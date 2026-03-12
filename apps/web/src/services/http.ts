@@ -88,3 +88,19 @@ export async function httpPostJson<TRes, TBody>(
     body: JSON.stringify(body),
   });
 }
+
+export async function httpPatchJson<TRes, TBody>(
+  path: string,
+  body: TBody,
+  init?: RequestInit,
+): Promise<TRes> {
+  return httpRequestJson<TRes>(path, {
+    ...init,
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(init?.headers as Record<string, string> | undefined),
+    },
+    body: JSON.stringify(body),
+  });
+}
