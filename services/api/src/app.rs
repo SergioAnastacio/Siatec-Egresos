@@ -1,6 +1,9 @@
 use axum::{middleware, routing::get, Router};
 use utoipa::OpenApi;
 
+#[cfg(feature = "swagger-ui")]
+use utoipa_swagger_ui::SwaggerUi;
+
 use crate::{auth, auth::DevAuth, openapi::ApiDoc, routes, state::AppState};
 
 pub fn build_router(state: AppState, dev_auth: DevAuth) -> Router {
@@ -64,11 +67,24 @@ pub fn build_router(state: AppState, dev_auth: DevAuth) -> Router {
         .nest("/egresos", egresos)
         .nest("/solicitudes", solicitudes_router);
 
-    Router::new()
+    let mut app = Router::new()
         .route("/health", get(routes::health::get_health))
         .route("/version", get(routes::version::get_version))
-        .route("/openapi.json", get(|| async { axum::Json(ApiDoc::openapi()) }))
         .route("/db/health", get(routes::db::get_db_health))
         .nest("/api/v1", v1)
-        .with_state(state)
+        .with_state(state);
+
+    // OpenAPI JSON
+    #[cfg(not(feature = "swagger-ui"))]
+    {
+        app = app.route("/openapi.json", get(|| async { axum::Json(ApiDoc::openapi()) }));
+    }
+
+    // Swagger UI (dev/testing)
+    #[cfg(feature = "swagger-ui")]
+    {
+        app = app.merge(SwaggerUi::new("/docs").url("/openapi.json", ApiDoc::openapi()));
+    }
+
+    app
 }
