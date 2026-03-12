@@ -13,7 +13,25 @@ use tracing::{error, info};
 
 #[tokio::main]
 async fn main() {
-    // Loads variables from .env (if present) into process env.
+    // Loads variables from .env into process env.
+    //
+    // By default `dotenvy::dotenv()` looks for `.env` in the current working directory.
+    // In practice, we sometimes run the API from the repo root, so we also try parent
+    // directories (best-effort) to reduce setup friction.
+    if let Ok(mut dir) = std::env::current_dir() {
+        for _ in 0..4 {
+            let candidate = dir.join(".env");
+            if candidate.exists() {
+                let _ = dotenvy::from_path(&candidate);
+                break;
+            }
+            if !dir.pop() {
+                break;
+            }
+        }
+    }
+
+    // Fallback to default behavior.
     let _ = dotenvy::dotenv();
 
     let cfg = match AppConfig::from_env() {
