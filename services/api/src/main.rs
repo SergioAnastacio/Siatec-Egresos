@@ -3,6 +3,7 @@ mod config;
 mod http;
 mod openapi;
 mod routes;
+mod state;
 mod telemetry;
 
 use crate::{config::AppConfig, telemetry::init_telemetry};
