@@ -26,6 +26,9 @@ export default function HomePage() {
           <Link href="/usuarios">
             <Button variant="secondary">Usuarios</Button>
           </Link>
+          <Link href="/solicitudes">
+            <Button variant="secondary">Solicitudes</Button>
+          </Link>
         </div>
       </main>
     </>

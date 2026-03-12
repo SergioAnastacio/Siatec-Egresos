@@ -30,6 +30,9 @@ export default function UsuariosPage() {
             <Link className="text-sm underline" href="/egresos">
               Egresos
             </Link>
+            <Link className="text-sm underline" href="/solicitudes">
+              Solicitudes
+            </Link>
           </nav>
         </header>
 
