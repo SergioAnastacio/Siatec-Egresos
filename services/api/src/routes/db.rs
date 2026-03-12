@@ -1,10 +1,11 @@
 use axum::{http::StatusCode, response::IntoResponse, Json};
 use serde::Serialize;
 use tokio_util::compat::TokioAsyncWriteCompatExt;
+use utoipa::ToSchema;
 
 use crate::{config::AppConfig, error::api_error};
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, ToSchema)]
 pub struct DbHealthResponse {
     pub ok: bool,
     pub message: Option<String>,
@@ -18,6 +19,16 @@ pub struct DbHealthResponse {
 /// - `SQLSERVER_URL` in environment (see `.env.example`).
 ///
 /// Note: intended for development environments only.
+#[utoipa::path(
+    get,
+    path = "/db/health",
+    tag = "Ops",
+    responses(
+        (status = 200, description = "DB OK", body = DbHealthResponse),
+        (status = 400, description = "Bad request / missing or invalid SQLSERVER_URL", body = ApiError),
+        (status = 503, description = "DB unavailable", body = DbHealthResponse)
+    )
+)]
 pub async fn get_db_health() -> axum::response::Response {
     let cfg = match AppConfig::from_env() {
         Ok(c) => c,
