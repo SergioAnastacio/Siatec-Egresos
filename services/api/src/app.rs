@@ -25,7 +25,29 @@ pub fn build_router(state: AppState, dev_auth: DevAuth) -> Router {
 
     let egresos = Router::new().merge(egresos_public).merge(egresos_protected);
 
-    let v1 = Router::new().nest("/egresos", egresos);
+    let auth_public = Router::new().route("/login", axum::routing::post(routes::auth::login));
+
+    let auth_protected = Router::new()
+        .route("/me", get(routes::auth::me))
+        .route_layer(middleware::from_fn_with_state(
+            dev_auth.clone(),
+            auth::require_dev_token,
+        ));
+
+    let auth_router = Router::new().merge(auth_public).merge(auth_protected);
+
+    let users_router = Router::new()
+        .route("/", get(routes::users::list_users))
+        .route("/{id}", get(routes::users::get_user))
+        .route_layer(middleware::from_fn_with_state(
+            dev_auth.clone(),
+            auth::require_dev_token,
+        ));
+
+    let v1 = Router::new()
+        .nest("/auth", auth_router)
+        .nest("/users", users_router)
+        .nest("/egresos", egresos);
 
     Router::new()
         .route("/health", get(routes::health::get_health))
