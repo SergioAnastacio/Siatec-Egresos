@@ -1,4 +1,5 @@
 use axum::{
+    body::Body,
     extract::State,
     http::{header, Request, StatusCode},
     middleware::Next,
@@ -13,10 +14,10 @@ pub struct DevAuth {
     pub token: Option<String>,
 }
 
-pub async fn require_dev_token<B>(
+pub async fn require_dev_token(
     State(auth): State<DevAuth>,
-    req: Request<B>,
-    next: Next<B>,
+    req: Request<Body>,
+    next: Next,
 ) -> Response {
     let Some(expected) = auth.token.as_deref().filter(|t| !t.is_empty()) else {
         // Auth not configured; keep routes accessible.

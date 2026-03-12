@@ -1,7 +1,4 @@
-use utoipa::{
-    openapi::security::{HttpAuthScheme, HttpBuilder, SecurityScheme},
-    OpenApi,
-};
+use utoipa::OpenApi;
 
 use crate::{error::ApiError, routes};
 
@@ -25,16 +22,6 @@ use crate::{error::ApiError, routes};
             siatec_egresos_egresos::Egreso,
             siatec_egresos_egresos::CreateEgresoRequest,
             siatec_egresos_egresos::EgresoStatus
-        ),
-        security_schemes(
-            (
-                "devToken" = SecurityScheme::Http(
-                    HttpBuilder::new()
-                        .scheme(HttpAuthScheme::Bearer)
-                        .bearer_format("static")
-                        .build()
-                )
-            )
         )
     ),
     tags(
