@@ -7,7 +7,9 @@ use axum::{
 use serde::{Deserialize, Serialize};
 use utoipa::ToSchema;
 
-use crate::{error::ApiError, error::api_error, state::AppState};
+#[allow(unused_imports)]
+use crate::error::ApiError;
+use crate::{error::api_error, state::AppState};
 
 #[derive(Debug, Deserialize, ToSchema)]
 pub struct LoginRequest {
@@ -48,7 +50,7 @@ pub struct MeResponse {
         (status = 401, description = "Credenciales inválidas", body = ApiError)
     )
 )]
-pub async fn login(State(state): State<AppState>, Json(req): Json<LoginRequest>) -> impl IntoResponse {
+pub async fn login(State(state): State<AppState>, Json(req): Json<LoginRequest>) -> axum::response::Response {
     // MVP/dev-mode:
     // - Aceptamos cualquier combinación (por ahora).
     // - Emitimos un token estático (si está configurado) para que la web lo use como Bearer.
@@ -70,7 +72,9 @@ pub async fn login(State(state): State<AppState>, Json(req): Json<LoginRequest>)
         user,
     };
 
-    (StatusCode::OK, Json(res)).into_response()
+    let mut resp = Json(res).into_response();
+    *resp.status_mut() = StatusCode::OK;
+    resp
 }
 
 /// GET /api/v1/auth/me
@@ -84,7 +88,7 @@ pub async fn login(State(state): State<AppState>, Json(req): Json<LoginRequest>)
         (status = 401, description = "No autorizado", body = ApiError)
     )
 )]
-pub async fn me(State(state): State<AppState>) -> impl IntoResponse {
+pub async fn me(State(state): State<AppState>) -> axum::response::Response {
     // MVP/dev-mode: el middleware valida el token si existe `API_DEV_TOKEN`.
     let user = UserDto {
         id: state.dev_user_id.clone(),
@@ -93,5 +97,7 @@ pub async fn me(State(state): State<AppState>) -> impl IntoResponse {
         roles: Some(vec!["admin".to_string()]),
     };
 
-    (StatusCode::OK, Json(MeResponse { user })).into_response()
+    let mut resp = Json(MeResponse { user }).into_response();
+    *resp.status_mut() = StatusCode::OK;
+    resp
 }

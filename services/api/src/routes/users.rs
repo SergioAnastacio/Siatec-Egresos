@@ -4,11 +4,14 @@ use axum::{
     response::IntoResponse,
     Json,
 };
+use serde::Serialize;
 use utoipa::ToSchema;
 
-use crate::{error::ApiError, error::api_error, routes::auth::UserDto, state::AppState};
+#[allow(unused_imports)]
+use crate::error::ApiError;
+use crate::{error::api_error, routes::auth::UserDto, state::AppState};
 
-#[derive(Debug, ToSchema)]
+#[derive(Debug, Serialize, ToSchema)]
 pub struct UsersListResponse {
     pub items: Vec<UserDto>,
 }
@@ -43,9 +46,11 @@ fn seed_users(state: &AppState) -> Vec<UserDto> {
         (status = 401, description = "No autorizado", body = ApiError)
     )
 )]
-pub async fn list_users(State(state): State<AppState>) -> impl IntoResponse {
+pub async fn list_users(State(state): State<AppState>) -> axum::response::Response {
     let items = seed_users(&state);
-    (StatusCode::OK, Json(UsersListResponse { items })).into_response()
+    let mut resp = Json(UsersListResponse { items }).into_response();
+    *resp.status_mut() = StatusCode::OK;
+    resp
 }
 
 /// GET /api/v1/users/{id}
@@ -63,10 +68,14 @@ pub async fn list_users(State(state): State<AppState>) -> impl IntoResponse {
         (status = 404, description = "No encontrado", body = ApiError)
     )
 )]
-pub async fn get_user(State(state): State<AppState>, Path(id): Path<String>) -> impl IntoResponse {
+pub async fn get_user(State(state): State<AppState>, Path(id): Path<String>) -> axum::response::Response {
     let items = seed_users(&state);
     match items.into_iter().find(|u| u.id == id) {
-        Some(u) => (StatusCode::OK, Json(u)).into_response(),
+        Some(u) => {
+            let mut resp = Json(u).into_response();
+            *resp.status_mut() = StatusCode::OK;
+            resp
+        }
         None => api_error(StatusCode::NOT_FOUND, "not_found", "user not found").into_response(),
     }
 }

@@ -19,7 +19,7 @@ pub fn build_router(state: AppState, dev_auth: DevAuth) -> Router {
             axum::routing::patch(routes::egresos::update_egreso_status),
         )
         .route_layer(middleware::from_fn_with_state(
-            dev_auth,
+            dev_auth.clone(),
             auth::require_dev_token,
         ));
 
