@@ -1,0 +1,40 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Edita_Usuarios:AACarga_ZDerechos_Revision",
+  "name": "AACarga_ZDerechos_Revision",
+  "scope": "window_local",
+  "owner_window": "WIN_Edita_Usuarios",
+  "signature": "PROCEDURE AACarga_ZDerechos_Revision()",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Edita_Usuarios_AACarga_ZDerechos_Revision.json",
+  "tables_read": [
+    "BuscaQry",
+    "LUCCA247",
+    "LUCCA249"
+  ],
+  "tables_write": [],
+  "relations_found": [
+    {
+      "type": "field_assignment",
+      "child_table": "P1",
+      "child_column": "Codigo",
+      "parent_table": "U1",
+      "parent_column": "Revision",
+      "evidence": "P1.Codigo=U1.Revision",
+      "source": "PROC:AACarga_ZDerechos_Revision"
+    },
+    {
+      "type": "sql_join",
+      "join_table": "LUCCA247",
+      "on": "P1.Codigo=U1.Revision",
+      "evidence": " FROM LUCCA249 U1 Left Join LUCCA247 P1 On P1.Codigo=U1.Revision  ...",
+      "source": "PROC:AACarga_ZDerechos_Revision"
+    }
+  ],
+  "metrics": {
+    "lines": 14,
+    "sql_fragments": 3
+  },
+  "wl_code": "BuscaQry is Data Source\nTableDeleteAll(TABLE_DerechosRevision)\nIF HExecuteSQLQuery(BuscaQry, MyConnectionLucca, hQueryWithoutCorrection + hNoBind,\n\"SELECT U1.Usuario, U1.Renglon, U1.Revision, P1.TipodeRevision \" + ...\n\" FROM LUCCA249 U1 Left Join LUCCA247 P1 On P1.Codigo=U1.Revision  \" + ...\n\"Where U1.Usuario=\" + Usuarios.CODIGO + \" Order by U1.Renglon \") = False THEN\nError(\"HFSQL error: \" + HErrorInfo())\nEND\nHReadFirst(BuscaQry)\nLOOP (HNbRec(BuscaQry))\nTableAddLine(TABLE_DerechosRevision, BuscaQry.Usuario, BuscaQry.Renglon, BuscaQry.TipodeRevision)\nHReadNext(BuscaQry)\nEND\nLocal procedure AACarga_ZZZGuarda410"
+}

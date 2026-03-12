@@ -1,0 +1,25 @@
+{
+  "step": 1,
+  "artifact_type": "procedure_index",
+  "owner_window": "WIN_Inicio_LUCCA",
+  "procedures": [
+    {
+      "id": "PROC:WIN_Inicio_LUCCA:Prepara_Menu",
+      "file": "docs/as-is/procedures/PROC_WIN_Inicio_LUCCA_Prepara_Menu.json"
+    },
+    {
+      "id": "PROC:WIN_Inicio_LUCCA:Cambia_Letrero_Fecha",
+      "file": "docs/as-is/procedures/PROC_WIN_Inicio_LUCCA_Cambia_Letrero_Fecha.json"
+    },
+    {
+      "id": "PROC:WIN_Inicio_LUCCA:Actualiza_Pendientes",
+      "file": "docs/as-is/procedures/PROC_WIN_Inicio_LUCCA_Actualiza_Pendientes.json"
+    },
+    {
+      "id": "PROC:WIN_Inicio_LUCCA:MsWheel",
+      "file": "docs/as-is/procedures/PROC_WIN_Inicio_LUCCA_MsWheel.json"
+    }
+  ],
+  "generated_from": "PROCEDIMIENTOS_WIN_Inicio_LUCCA.txt",
+  "generated_at": "2026-03-08T18:55:05.958287Z"
+}

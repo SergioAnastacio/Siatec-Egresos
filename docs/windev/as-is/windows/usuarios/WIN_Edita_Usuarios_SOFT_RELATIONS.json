@@ -1,0 +1,286 @@
+{
+  "artifact_type": "soft_relations",
+  "scope": "WIN_Edita_Usuarios",
+  "relations": [
+    {
+      "type": "hreadseek_soft_fk",
+      "child_table": "LUCCA410",
+      "child_column": "CODIGO",
+      "parent_table": "Usuarios",
+      "parent_column": "CODIGO",
+      "evidence": "HReadSeek(LUCCA410,CODIGO,Usuarios.CODIGO,...)",
+      "source": "PROC:WIN_Edita_Usuarios"
+    },
+    {
+      "type": "hreadseek_soft_fk",
+      "child_table": "LUCCA187",
+      "child_column": "ROL",
+      "parent_table": "LUCCA411",
+      "parent_column": "CODIGO",
+      "evidence": "HReadSeek(LUCCA411,CODIGO,LUCCA187.ROL,...)",
+      "source": "PROC:WIN_Edita_Usuarios"
+    },
+    {
+      "type": "field_assignment",
+      "child_table": "UsuHist",
+      "child_column": "CODIGO",
+      "parent_table": "Usuarios",
+      "parent_column": "CODIGO",
+      "evidence": "UsuHist.CODIGO=Usuarios.CODIGO",
+      "source": "PROC:WIN_Edita_Usuarios"
+    },
+    {
+      "type": "field_assignment",
+      "child_table": "BitMovs",
+      "child_column": "REGISTRO",
+      "parent_table": "Usuarios",
+      "parent_column": "CODIGO",
+      "evidence": "BitMovs.REGISTRO=Usuarios.CODIGO",
+      "source": "PROC:WIN_Edita_Usuarios"
+    },
+    {
+      "type": "field_assignment",
+      "child_table": "BitMovs",
+      "child_column": "REGISTRO",
+      "parent_table": "Usuarios",
+      "parent_column": "CODIGO",
+      "evidence": "BitMovs.REGISTRO=Usuarios.CODIGO",
+      "source": "PROC:WIN_Edita_Usuarios"
+    },
+    {
+      "type": "field_assignment",
+      "child_table": "Usuarios",
+      "child_column": "AUTVIAT",
+      "parent_table": "LUCCA104",
+      "parent_column": "ORDEN",
+      "evidence": "Usuarios.AUTVIAT=LUCCA104.ORDEN",
+      "source": "PROC:WIN_Edita_Usuarios"
+    },
+    {
+      "type": "field_assignment",
+      "child_table": "Usuarios",
+      "child_column": "CUENTADEUDORDIVERSO",
+      "parent_table": "SIVEC001C",
+      "parent_column": "CODIGO",
+      "evidence": "Usuarios.CUENTADEUDORDIVERSO=SIVEC001C.CODIGO",
+      "source": "PROC:WIN_Edita_Usuarios"
+    },
+    {
+      "type": "field_assignment",
+      "child_table": "Usuarios",
+      "child_column": "CTADEUDORDIVINTERNACIONAL",
+      "parent_table": "SIVEC001C",
+      "parent_column": "CODIGO",
+      "evidence": "Usuarios.CTADEUDORDIVINTERNACIONAL=SIVEC001C.CODIGO",
+      "source": "PROC:WIN_Edita_Usuarios"
+    },
+    {
+      "type": "field_assignment",
+      "child_table": "Usuarios",
+      "child_column": "AREA",
+      "parent_table": "Areax",
+      "parent_column": "CODIGO",
+      "evidence": "Usuarios.AREA=Areas.CODIGO",
+      "source": "PROC:WIN_Edita_Usuarios"
+    },
+    {
+      "type": "field_assignment",
+      "child_table": "Usuarios",
+      "child_column": "CTADEUDORDIVOTROSGASTOS",
+      "parent_table": "SIVEC001C",
+      "parent_column": "CODIGO",
+      "evidence": "Usuarios.CTADEUDORDIVOTROSGASTOS=SIVEC001C.CODIGO",
+      "source": "PROC:WIN_Edita_Usuarios"
+    },
+    {
+      "type": "field_assignment",
+      "child_table": "LUCCA182",
+      "child_column": "CTAEFEVOCAJA",
+      "parent_table": "SIVEC001C",
+      "parent_column": "CODIGO",
+      "evidence": "LUCCA182.CTAEFEVOCAJA=SIVEC001C.CODIGO",
+      "source": "PROC:WIN_Edita_Usuarios"
+    },
+    {
+      "type": "field_assignment",
+      "child_table": "Usuarios",
+      "child_column": "AUTBIEN",
+      "parent_table": "LUCCA102",
+      "parent_column": "ORDEN",
+      "evidence": "Usuarios.AUTBIEN=LUCCA102.ORDEN",
+      "source": "PROC:WIN_Edita_Usuarios"
+    },
+    {
+      "type": "field_assignment",
+      "child_table": "Usuarios",
+      "child_column": "AUTSERV",
+      "parent_table": "LUCCA103",
+      "parent_column": "ORDEN",
+      "evidence": "Usuarios.AUTSERV=LUCCA103.ORDEN",
+      "source": "PROC:WIN_Edita_Usuarios"
+    },
+    {
+      "type": "field_assignment",
+      "child_table": "Usuarios",
+      "child_column": "AUTVIAT",
+      "parent_table": "LUCCA104",
+      "parent_column": "ORDEN",
+      "evidence": "Usuarios.AUTVIAT=LUCCA104.ORDEN",
+      "source": "PROC:WIN_Edita_Usuarios"
+    },
+    {
+      "type": "field_assignment",
+      "child_table": "LUCCA182",
+      "child_column": "MANIPULAUF",
+      "parent_table": "LUCCA213",
+      "parent_column": "CODIGO",
+      "evidence": "LUCCA182.MANIPULAUF=LUCCA213.CODIGO",
+      "source": "PROC:WIN_Edita_Usuarios"
+    },
+    {
+      "type": "field_assignment",
+      "child_table": "U1",
+      "child_column": "Codigo",
+      "parent_table": "L63",
+      "parent_column": "Usuario",
+      "evidence": "U1.Codigo=L63.Usuario",
+      "source": "PROC:AACarga_Tabla_RecepDocts"
+    },
+    {
+      "type": "sql_join",
+      "join_table": "Usuarios",
+      "on": "U1.Codigo=L63.Usuario",
+      "evidence": "FROM LUCCA663 L63 Left Join Usuarios U1 On U1.Codigo=L63.Usuario Where L63.Codigo=...",
+      "source": "PROC:AACarga_Tabla_RecepDocts"
+    },
+    {
+      "type": "field_assignment",
+      "child_table": "A1",
+      "child_column": "Codigo",
+      "parent_table": "U1",
+      "parent_column": "Area",
+      "evidence": "A1.Codigo=U1.Area",
+      "source": "PROC:AACarga_TablaAut_Compras"
+    },
+    {
+      "type": "sql_join",
+      "join_table": "Areax",
+      "on": "A1.Codigo=U1.Area",
+      "evidence": " FROM LUCCA105 U1 Left Join AreaX A1 On A1.Codigo=U1.Area Where U1.Codigo=...",
+      "source": "PROC:AACarga_TablaAut_Compras"
+    },
+    {
+      "type": "field_assignment",
+      "child_table": "P1",
+      "child_column": "Codigo",
+      "parent_table": "U1",
+      "parent_column": "Area",
+      "evidence": "P1.Codigo=U1.Area",
+      "source": "PROC:AACarga_ZDerechos_AreaCompras"
+    },
+    {
+      "type": "sql_join",
+      "join_table": "Areax",
+      "on": "P1.Codigo=U1.Area",
+      "evidence": " FROM LUCCA254 U1 Left Join AreaX P1 On P1.Codigo=U1.Area  ...",
+      "source": "PROC:AACarga_ZDerechos_AreaCompras"
+    },
+    {
+      "type": "field_assignment",
+      "child_table": "P1",
+      "child_column": "Numero",
+      "parent_table": "U1",
+      "parent_column": "Cuenta",
+      "evidence": "P1.Numero=U1.Cuenta",
+      "source": "PROC:AACarga_ZDerechos_BancosRev"
+    },
+    {
+      "type": "sql_join",
+      "join_table": "Bancos",
+      "on": "P1.Numero=U1.Cuenta",
+      "evidence": " FROM LUCCA296 U1 Left Join Bancos P1 On P1.Numero=U1.Cuenta  ...",
+      "source": "PROC:AACarga_ZDerechos_BancosRev"
+    },
+    {
+      "type": "field_assignment",
+      "child_table": "P1",
+      "child_column": "Codigo",
+      "parent_table": "U1",
+      "parent_column": "Cuadrilla",
+      "evidence": "P1.Codigo=U1.Cuadrilla",
+      "source": "PROC:AACarga_ZDerechos_Cuadrilla"
+    },
+    {
+      "type": "sql_join",
+      "join_table": "LUCCA285",
+      "on": "P1.Codigo=U1.Cuadrilla",
+      "evidence": " FROM LUCCA286 U1 Left Join LUCCA285 P1 On P1.Codigo=U1.Cuadrilla  ...",
+      "source": "PROC:AACarga_ZDerechos_Cuadrilla"
+    },
+    {
+      "type": "field_assignment",
+      "child_table": "P1",
+      "child_column": "Codigo",
+      "parent_table": "U1",
+      "parent_column": "Rol",
+      "evidence": "P1.Codigo=U1.Rol",
+      "source": "PROC:AACarga_ZDerechos_GruposRoles"
+    },
+    {
+      "type": "sql_join",
+      "join_table": "LUCCA411",
+      "on": "P1.Codigo=U1.Rol",
+      "evidence": " FROM LUCCA187 U1 Left Join LUCCA411 P1 On P1.Codigo=U1.Rol  ...",
+      "source": "PROC:AACarga_ZDerechos_GruposRoles"
+    },
+    {
+      "type": "field_assignment",
+      "child_table": "P1",
+      "child_column": "Codigo",
+      "parent_table": "U1",
+      "parent_column": "CodAmarre",
+      "evidence": "P1.Codigo=U1.CodAmarre",
+      "source": "PROC:AACarga_ZDerechos_Nomina"
+    },
+    {
+      "type": "field_assignment",
+      "child_table": "D1",
+      "child_column": "Codigo",
+      "parent_table": "U1",
+      "parent_column": "CodAmarre",
+      "evidence": "D1.Codigo=U1.CodAmarre",
+      "source": "PROC:AACarga_ZDerechos_Nomina"
+    },
+    {
+      "type": "sql_join",
+      "join_table": "Percepciones",
+      "on": "P1.Codigo=U1.CodAmarre",
+      "evidence": " FROM LUCCA185 U1 Left Join Percepciones P1 On P1.Codigo=U1.CodAmarre and U1.Funcion='Percepcion\n' Left Join Deducciones D1 On D1.Codigo=U1.CodAmarre and U1.Funcion='Deduccion'  ...",
+      "source": "PROC:AACarga_ZDerechos_Nomina"
+    },
+    {
+      "type": "sql_join",
+      "join_table": "Deducciones",
+      "on": "D1.Codigo=U1.CodAmarre",
+      "evidence": " FROM LUCCA185 U1 Left Join Percepciones P1 On P1.Codigo=U1.CodAmarre and U1.Funcion='Percepcion\n' Left Join Deducciones D1 On D1.Codigo=U1.CodAmarre and U1.Funcion='Deduccion'  ...",
+      "source": "PROC:AACarga_ZDerechos_Nomina"
+    },
+    {
+      "type": "field_assignment",
+      "child_table": "P1",
+      "child_column": "Codigo",
+      "parent_table": "U1",
+      "parent_column": "Revision",
+      "evidence": "P1.Codigo=U1.Revision",
+      "source": "PROC:AACarga_ZDerechos_Revision"
+    },
+    {
+      "type": "sql_join",
+      "join_table": "LUCCA247",
+      "on": "P1.Codigo=U1.Revision",
+      "evidence": " FROM LUCCA249 U1 Left Join LUCCA247 P1 On P1.Codigo=U1.Revision  ...",
+      "source": "PROC:AACarga_ZDerechos_Revision"
+    }
+  ],
+  "generated_at": "2026-03-09T16:08:25.755695+00:00"
+}

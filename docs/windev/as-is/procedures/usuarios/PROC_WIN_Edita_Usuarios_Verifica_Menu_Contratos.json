@@ -1,0 +1,19 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Edita_Usuarios:Verifica_Menu_Contratos",
+  "name": "Verifica_Menu_Contratos",
+  "scope": "window_local",
+  "owner_window": "WIN_Edita_Usuarios",
+  "signature": "PROCEDURE Verifica_Menu_Contratos()",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Edita_Usuarios_Verifica_Menu_Contratos.json",
+  "tables_read": [],
+  "tables_write": [],
+  "relations_found": [],
+  "metrics": {
+    "lines": 16,
+    "sql_fragments": 0
+  },
+  "wl_code": "gsResPath=TreeFind(TREE_Example, 282, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=-1 THEN\nTREE_Example[gsResPath]..Checked=0\nEND\nIF TREE_Example[gsResPath]..Checked=0 THEN\nFOR i=283 TO 288\ngsResPath=TreeFind(TREE_Example, i, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\nEND\nELSE\nFOR i=283 TO 288\ngsResPath=TreeFind(TREE_Example, i, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\nEND\nEND\nLocal procedure Verifica_Menu_DeuPub"
+}

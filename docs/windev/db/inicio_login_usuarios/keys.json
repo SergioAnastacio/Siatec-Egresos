@@ -1,0 +1,93 @@
+{
+  "keys": [
+    {
+      "schema_name": "dbo",
+      "table_name": "Areax",
+      "constraint_name": "PK__Areas_2019",
+      "constraint_type": "PRIMARY_KEY_CONSTRAINT",
+      "column_name": "CODIGO",
+      "key_ordinal": 1
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "BitMovs",
+      "constraint_name": "PK_BitMovs",
+      "constraint_type": "PRIMARY_KEY_CONSTRAINT",
+      "column_name": "FECHAHORA",
+      "key_ordinal": 1
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "BitMovs",
+      "constraint_name": "PK_BitMovs",
+      "constraint_type": "PRIMARY_KEY_CONSTRAINT",
+      "column_name": "USUARIO",
+      "key_ordinal": 2
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "ConfInter",
+      "constraint_name": "PK_ConfInter",
+      "constraint_type": "PRIMARY_KEY_CONSTRAINT",
+      "column_name": "CODIGO",
+      "key_ordinal": 1
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "DatosGrales",
+      "constraint_name": "PK__DatosGra__CC87E12715261146",
+      "constraint_type": "PRIMARY_KEY_CONSTRAINT",
+      "column_name": "CODIGO",
+      "key_ordinal": 1
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "LUCCA182",
+      "constraint_name": "PK_LUCCA182",
+      "constraint_type": "PRIMARY_KEY_CONSTRAINT",
+      "column_name": "CODIGO",
+      "key_ordinal": 1
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "LUCCA333",
+      "constraint_name": "PK_LUCCA333",
+      "constraint_type": "PRIMARY_KEY_CONSTRAINT",
+      "column_name": "CODIGO",
+      "key_ordinal": 1
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "LUCCA410",
+      "constraint_name": "PK_LUCCA410",
+      "constraint_type": "PRIMARY_KEY_CONSTRAINT",
+      "column_name": "CODIGO",
+      "key_ordinal": 1
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "UsuHist",
+      "constraint_name": "PK_UsuHist",
+      "constraint_type": "PRIMARY_KEY_CONSTRAINT",
+      "column_name": "CODIGO",
+      "key_ordinal": 1
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "UsuHist",
+      "constraint_name": "PK_UsuHist",
+      "constraint_type": "PRIMARY_KEY_CONSTRAINT",
+      "column_name": "CONTRASENA",
+      "key_ordinal": 2
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "Usuarios",
+      "constraint_name": "PK__Usuarios__CC87E12718C3FA05",
+      "constraint_type": "PRIMARY_KEY_CONSTRAINT",
+      "column_name": "CODIGO",
+      "key_ordinal": 1
+    }
+  ],
+  "foreign_keys": []
+}

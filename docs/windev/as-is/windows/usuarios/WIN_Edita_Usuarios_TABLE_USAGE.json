@@ -1,0 +1,270 @@
+{
+  "artifact_type": "table_usage",
+  "scope": "WIN_Edita_Usuarios",
+  "tables": [
+    {
+      "table": "Areax",
+      "read_by": [
+        "AACarga_TablaAut_Compras",
+        "AACarga_ZDerechos_AreaCompras",
+        "WIN_Edita_Usuarios"
+      ],
+      "write_by": []
+    },
+    {
+      "table": "Bancos",
+      "read_by": [
+        "AACarga_ZDerechos_BancosRev"
+      ],
+      "write_by": []
+    },
+    {
+      "table": "BitMovs",
+      "read_by": [],
+      "write_by": [
+        "WIN_Edita_Usuarios"
+      ]
+    },
+    {
+      "table": "BuscaIns",
+      "read_by": [
+        "WIN_Edita_Usuarios"
+      ],
+      "write_by": []
+    },
+    {
+      "table": "BuscaQry",
+      "read_by": [
+        "AACarga_TablaAut_Compras",
+        "AACarga_Tabla_RecepDocts",
+        "AACarga_ZDerechos_AreaCompras",
+        "AACarga_ZDerechos_BancosRev",
+        "AACarga_ZDerechos_Cuadrilla",
+        "AACarga_ZDerechos_GruposRoles",
+        "AACarga_ZDerechos_Nomina",
+        "AACarga_ZDerechos_Revision"
+      ],
+      "write_by": []
+    },
+    {
+      "table": "DatosGrales",
+      "read_by": [
+        "WIN_Edita_Usuarios"
+      ],
+      "write_by": []
+    },
+    {
+      "table": "Deducciones",
+      "read_by": [
+        "AACarga_ZDerechos_Nomina"
+      ],
+      "write_by": []
+    },
+    {
+      "table": "LUCCA102",
+      "read_by": [
+        "WIN_Edita_Usuarios"
+      ],
+      "write_by": []
+    },
+    {
+      "table": "LUCCA103",
+      "read_by": [
+        "WIN_Edita_Usuarios"
+      ],
+      "write_by": []
+    },
+    {
+      "table": "LUCCA104",
+      "read_by": [
+        "WIN_Edita_Usuarios"
+      ],
+      "write_by": []
+    },
+    {
+      "table": "LUCCA105",
+      "read_by": [
+        "AACarga_TablaAut_Compras",
+        "WIN_Edita_Usuarios"
+      ],
+      "write_by": [
+        "WIN_Edita_Usuarios"
+      ]
+    },
+    {
+      "table": "LUCCA111",
+      "read_by": [
+        "WIN_Edita_Usuarios"
+      ],
+      "write_by": []
+    },
+    {
+      "table": "LUCCA182",
+      "read_by": [],
+      "write_by": [
+        "WIN_Edita_Usuarios"
+      ]
+    },
+    {
+      "table": "LUCCA185",
+      "read_by": [
+        "AACarga_ZDerechos_Nomina",
+        "WIN_Edita_Usuarios"
+      ],
+      "write_by": [
+        "WIN_Edita_Usuarios"
+      ]
+    },
+    {
+      "table": "LUCCA187",
+      "read_by": [
+        "AACarga_ZDerechos_GruposRoles",
+        "WIN_Edita_Usuarios"
+      ],
+      "write_by": [
+        "WIN_Edita_Usuarios"
+      ]
+    },
+    {
+      "table": "LUCCA213",
+      "read_by": [
+        "WIN_Edita_Usuarios"
+      ],
+      "write_by": []
+    },
+    {
+      "table": "LUCCA247",
+      "read_by": [
+        "AACarga_ZDerechos_Revision"
+      ],
+      "write_by": []
+    },
+    {
+      "table": "LUCCA249",
+      "read_by": [
+        "AACarga_ZDerechos_Revision",
+        "WIN_Edita_Usuarios"
+      ],
+      "write_by": [
+        "WIN_Edita_Usuarios"
+      ]
+    },
+    {
+      "table": "LUCCA254",
+      "read_by": [
+        "AACarga_ZDerechos_AreaCompras",
+        "WIN_Edita_Usuarios"
+      ],
+      "write_by": [
+        "WIN_Edita_Usuarios"
+      ]
+    },
+    {
+      "table": "LUCCA285",
+      "read_by": [
+        "AACarga_ZDerechos_Cuadrilla"
+      ],
+      "write_by": []
+    },
+    {
+      "table": "LUCCA286",
+      "read_by": [
+        "AACarga_ZDerechos_Cuadrilla",
+        "WIN_Edita_Usuarios"
+      ],
+      "write_by": [
+        "WIN_Edita_Usuarios"
+      ]
+    },
+    {
+      "table": "LUCCA296",
+      "read_by": [
+        "AACarga_ZDerechos_BancosRev",
+        "WIN_Edita_Usuarios"
+      ],
+      "write_by": [
+        "WIN_Edita_Usuarios"
+      ]
+    },
+    {
+      "table": "LUCCA333",
+      "read_by": [],
+      "write_by": [
+        "WIN_Edita_Usuarios"
+      ]
+    },
+    {
+      "table": "LUCCA410",
+      "read_by": [
+        "WIN_Edita_Usuarios"
+      ],
+      "write_by": [
+        "AACarga_ZZZGuarda410",
+        "WIN_Edita_Usuarios"
+      ]
+    },
+    {
+      "table": "LUCCA411",
+      "read_by": [
+        "AACarga_ZDerechos_GruposRoles",
+        "WIN_Edita_Usuarios"
+      ],
+      "write_by": []
+    },
+    {
+      "table": "LUCCA663",
+      "read_by": [
+        "AACarga_Tabla_RecepDocts",
+        "WIN_Edita_Usuarios"
+      ],
+      "write_by": [
+        "WIN_Edita_Usuarios"
+      ]
+    },
+    {
+      "table": "LUCCA685",
+      "read_by": [],
+      "write_by": [
+        "Guarda_DerNomina"
+      ]
+    },
+    {
+      "table": "Percepciones",
+      "read_by": [
+        "AACarga_ZDerechos_Nomina"
+      ],
+      "write_by": []
+    },
+    {
+      "table": "SIVEC001C",
+      "read_by": [
+        "WIN_Edita_Usuarios"
+      ],
+      "write_by": []
+    },
+    {
+      "table": "UsuHist",
+      "read_by": [
+        "WIN_Edita_Usuarios"
+      ],
+      "write_by": [
+        "WIN_Edita_Usuarios"
+      ]
+    },
+    {
+      "table": "Usuarios",
+      "read_by": [
+        "AACarga_Tabla_RecepDocts",
+        "WIN_Edita_Usuarios"
+      ],
+      "write_by": [
+        "WIN_Edita_Usuarios"
+      ]
+    }
+  ],
+  "generated_at": "2026-03-09T16:08:25.734028+00:00",
+  "notes": [
+    "Se detectaron tablas a partir de HRead*/HReadSeek/HAdd/HModify/HDelete y fragmentos SQL embebidos.",
+    "Normalización aplicada: Areas/AreaX -> Areax."
+  ]
+}

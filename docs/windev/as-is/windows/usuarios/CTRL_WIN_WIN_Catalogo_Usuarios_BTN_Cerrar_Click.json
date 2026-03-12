@@ -1,0 +1,33 @@
+{
+  "step": 1,
+  "artifact_type": "ui_control_event",
+  "id": "CTRL:WIN:WIN_Catalogo_Usuarios:BTN_Cerrar:Click",
+  "window_or_page": "WIN:WIN_Catalogo_Usuarios",
+  "module": "Admin/Usuarios",
+  "control": {
+    "name": "BTN_Cerrar",
+    "type": "Button",
+    "purpose": "Cierra ventana.",
+    "visibility_or_permissions": []
+  },
+  "output_dir": "docs/as-is/windows/",
+  "output_filename": "CTRL_WIN_WIN_Catalogo_Usuarios_BTN_Cerrar_Click.json",
+  "events": [
+    {
+      "event": "Click BTN_Cerrar",
+      "summary": "Cierra ventana.",
+      "calls_procedures": [],
+      "calls_windows": [],
+      "calls_queries_or_sql": [],
+      "tables_read": [],
+      "tables_write": [],
+      "business_rules": [],
+      "validations": [],
+      "exceptions_or_errors": [],
+      "dependencies": [],
+      "wl_code": "Close()"
+    }
+  ],
+  "unknowns": [],
+  "followups": []
+}

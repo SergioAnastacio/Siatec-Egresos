@@ -1,0 +1,40 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Edita_Usuarios:AACarga_ZDerechos_GruposRoles",
+  "name": "AACarga_ZDerechos_GruposRoles",
+  "scope": "window_local",
+  "owner_window": "WIN_Edita_Usuarios",
+  "signature": "PROCEDURE AACarga_ZDerechos_GruposRoles()",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Edita_Usuarios_AACarga_ZDerechos_GruposRoles.json",
+  "tables_read": [
+    "BuscaQry",
+    "LUCCA187",
+    "LUCCA411"
+  ],
+  "tables_write": [],
+  "relations_found": [
+    {
+      "type": "field_assignment",
+      "child_table": "P1",
+      "child_column": "Codigo",
+      "parent_table": "U1",
+      "parent_column": "Rol",
+      "evidence": "P1.Codigo=U1.Rol",
+      "source": "PROC:AACarga_ZDerechos_GruposRoles"
+    },
+    {
+      "type": "sql_join",
+      "join_table": "LUCCA411",
+      "on": "P1.Codigo=U1.Rol",
+      "evidence": " FROM LUCCA187 U1 Left Join LUCCA411 P1 On P1.Codigo=U1.Rol  ...",
+      "source": "PROC:AACarga_ZDerechos_GruposRoles"
+    }
+  ],
+  "metrics": {
+    "lines": 14,
+    "sql_fragments": 3
+  },
+  "wl_code": "BuscaQry is Data Source\nTableDeleteAll(TABLE_GruposDerechos)\nIF HExecuteSQLQuery(BuscaQry, MyConnectionLucca, hQueryWithoutCorrection + hNoBind,\n\"SELECT U1.Codigo, U1.Renglon, P1.Descripcion \" + ...\n\" FROM LUCCA187 U1 Left Join LUCCA411 P1 On P1.Codigo=U1.Rol  \" + ...\n\"Where U1.Codigo=\" + Usuarios.CODIGO + \" Order by U1.Renglon \") = False THEN\nError(\"HFSQL error: \" + HErrorInfo())\nEND\nHReadFirst(BuscaQry)\nLOOP (HNbRec(BuscaQry))\nTableAddLine(TABLE_GruposDerechos, BuscaQry.Codigo, BuscaQry.Renglon, BuscaQry.Descripcion)\nHReadNext(BuscaQry)\nEND\nLocal procedure AACarga_ZDerechos_Nomina"
+}

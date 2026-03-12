@@ -1,0 +1,41 @@
+{
+  "step": 1,
+  "artifact_type": "ui_control_event",
+  "id": "CTRL:WIN:WIN_CambiaUsuarioLUCCA:BTN_Cancelar:Click",
+  "window_or_page": "WIN:WIN_CambiaUsuarioLUCCA",
+  "module": "Auth/ChangeUser",
+  "control": {
+    "name": "BTN_Cancelar",
+    "type": "Button",
+    "purpose": "",
+    "visibility_or_permissions": []
+  },
+  "output_dir": "docs/as-is/windows/",
+  "output_filename": "CTRL_WIN_WIN_CambiaUsuarioLUCCA_BTN_Cancelar_Click.json",
+  "events": [
+    {
+      "event": "Click BTN_Cancelar",
+      "summary": "Ver WL",
+      "calls_procedures": [],
+      "calls_windows": [],
+      "calls_queries_or_sql": [],
+      "tables_read": [],
+      "tables_write": [],
+      "business_rules": [
+        {
+          "id": "BR-AUTH-CHG-CANCEL-001",
+          "rule": "Cancelar cambio de usuario fuerza gnUSUARIO=0 y cierra.",
+          "evidence": "gnUSUARIO=0 Close()"
+        }
+      ],
+      "validations": [],
+      "exceptions_or_errors": [],
+      "dependencies": [],
+      "wl_code": "gnUSUARIO=0\n\t\tClose()"
+    }
+  ],
+  "unknowns": [],
+  "followups": [
+    "Confirmar si esta ventana solo cambia usuario (sin cambiar conexión/basedatos) o también cambia contexto multiempresa."
+  ]
+}

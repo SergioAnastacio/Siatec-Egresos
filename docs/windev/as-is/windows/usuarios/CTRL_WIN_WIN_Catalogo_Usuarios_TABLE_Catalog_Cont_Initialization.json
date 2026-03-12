@@ -1,0 +1,39 @@
+{
+  "step": 1,
+  "artifact_type": "ui_control_event",
+  "id": "CTRL:WIN:WIN_Catalogo_Usuarios:TABLE_Catalog_Cont:Initialization",
+  "window_or_page": "WIN:WIN_Catalogo_Usuarios",
+  "module": "Admin/Usuarios",
+  "control": {
+    "name": "TABLE_Catalog_Cont",
+    "type": "Table",
+    "purpose": "Inicializa doble click para seleccionar o editar según modo selector.",
+    "visibility_or_permissions": []
+  },
+  "output_dir": "docs/as-is/windows/",
+  "output_filename": "CTRL_WIN_WIN_Catalogo_Usuarios_TABLE_Catalog_Cont_Initialization.json",
+  "events": [
+    {
+      "event": "Initialization TABLE_Catalog_Cont",
+      "summary": "Inicializa doble click para seleccionar o editar según modo selector.",
+      "calls_procedures": [],
+      "calls_windows": [],
+      "calls_queries_or_sql": [],
+      "tables_read": [],
+      "tables_write": [],
+      "business_rules": [
+        {
+          "id": "BR-USR-DBLCLK-001",
+          "rule": "DoubleClick apunta a BTN_Seleccionar si visible, else BTN_Editar.",
+          "evidence": "TABLE_Catalog_Cont..DoubleClick"
+        }
+      ],
+      "validations": [],
+      "exceptions_or_errors": [],
+      "dependencies": [],
+      "wl_code": "Initialization of TABLE_Catalog_Cont\n\t\t\t\tIF BTN_Seleccionar..Visible=True THEN\n\t\t\t\t\tTABLE_Catalog_Cont..DoubleClick = \"BTN_Seleccionar\"\n\t\t\t\tELSE\n\t\t\t\t\tTABLE_Catalog_Cont..DoubleClick = \"BTN_Editar\"\n\t\t\t\tEND"
+    }
+  ],
+  "unknowns": [],
+  "followups": []
+}

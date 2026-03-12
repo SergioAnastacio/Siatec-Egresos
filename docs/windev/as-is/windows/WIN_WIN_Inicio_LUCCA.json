@@ -1,0 +1,461 @@
+{
+  "step": 1,
+  "artifact_type": "window_or_page",
+  "id": "WIN:WIN_Inicio_LUCCA",
+  "name": "WIN_Inicio_LUCCA",
+  "module": "Shell/Inicio",
+  "output_dir": "docs/as-is/windows/",
+  "output_filename": "WIN_WIN_Inicio_LUCCA.json",
+  "purpose": "Ventana principal (shell) del GRP en escritorio Windows. Inicializa branding (LUCCA vs SIATEC), valida versión, carga componentes embebidos (pendientes/agenda/etc.), gestiona side-menu masivo y navegación a módulos.",
+  "entrypoints": [
+    {
+      "event": "Global declarations / MyWindow",
+      "summary": "Si no hay sesión (gnUSUARIO=0) abre splash (OpenSister) y difiere preparación de menú; si ya hay usuario, ejecuta Prepara_Menu().",
+      "evidence_excerpt": "\t\t\tPROCEDURE MyWindow()\n\t\t\tgnUlBoton is int=0\n\t\t\tgnUltimaPosScroll is int=0\n\t\t\tsVer is string=\"\"\n\t\t\tgsNomVent is string=\"\"\n\t\t\tIF gnUSUARIO=0 THEN\n\t\t\t\tgnVantanaActiva=1\t\n\t\t\t\t//OpenSister(WIN_SplashAdvo)\t\t\n\t\t\t\tOpenSister(WIN_SPLASH_AdvoICONG)\t\t\n\t\t\tELSE\n\t\t\t\tPrepara_Menu()\n\t\t\tEND"
+    },
+    {
+      "event": "End of initialization",
+      "summary": "Determina sistema (LUCCA/ICONG) consultando DatosGrales.NOMSISTEM; configura captions/statusbar; valida versión vs LUCCA417; actualiza DLL/ZIP en disco; aplica LockAppTimeout; carga IW_Pendientes; restaura notas.",
+      "evidence_excerpt": "\t\t\tEvent(MsWheel,\"SCROLL_NoName1\",522)\n\t\t\tsDirIp is string=NetIPAddress()\n\t\t\tsNomWin is string=NetMachineName()\n\t\t\t//HReadSeek(DatosGrales,CODIGO,1,hIdentical)\n\t\t\tBuscaQry2 is Data Source\n\t\t\tIF HExecuteSQLQuery(BuscaQry2, MyConnectionLucca, hQueryWithoutCorrection + hNoBind,\"SELECT NOMSISTEM FROM DatosGrales Where Codigo=1 \") = False THEN\n\t\t\t\tError(\"HFSQL error: \" + HErrorInfo())\n\t\t\tEND\n\t\t\tHReadFirst(BuscaQry2)\n\t\t\tBuscaQry is Data Source\n\t\t\tIF BuscaQry2.NOMSISTEM=\"LUCCA\" OR BuscaQry2.NOMSISTEM=\"\" THEN\n\t\t\t\tgsSistema=\"LUCCA\"\n\t\t\t\tIF In64bitMode()=True THEN\n\t\t\t\t\tgsNombreSistema=\"LUCCA 64 bits Ver.\" + ExeInfo(exeVersion,\"LUCCA.EXE\")\n\t\t\t\t\tIF HExecuteSQLQuery(BuscaQry, MyConnectionLucca, hQueryWithoutCorrection + hNoBind,\"SELECT Codigo, Version FROM LUCCA417 Where Codigo=64 \") = False THEN\n\t\t\t\t\t\tError(\"HFSQL error: \" + HErrorInfo())\n\t\t\t\t\tEND\n\t\t\t\t\tHReadFirst(BuscaQry)\n\t\t\t\t\tLUCCA417.Codigo=BuscaQry.codigo\n\t\t\t\t\tLUCCA417.Version=BuscaQry.Version\n\t\t\t\t\t//\t\tHReadSeek(LUCCA417,Codigo,64,hIdentical)\n\t\t\t\tELSE\n\t\t\t\t\tgsNombreSistema=\"LUCCA 32 bits Ver.\" + ExeInfo(exeVersion,\"LUCCA.EXE\")\n\t\t\t\t\tIF HExecuteSQLQuery(BuscaQry, MyConnectionLucca, hQueryWithoutCorrection + hNoBind,\"SELECT Codigo, Version FROM LUCCA417 Where Codigo=32 \") = False THEN\n\t\t\t\t\t\tError(\"HFSQL error: \" + HErrorInfo())\n\t\t\t\t\tEND\n\t\t\t\t\tHReadFirst(BuscaQry)\n\t\t\t\t\tLUCCA417.Codigo=BuscaQry.codigo\n\t\t\t\t\tLUCCA417.Version=BuscaQry.Version\n\t\t\t//\t\tHReadSeek(LUCCA417,Codigo,32,hIdentical)\n\t\t\t\tEND\n\t\t\t\tSBC_3=\"LUCCA es Marca Registrada ®\"\n\t\t\t\tsVer=ExeInfo(exeVersion,\"LUCCA.EXE\")\n\t\t\tELSE\n\t\t\t\tgsSistema=\"ICONG\"\n\t\t\t\tIF In64bitMode()=True THEN\n\t\t\t\t\tgsNombreSistema=\"SIATEC 64 bits Ver.\" + ExeInfo(exeVersion,\"SIATEC.EXE\")\n\t\t\t\t\tIF HExecuteSQLQuery(BuscaQry, MyConnectionLucca, hQueryWithoutCorrection + hNoBind,\"SELECT Codigo, Version FROM LUCCA417 Where Codigo=64 \") = False THEN\n\t\t\t\t\t\tError(\"HFSQL error: \" + HErrorInfo())\n\t\t\t\t\tEND"
+    }
+  ],
+  "ui": {
+    "controls": {
+      "top_level": [
+        "BTN_Abajo",
+        "BTN_Arriba",
+        "BTN_NoName1",
+        "DASH_Principal",
+        "SBC_1",
+        "SBC_2",
+        "SBC_3",
+        "SBC_4",
+        "SBC_5",
+        "SBC_6",
+        "SBC_7",
+        "SBC_8",
+        "SBC_FechaSistema",
+        "SCROLL_NoName1"
+      ],
+      "side_menu_buttons": [
+        "BTN_AlmArticulos",
+        "BTN_AlmCatMovsAlm",
+        "BTN_AlmConvUnidades",
+        "BTN_AlmMovAlm",
+        "BTN_AlmPrestamosAlm",
+        "BTN_AlmRecep",
+        "BTN_AlmResguardos",
+        "BTN_AlmSolEsp",
+        "BTN_AlmSoli",
+        "BTN_ApoyosACiudadanos",
+        "BTN_ApoyosEmpresas",
+        "BTN_AutBienes",
+        "BTN_AutCheqSuspendido",
+        "BTN_AutCheques",
+        "BTN_AutEstimNomina",
+        "BTN_AutGFPeriodico",
+        "BTN_AutIniGastosFijos",
+        "BTN_AutIniObra",
+        "BTN_AutLiqBienes",
+        "BTN_AutLiqServ",
+        "BTN_AutModPres",
+        "BTN_AutoServs",
+        "BTN_AutRepCajaChica",
+        "BTN_AutRepFondoRev",
+        "BTN_AutReqBien",
+        "BTN_AutReqServ",
+        "BTN_AutVacaciones",
+        "BTN_AvancePVR",
+        "BTN_BanCancleados",
+        "BTN_BanCierrePagaduria",
+        "BTN_BanConciliaBancaria",
+        "BTN_BanCtas",
+        "BTN_BanDesintegraCheques",
+        "BTN_BanEgrEsp",
+        "BTN_BanEmitidos",
+        "BTN_BanEntregados",
+        "BTN_BanGastComprobar",
+        "BTN_BanIngEsp",
+        "BTN_BanIntegracionCheqs",
+        "BTN_BanIntsCred",
+        "BTN_BanPagosXFecha",
+        "BTN_BanPagXEmitir",
+        "BTN_BanProgramacion",
+        "BTN_BanSelForma",
+        "BTN_BanTipoCambio",
+        "BTN_CambioFecha",
+        "BTN_CargarCompras",
+        "BTN_Cat_Beneficiarios",
+        "BTN_CatBitacoraact",
+        "BTN_CatCatalogos",
+        "BTN_CatInterfases",
+        "BTN_CatRepAvanzada",
+        "BTN_CatReportes",
+        "BTN_ClasificadoresPres",
+        "BTN_ComisionAutCom",
+        "BTN_ComisionAutoriza",
+        "BTN_ComisionAutRev",
+        "BTN_ComisionComprobacion",
+        "BTN_ComisionHistorico",
+        "BTN_ComisionRegistro",
+        "BTN_ComisionRevision",
+        "BTN_CompAdjudicaBien",
+        "BTN_CompAdjudicaServ",
+        "BTN_CompbienSuspendido",
+        "BTN_CompCuadFrioBien",
+        "BTN_CompCuadFrioServ",
+        "BTN_CompEmiteOCBien",
+        "BTN_CompEmiteOCServ",
+        "BTN_CompFondoRev",
+        "BTN_CompGF",
+        "BTN_CompLAdq",
+        "BTN_CompMedicinaSubrogada",
+        "BTN_CompProv",
+        "BTN_CompRecepServ",
+        "BTN_CompReqBien",
+        "BTN_CompReqServ",
+        "BTN_CompServSuspendido",
+        "BTN_ConsumoGas",
+        "BTN_Contareas",
+        "BTN_ContArts",
+        "BTN_ContBancos",
+        "BTN_ContCenCost",
+        "BTN_ContCodCheques",
+        "BTN_ContCOG",
+        "BTN_ContComprobarGastos",
+        "BTN_ContComprobarGastos1",
+        "BTN_ContContribuyentes",
+        "BTN_ContFinFunSub",
+        "BTN_ContGF",
+        "BTN_ContImpuestos",
+        "BTN_ContMatEgre",
+        "BTN_ContOrigRecs",
+        "BTN_ContParadigma",
+        "BTN_ContProgramas",
+        "BTN_ContProveedores",
+        "BTN_ContProyectos",
+        "BTN_ContraBienes",
+        "BTN_ContraGF",
+        "BTN_ContraModelo",
+        "BTN_ContraObra",
+        "BTN_ContraServ",
+        "BTN_Contratos",
+        "BTN_ControlProyectos",
+        "BTN_ContServicios",
+        "BTN_ConumiblesPorResguardar",
+        "BTN_DeudaPublicaCatDeuPub",
+        "BTN_DeudaPublicaCatDivisas",
+        "BTN_DoctosElectronicos",
+        "BTN_DoctosRecep",
+        "BTN_EditorGrafico",
+        "BTN_EmiteCompras",
+        "BTN_EstimacionObra",
+        "BTN_EventosCiudadanos",
+        "BTN_ExpedienteElectronico",
+        "BTN_GeneralBloquePant",
+        "BTN_GeneralCambCont",
+        "BTN_GeneralCamUsu",
+        "BTN_GeneralCerrar",
+        "BTN_GeneralConfdashBoard",
+        "BTN_GeneralImpresoras",
+        "BTN_GeneralMenuPref",
+        "BTN_Glosa",
+        "BTN_GlosaServs",
+        "BTN_HojaCalculo",
+        "BTN_IngCalles",
+        "BTN_IngCatastro",
+        "BTN_IngCobros",
+        "BTN_IngColonias",
+        "BTN_IngContribuyentes",
+        "BTN_IngConvenios",
+        "BTN_IngDelegaciones",
+        "BTN_IngdocsComplementa",
+        "BTN_IngFormaPago",
+        "BTN_IngFormatos",
+        "BTN_IngGiros",
+        "BTN_IngImpuestos",
+        "BTN_IngPadron",
+        "BTN_IngPredial",
+        "BTN_IngUnidRecau",
+        "BTN_Lector_PDF",
+        "BTN_LectorXML",
+        "BTN_LicitAdjudica",
+        "BTN_LicitInicio",
+        "BTN_LicitInvita",
+        "BTN_LicitPropEconomicas",
+        "BTN_LicitProTecnicas",
+        "BTN_Macs",
+        "BTN_Macs1",
+        "BTN_MantoActivos",
+        "BTN_MantoBaterias",
+        "BTN_MantoCatServs",
+        "BTN_MantoInsumos",
+        "BTN_MantoLlantas",
+        "BTN_MantoPrograma",
+        "BTN_MantoReparaciones",
+        "BTN_MantoSolicitudes",
+        "BTN_MantotalleresExternos",
+        "BTN_MatConvIngresos",
+        "BTN_MovsFarmacia",
+        "BTN_NomActivarEmp",
+        "BTN_Nomasistencia",
+        "BTN_NomcajaAhorro",
+        "BTN_NomCalcularNomina",
+        "BTN_NomCtrolVaca",
+        "BTN_NomDeclaracion",
+        "BTN_NomDeducciones",
+        "BTN_NomDiasFest",
+        "BTN_NomEmpleados",
+        "BTN_NomEspeciales",
+        "BTN_NomFestividades",
+        "BTN_NomGrupos",
+        "BTN_NomHorMod",
+        "BTN_NomIncapacidades",
+        "BTN_NomIncidencias",
+        "BTN_NomInpArchivos",
+        "BTN_NomLiquidaciones",
+        "BTN_NomParGen",
+        "BTN_NomPercepciones",
+        "BTN_NomPlazas",
+        "BTN_NomPrestamos",
+        "BTN_NomPrestcajAho",
+        "BTN_NomPTU",
+        "BTN_NomReinst",
+        "BTN_Nomretroactivos",
+        "BTN_NomServsMed",
+        "BTN_NomTablaISR",
+        "BTN_NomTablaSubs",
+        "BTN_NomVisualVaca",
+        "BTN_NomZonaEsp",
+        "BTN_ObraAvance",
+        "BTN_ObraAvanceXTrabajador",
+        "BTN_ObraCatalogo",
+        "BTN_ObraConceptos",
+        "BTN_ObraCuadrillas",
+        "BTN_ObraEstimaciones",
+        "BTN_ObraMaquinaria",
+        "BTN_ObraOficios",
+        "BTN_ObraTrabajadores",
+        "BTN_ParamAdmomProy",
+        "BTN_ParamCotrolUsuario",
+        "BTN_Paramsistema",
+        "BTN_Participa_Aporta",
+        "BTN_PlasaAut",
+        "BTN_PresadqBien",
+        "BTN_PresAdqServ",
+        "BTN_PresCreaCatIng",
+        "BTN_PresCreaCtaEgre",
+        "BTN_PresIndica",
+        "BTN_PresModPres",
+        "BTN_PresModPresIng",
+        "BTN_PresPlaneacion",
+        "BTN_PresProgAnualAdq",
+        "BTN_PresReporteador",
+        "BTN_PresTabGral",
+        "BTN_ProcesadorTexto",
+        "BTN_Programas_Sociales",
+        "BTN_ReautLicita",
+        "BTN_RecibeMedica",
+        "BTN_RecibeMedica1",
+        "BTN_RecibeMedica2",
+        "BTN_RecibeMedica3",
+        "BTN_ReporteadorResguardos",
+        "BTN_ResgDepreciaciones",
+        "BTN_ResgDepreciacionInmuebles",
+        "BTN_Resgresguardos",
+        "BTN_Resgtabla",
+        "BTN_SolBienes",
+        "BTN_SolBienes1",
+        "BTN_SolcajaChica",
+        "BTN_SolCheqMan",
+        "BTN_SolModPres",
+        "BTN_SolProgAdqbien",
+        "BTN_SolProgAdqServ",
+        "BTN_SolRevBien",
+        "BTN_SolRevServ",
+        "BTN_SolServ",
+        "BTN_SolVacaciones",
+        "BTN_TrabajoDelegado",
+        "BTN_TransObra",
+        "BTN_TranspActFijos",
+        "BTN_TranspAnalGastos",
+        "BTN_TranspFormatos",
+        "BTN_transpGF",
+        "BTN_TranspPresup",
+        "BTN_TransProv",
+        "BTN_TranspSueldos",
+        "BTN_TranspViaticos",
+        "BTN_Version",
+        "BTN_VisualizadorProgSoc"
+      ],
+      "notes": "Lista tomada del diseñador (archivo WinDev exportado). No se incluyeron eventos individuales de cada botón por falta de código de Click/Select."
+    },
+    "status_bar_controls": [
+      "SBC_1",
+      "SBC_2",
+      "SBC_3",
+      "SBC_4",
+      "SBC_FechaSistema",
+      "SBC_5",
+      "SBC_6",
+      "SBC_7",
+      "SBC_8"
+    ],
+    "scrolling": {
+      "scroll_control": "SCROLL_NoName1",
+      "logic": "Visible si SIDE_Menu..Height > WIN_Inicio_LUCCA..Height-66; ajusta MaxValue/Scroll/ScrollValue."
+    }
+  },
+  "local_procedures_declared": [
+    "Actualiza_Pendientes",
+    "Cambia_Letrero_Fecha",
+    "MsWheel",
+    "Prepara_Menu"
+  ],
+  "local_variables_declared": [
+    "gnUlBoton",
+    "gnUltimaPosScroll",
+    "gsEntidad",
+    "gsNomVent",
+    "sVer"
+  ],
+  "navigation": {
+    "opens_windows": [
+      {
+        "window": "WIN_SPLASH_AdvoICONG",
+        "when": "gnUSUARIO=0 (MyWindow)",
+        "mode": "OpenSister"
+      },
+      {
+        "window": "WIN_RegistroUsuarioLUCCA",
+        "when": "gnUSUARIO=0 (End of initialization)",
+        "mode": "Open"
+      },
+      {
+        "window": "WIN_Ventana_Actualización_Version",
+        "when": "LUCCA417.Version <> ExeVersion",
+        "mode": "Open then Close self"
+      },
+      {
+        "window": "WIN_Novedades_Actualización",
+        "when": "gnVerionNueva=1",
+        "mode": "Open"
+      },
+      {
+        "window": "(embedded) IW_Pendientes",
+        "when": "End init",
+        "mode": "calls IW_Pendientes.Carga_Tabla()"
+      }
+    ],
+    "closes_self_conditions": [
+      {
+        "condition": "gnUSUARIO=0 (after opening WIN_RegistroUsuarioLUCCA)",
+        "evidence": "IF gnUSUARIO=0 THEN Close()"
+      }
+    ]
+  },
+  "data_access": {
+    "tables_read": [
+      "DatosGrales",
+      "LUCCA417",
+      "Usuarios"
+    ],
+    "tables_written": [],
+    "embedded_sql": [
+      {
+        "crud": "read",
+        "table": "DatosGrales",
+        "sql_summary": "SELECT NOMSISTEM FROM DatosGrales WHERE Codigo=1"
+      },
+      {
+        "crud": "read",
+        "table": "LUCCA417",
+        "sql_summary": "SELECT Codigo, Version FROM LUCCA417 WHERE Codigo in (32,64)"
+      },
+      {
+        "crud": "read",
+        "table": "(via HReadSeek) DatosGrales",
+        "sql_summary": "HReadSeek(DatosGrales,CODIGO,1)"
+      },
+      {
+        "crud": "read",
+        "table": "Usuarios",
+        "sql_summary": "HReadSeek(Usuarios,CODIGO,gnUSUARIO) (solo si TIEMPOINACTIVIDADBLOQUEO>0)"
+      }
+    ],
+    "unknowns": [
+      "Tablas usadas por IW_Pendientes.Carga_Tabla() (no incluido).",
+      "Navegación/acciones por cada botón del SIDE_Menu (no incluido)."
+    ]
+  },
+  "filesystem_and_runtime": {
+    "notes_persistence": [
+      {
+        "file": "<exeDir>\\LUCCAI.wdnote",
+        "load_on_init": true,
+        "save_on_close": true
+      }
+    ],
+    "version_artifacts": [
+      {
+        "file": "wd270action64.DLL",
+        "dir": "fCurrentDir",
+        "behavior": "si no existe, extrae ZIPs desde LUCCA417.DOCUMENTO"
+      },
+      {
+        "files_created": [
+          "wd240zip64.ZIP",
+          "wd270web64.ZIP",
+          "wd240zip32.ZIP",
+          "wd270web32.ZIP"
+        ],
+        "source": "LUCCA417.DOCUMENTO"
+      }
+    ],
+    "zip_ops": [
+      "zipOpen",
+      "zipExtractAll"
+    ],
+    "ui_ops": [
+      "ToastDisplay",
+      "HourGlass(True/False)",
+      "Event(MsWheel,...)"
+    ]
+  },
+  "security_and_locking": {
+    "app_lock": {
+      "condition": "DatosGrales.TIEMPOINACTIVIDADBLOQUEO>0",
+      "actions": [
+        "LockAppTimeout(TIEMPOINACTIVIDADBLOQUEO)",
+        "LockAppPassword(gsContraseñaAdva)"
+      ],
+      "notes": "Password proviene de variable global; no se incluye su origen en este paquete."
+    }
+  },
+  "events": {
+    "close": {
+      "summary": "Guarda notas .wdnote",
+      "evidence_excerpt": "\t\t\tNoteSaveAll(fExeDir() + \"\\LUCCAI.wdnote\")"
+    },
+    "resize": {
+      "summary": "Recalcula lógica de scrollbar del SIDE_Menu",
+      "evidence_excerpt": "\t\t\tIF SIDE_Menu..Height>WIN_Inicio_LUCCA..Height-66 THEN\n\t\t\t\tSCROLL_NoName1..Visible=True\n\t\t\t\tSCROLL_NoName1..Height=WIN_Inicio_LUCCA..Height-66\n\t\t\t\tSCROLL_NoName1..MaxValue=SIDE_Menu..Height-(WIN_Inicio_LUCCA..Height-66)\n\t\t\t\tSCROLL_NoName1..Scroll=SCROLL_NoName1..MaxValue/10\n\t\t\t\tSCROLL_NoName1..ScrollValue=(SIDE_Menu..Height-(WIN_Inicio_LUCCA..Height-66))*((WIN_Inicio_LUCCA..Height-66)/SIDE_Menu..Height)///((WIN_Inicio_LUCCA..Height-66)/SIDE_Menu..Height)*100\t\n\t\t\tELSE\n\t\t\t\tSIDE_Menu..Y=0\n\t\t\t\tSCROLL_NoName1..Visible=False\n\t\t\tEND\nUI (CONTROLES)\n\t\tControls\n\t\t\tBTN_Abajo\n\t\t\tBTN_Arriba\n\t\t\tBTN_NoName1\n\t\t\tDASH_Principal\n\t\t\tSBC_1\n\t\t\tSBC_2\n\t\t\tSBC_3\n\t\t\tSBC_4"
+    }
+  },
+  "unknowns": [
+    {
+      "topic": "Código de Prepara_Menu(), Actualiza_Pendientes(), Cambia_Letrero_Fecha(), MsWheel()",
+      "why": "No incluido en archivo",
+      "how_to_confirm": "Pegar código de estos procedimientos (si están en ventana o en colección global)."
+    },
+    {
+      "topic": "Eventos Click/Select para BTN_* del SIDE_Menu",
+      "why": "Solo se entregó inventario de controles, no eventos",
+      "how_to_confirm": "Exportar y pegar código de eventos para los botones principales (por módulo/proceso)."
+    }
+  ],
+  "followups": [
+    "Pegar código de Prepara_Menu() y, al menos, eventos de BTN_SolBienes y BTN_SolServ (navegación a Solicitudes).",
+    "Compartir el archivo de paleta/branding para generar docs/architecture/branding.json (no fue incluido en los uploads visibles)."
+  ]
+}

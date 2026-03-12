@@ -1,0 +1,19 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Edita_Usuarios:Verifica_Menu_Nomina",
+  "name": "Verifica_Menu_Nomina",
+  "scope": "window_local",
+  "owner_window": "WIN_Edita_Usuarios",
+  "signature": "PROCEDURE Verifica_Menu_Nomina()",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Edita_Usuarios_Verifica_Menu_Nomina.json",
+  "tables_read": [],
+  "tables_write": [],
+  "relations_found": [],
+  "metrics": {
+    "lines": 30,
+    "sql_fragments": 0
+  },
+  "wl_code": "gsResPath=TreeFind(TREE_Example, 186, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=-1 THEN\nTREE_Example[gsResPath]..Checked=0\nEND\nIF TREE_Example[gsResPath]..Checked=0 THEN\nFOR i=187 TO 215\ngsResPath=TreeFind(TREE_Example, i, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\nEND\nFOR i=303 TO 306\ngsResPath=TreeFind(TREE_Example, i, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\nEND\nELSE\nFOR i=187 TO 215\ngsResPath=TreeFind(TREE_Example, i, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\nEND\nFOR i=303 TO 306\ngsResPath=TreeFind(TREE_Example, i, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\nEND\nEND\nLocal procedure Verifica_Menu_Obra\n\n\nPart 1 › WINDEV window › WIN_Edita_Usuarios › Procedures\n3/9/2026\n348\nSIATEC1_IA"
+}

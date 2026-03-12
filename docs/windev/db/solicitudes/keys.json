@@ -1,0 +1,68 @@
+﻿{
+  "keys": [
+    {
+      "schema_name": "dbo",
+      "table_name": "Areax",
+      "constraint_name": "PK__Areas_2019",
+      "type_desc": "PRIMARY_KEY_CONSTRAINT",
+      "key_ordinal": 1,
+      "column_name": "CODIGO"
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "AtencionServicios",
+      "constraint_name": "PK__Atencion__CC87E1275A5CB338",
+      "type_desc": "PRIMARY_KEY_CONSTRAINT",
+      "key_ordinal": 1,
+      "column_name": "CODIGO"
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "ConfInter",
+      "constraint_name": "PK__ConfInte__CC87E12714397164",
+      "type_desc": "PRIMARY_KEY_CONSTRAINT",
+      "key_ordinal": 1,
+      "column_name": "CODIGO"
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "DatosGrales",
+      "constraint_name": "PK__DatosGra__CC87E12715261146",
+      "type_desc": "PRIMARY_KEY_CONSTRAINT",
+      "key_ordinal": 1,
+      "column_name": "CODIGO"
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "LUCCA429",
+      "constraint_name": "PK_LUCCA429",
+      "type_desc": "PRIMARY_KEY_CONSTRAINT",
+      "key_ordinal": 1,
+      "column_name": "Codigo"
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "LUCCA430",
+      "constraint_name": "PK_LUCCA430",
+      "type_desc": "PRIMARY_KEY_CONSTRAINT",
+      "key_ordinal": 1,
+      "column_name": "Codigo"
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "Solicitudes",
+      "constraint_name": "PK__Solicitu__CC87E1274B1A6FA8",
+      "type_desc": "PRIMARY_KEY_CONSTRAINT",
+      "key_ordinal": 1,
+      "column_name": "CODIGO"
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "Usuarios",
+      "constraint_name": "PK__Usuarios__CC87E12718C3FA05",
+      "type_desc": "PRIMARY_KEY_CONSTRAINT",
+      "key_ordinal": 1,
+      "column_name": "CODIGO"
+    }
+  ]
+}

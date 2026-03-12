@@ -1,0 +1,640 @@
+{
+  "step": 1,
+  "artifact_type": "window_or_page",
+  "id": "WIN:WIN_Browse_Solicitudes",
+  "name": "WIN_Browse_Solicitudes",
+  "module": "Solicitudes",
+  "output_dir": "docs/as-is/windows/",
+  "output_filename": "WIN_WIN_Browse_Solicitudes.json",
+  "purpose": "Catálogo de solicitudes (Bienes/Servicios) para el usuario actual. Permite crear (normal o préstamo), editar con bloqueo de concurrencia, cancelar (si no está procesada) y acceder a recepción de bienes. Carga el listado con SQL dinámico y persiste notas de ventana (.wdnote).",
+  "ui": {
+    "controls": [
+      {
+        "name": "TABLE_Catalogo_Solicitudes",
+        "type": "Table",
+        "purpose": "Listado del catálogo de solicitudes del usuario. Soporta ordenamiento y búsqueda en todas las columnas.",
+        "events": ["populated_by_code"],
+        "data_source": "PROC:Carga_Tabla",
+        "columns": [
+          { "name": "Codigo", "sortable": true, "searchable": true, "source": "BuscaQry.Codigo" },
+          { "name": "Fecha", "sortable": true, "searchable": true, "source": "IntegerToDate(BuscaQry.Fecha + 362)" },
+          { "name": "Area", "sortable": true, "searchable": true, "source": "NoSpace(BuscaQry.DESCRIPCION)" },
+          { "name": "Solicitante", "sortable": true, "searchable": true, "source": "BuscaQry.Nombre" },
+          { "name": "Estado", "sortable": true, "searchable": true, "source": "BuscaQry.Estado" }
+        ],
+        "unknown": false
+      },
+      {
+        "name": "BTN_Agregar",
+        "type": "Button",
+        "purpose": "Crear nueva solicitud (Normal). Inserta registro base y abre ventana de edición.",
+        "events": ["click"],
+        "calls": ["PROC:Carga_Tabla", "WIN:WIN_UpdateSolicitudes"],
+        "unknown": false
+      },
+      {
+        "name": "BTN_Editar",
+        "type": "Button",
+        "purpose": "Editar solicitud seleccionada si está editable y no está bloqueada por otro usuario.",
+        "events": ["click"],
+        "calls": ["PROC:Carga_Tabla", "WIN:WIN_UpdateSolicitudes"],
+        "unknown": false
+      },
+      {
+        "name": "BTN_Cancelar",
+        "type": "Button",
+        "purpose": "Cancelar permanentemente la solicitud seleccionada si está editable y no está bloqueada.",
+        "events": ["click"],
+        "calls": [],
+        "unknown": false
+      },
+      {
+        "name": "BTN_Prestamos",
+        "type": "Button",
+        "purpose": "Crear nueva solicitud tipo Préstamo (solo Bienes) y abrir edición.",
+        "events": ["click"],
+        "calls": ["PROC:Carga_Tabla", "WIN:WIN_UpdateSolicitudes"],
+        "unknown": false
+      },
+      {
+        "name": "BTN_RecBienes",
+        "type": "Button",
+        "purpose": "Abrir catálogo/ventana de recepción de compras por usuario.",
+        "events": ["click"],
+        "calls": ["WIN:WIN_Browse_RecepCompUsu"],
+        "unknown": false
+      },
+      {
+        "name": "BTN_Prestamos1",
+        "type": "Button",
+        "purpose": "Abrir relación Compras Bien/Serv si la configuración lo permite.",
+        "events": ["click"],
+        "calls": ["WIN:WIN_Ventana_Relación_ComprasBienServ"],
+        "unknown": false
+      },
+      {
+        "name": "BTN_Postit",
+        "type": "Button",
+        "purpose": "Crear nota (post-it) y persistir consecutivo por MAC.",
+        "events": ["click"],
+        "calls": [],
+        "unknown": false
+      },
+      {
+        "name": "BTN_Cerrar",
+        "type": "Button",
+        "purpose": "Cerrar ventana.",
+        "events": ["click"],
+        "calls": ["WIN_CLOSE"],
+        "unknown": false
+      },
+      {
+        "name": "BTN_Ayuda",
+        "type": "Button",
+        "purpose": "Abrir ayuda CHM.",
+        "events": ["click"],
+        "calls": ["WHelp"],
+        "unknown": false
+      }
+    ],
+    "lifecycle_events": [
+      "End of initialization (restaura notas/permite u oculta botones por permisos/contexto y carga tabla)",
+      "Close window (NoteSaveAll)",
+      "Request for refreshing the display (sin código explícito en el objeto)"
+    ],
+    "entrypoints": [
+      { "source": "WIN_InicioRibon_LUCCA.MENU_Solicituddes.OPT_SolBien", "trigger": "select", "target": "WIN:WIN_Browse_Solicitudes" },
+      { "source": "WIN_InicioRibon_LUCCA.MENU_Solicituddes.OPT_Servicios", "trigger": "select", "target": "WIN:WIN_Browse_Solicitudes" },
+      { "source": "WIN_InicioMenu_LUCCA.MENU_Solicituddes.OPT_SolBien", "trigger": "select", "target": "WIN:WIN_Browse_Solicitudes" },
+      { "source": "WIN_InicioMenu_LUCCA.MENU_Solicituddes.OPT_Servicios", "trigger": "select", "target": "WIN:WIN_Browse_Solicitudes" },
+      { "source": "WIN_Inicio_Siatec.SIDE_Menu.BTN_SolBienes", "trigger": "click", "target": "WIN:WIN_Browse_Solicitudes" },
+      { "source": "WIN_Inicio_Siatec.SIDE_Menu.BTN_SolServ", "trigger": "click", "target": "WIN:WIN_Browse_Solicitudes" },
+      { "source": "WIN_Inicio_LUCCA.SIDE_Menu.BTN_SolBienes", "trigger": "click", "target": "WIN:WIN_Browse_Solicitudes" },
+      { "source": "WIN_Inicio_LUCCA.SIDE_Menu.BTN_SolServ", "trigger": "click", "target": "WIN:WIN_Browse_Solicitudes" }
+    ]
+  },
+  "entrypoints": [
+    {
+      "event": "End of initialization of WIN_Browse_Solicitudes",
+      "when": "init",
+      "summary": "Selecciona nombre de ventana por instancia (1/2) y restaura notas .wdnote; aplica permisos (garrDerNvos + gnSeActivoNuevoMenu) para mostrar/ocultar acciones; oculta acciones especiales fuera de contexto; llama Carga_Tabla()."
+    }
+  ],
+  "main_events": [
+    {
+      "event": "End of initialization of WIN_Browse_Solicitudes",
+      "calls_procedures": ["PROC:Carga_Tabla"],
+      "calls_queries_or_sql": [],
+      "tables_read": [],
+      "tables_write": [],
+      "validations": [
+        {
+          "rule": "Ocultar BTN_Prestamos si garrDerNvos[3]=0 y gnSeActivoNuevoMenu=1.",
+          "severity": "medium",
+          "where": "init",
+          "evidence": "IF garrDerNvos[3]=0 AND gnSeActivoNuevoMenu=1 THEN BTN_Prestamos..Visible=False"
+        },
+        {
+          "rule": "En contexto gnNVentanaEnUso=1 o 3, permisos 4/5/6 controlan Agregar/Editar/Cancelar (solo si gnSeActivoNuevoMenu=1).",
+          "severity": "medium",
+          "where": "init",
+          "evidence": "IF gnNVentanaEnUso=1 OR gnNVentanaEnUso=3 THEN ... garrDerNvos[4],[5],[6]"
+        },
+        {
+          "rule": "En contexto gnNVentanaEnUso=2, permisos 13/14/15 controlan Agregar/Editar/Cancelar (solo si gnSeActivoNuevoMenu=1).",
+          "severity": "medium",
+          "where": "init",
+          "evidence": "IF gnNVentanaEnUso=2 THEN ... garrDerNvos[13],[14],[15]"
+        },
+        {
+          "rule": "Si gnNVentanaEnUso<>1, ocultar BTN_Prestamos y BTN_RecBienes.",
+          "severity": "medium",
+          "where": "init",
+          "evidence": "IF gnNVentanaEnUso<>1 THEN BTN_Prestamos..Visible=False  BTN_RecBienes..Visible=False"
+        }
+      ],
+      "business_rules": [
+        {
+          "id": "BR-SOL-001",
+          "rule": "La disponibilidad de acciones depende de permisos garrDerNvos[] cuando gnSeActivoNuevoMenu=1 y del contexto gnNVentanaEnUso (1/2/3).",
+          "where": "WIN:WIN_Browse_Solicitudes init",
+          "evidence": "IF gnNVentanaEnUso=1 OR gnNVentanaEnUso=3 ... ELSE IF gnNVentanaEnUso=2 ..."
+        },
+        {
+          "id": "BR-SOL-002",
+          "rule": "Las notas (post-its) de la ventana se restauran desde un archivo .wdnote por instancia y se eliminan tras cargarlas.",
+          "where": "WIN:WIN_Browse_Solicitudes init",
+          "evidence": "NoteLoadAll(...MySelf..Name + \"1.wdnote\") ... fDelete(...\"1.wdnote\")"
+        }
+      ],
+      "exceptions_or_errors": [],
+      "dependencies": [
+        {
+          "type": "filesystem",
+          "name": "wdnote en fExeDir()",
+          "reason": "Persistencia/restauración de notas",
+          "evidence": "NoteLoadAll(fExeDir() + \"\\\" + MySelf..Name + \"1.wdnote\")"
+        }
+      ]
+    },
+    {
+      "event": "Click BTN_Agregar",
+      "calls_procedures": ["PROC:Carga_Tabla"],
+      "calls_queries_or_sql": [
+        {
+          "kind": "sql",
+          "name": "INSERT Solicitudes (OUTPUT Inserted.Codigo) con cálculo Max(Codigo)+1",
+          "crud": "write",
+          "evidence": "Insert Into Solicitudes OUTPUT Inserted.Codigo Select ((SELECT IsNull(Max(Codigo),0) ...)+1) ..."
+        },
+        {
+          "kind": "sql",
+          "name": "INSERT AtencionServicios (OUTPUT Inserted.Codigo) con cálculo Max(Codigo)+1",
+          "crud": "write",
+          "evidence": "Insert Into AtencionServicios OUTPUT Inserted.Codigo Select ((SELECT IsNull(Max(Codigo),0) ...)+1) ..."
+        },
+        {
+          "kind": "sql",
+          "name": "INSERT LUCCA429 (bloqueo bienes/prestamo)",
+          "crud": "write",
+          "evidence": "Insert into LUCCA429 Select Codigo=..., Usuario=..., Mac=..., IP=..., Nom=..., 'fecha'"
+        },
+        {
+          "kind": "sql",
+          "name": "INSERT LUCCA430 (bloqueo servicios)",
+          "crud": "write",
+          "evidence": "Insert into LUCCA430 Select Codigo=..., Usuario=..., Mac=..., IP=..., Nom=..."
+        }
+      ],
+      "tables_read": ["Usuarios", "Areas"],
+      "tables_write": ["Solicitudes", "AtencionServicios", "LUCCA429", "LUCCA430"],
+      "validations": [
+        {
+          "rule": "Determinar almacén (Usuarios.ALMACENFAVORITO); si no existe usar 1 (solo Bienes).",
+          "severity": "low",
+          "where": "BTN_Agregar click",
+          "evidence": "IF Usuarios.ALMACENFAVORITO>0 THEN nAlmacen=Usuarios.ALMACENFAVORITO ELSE nAlmacen=1"
+        }
+      ],
+      "business_rules": [
+        {
+          "id": "BR-SOL-010",
+          "rule": "Crear registro base de Solicitudes/AtencionServicios asignando Codigo = Max(Codigo)+1 y fecha = DateToInteger(gdFechaGral)-362, estado inicial 'Normal', revisión 0.",
+          "where": "BTN_Agregar click",
+          "evidence": "((SELECT IsNull(Max(Codigo),0) ...)+1) As Codigo, '" + (DateToInteger(gdFechaGral)-362) + "', ... , 'Normal', 0 ..."
+        },
+        {
+          "id": "BR-SOL-011",
+          "rule": "Al crear solicitud se registra un bloqueo por usuario/máquina en LUCCA429 (bienes) o LUCCA430 (servicios) incluyendo Mac/IP/Nom y fecha (solo LUCCA429 incluye timestamp).",
+          "where": "BTN_Agregar click",
+          "evidence": "Insert into LUCCA429 ... Mac='" + gsMacAdd + "', IP='" + sDirIp + "', Nom='" + sNomWin + "', '" + sFechaSQL + "'"
+        }
+      ],
+      "exceptions_or_errors": [
+        {
+          "type": "db_error",
+          "condition": "Falla de HExecuteSQLQuery al insertar en tablas",
+          "handling": "Mostrar Error(\"HFSQL error: \" + HErrorInfo())",
+          "evidence": "IF HExecuteSQLQuery(...) = False THEN Error(\"HFSQL error: \" + HErrorInfo())"
+        }
+      ],
+      "dependencies": [
+        {
+          "type": "network",
+          "name": "NetIPAddress / NetMachineName",
+          "reason": "Registrar IP y nombre de máquina para bloqueo",
+          "evidence": "sDirIp is string=NetIPAddress() / sNomWin is string=NetMachineName()"
+        },
+        {
+          "type": "window",
+          "name": "WIN_UpdateSolicitudes",
+          "reason": "Editar/capturar datos de la solicitud recién creada",
+          "evidence": "Open(WIN_UpdateSolicitudes)"
+        }
+      ]
+    },
+    {
+      "event": "Click BTN_Editar",
+      "calls_procedures": ["PROC:Carga_Tabla"],
+      "calls_queries_or_sql": [
+        {
+          "kind": "sql",
+          "name": "SELECT bloqueo LUCCA429 por Codigo",
+          "crud": "read",
+          "evidence": "Select Codigo, Usuario, Mac, IP, Nom from LUCCA429 Where Codigo=..."
+        },
+        {
+          "kind": "sql",
+          "name": "INSERT bloqueo LUCCA429 con timestamp",
+          "crud": "write",
+          "evidence": "Insert into LUCCA429 Select Codigo=..., Usuario=..., Mac=..., IP=..., Nom=..., 'timestamp'"
+        },
+        {
+          "kind": "sql",
+          "name": "SELECT bloqueo LUCCA430 por Codigo",
+          "crud": "read",
+          "evidence": "Select Codigo, Usuario, Mac, Ip, Nom from LUCCA430 Where Codigo=..."
+        },
+        {
+          "kind": "sql",
+          "name": "INSERT bloqueo LUCCA430",
+          "crud": "write",
+          "evidence": "Insert into LUCCA430 Select Codigo=..., Usuario=..., Mac=..., IP=..., Nom=..."
+        }
+      ],
+      "tables_read": ["Solicitudes", "AtencionServicios", "Usuarios", "LUCCA429", "LUCCA430"],
+      "tables_write": ["LUCCA429", "LUCCA430"],
+      "validations": [
+        {
+          "rule": "Solo se permite editar si el Estado de la fila (COL_Estado) está vacío; de lo contrario se bloquea la edición.",
+          "severity": "high",
+          "where": "BTN_Editar click",
+          "evidence": "IF NoSpace(COL_Estado)=\"\" THEN ... ELSE Info(\"La Solicitud ... no se puede editar\")"
+        },
+        {
+          "rule": "Permiso para editar depende de garrDerNvos[5] (bienes) o garrDerNvos[14] (servicios) cuando gnSeActivoNuevoMenu=1; si gnSeActivoNuevoMenu=0 se permite.",
+          "severity": "high",
+          "where": "BTN_Editar click",
+          "evidence": "IF ((garrDerNvos[5]=1 OR garrDerNvos[14]) AND gnSeActivoNuevoMenu=1) OR gnSeActivoNuevoMenu=0 THEN"
+        },
+        {
+          "rule": "Validar que COL_Codigo>0.",
+          "severity": "medium",
+          "where": "BTN_Editar click",
+          "evidence": "IF COL_Codigo>0 THEN"
+        }
+      ],
+      "business_rules": [
+        {
+          "id": "BR-SOL-020",
+          "rule": "Editar requiere bloqueo: si no existe registro en LUCCA429/LUCCA430 para el Código, se inserta bloqueo con usuario/máquina; si existe, se informa quién lo bloqueó.",
+          "where": "BTN_Editar click",
+          "evidence": "IF HNbRec(dsBloqueo)=0 THEN ... INSERT ... ELSE Info(\"Registro Bloqueado...\")"
+        },
+        {
+          "id": "BR-SOL-021",
+          "rule": "En Bienes: si Solicitudes.ESTADO está vacío se edita en modo gnNVentanaEnUso=1; si ESTADO='Prestamo' se edita en modo gnNVentanaEnUso=3.",
+          "where": "BTN_Editar click",
+          "evidence": "IF NoSpace(Solicitudes.ESTADO)=\"\" THEN ... gnNVentanaEnUso=1 ... ELSE IF Solicitudes.ESTADO=\"Prestamo\" THEN ... gnNVentanaEnUso=3"
+        }
+      ],
+      "exceptions_or_errors": [
+        {
+          "type": "db_error",
+          "condition": "Falla al consultar/insertar bloqueos",
+          "handling": "Error(\"HFSQL error: \" + HErrorInfo())",
+          "evidence": "IF HExecuteSQLQuery(dsBloqueo, ...) = False THEN Error(\"HFSQL error: \" + HErrorInfo())"
+        }
+      ],
+      "dependencies": [
+        {
+          "type": "network",
+          "name": "NetIPAddress / NetMachineName",
+          "reason": "Registrar IP y nombre de máquina para bloqueo",
+          "evidence": "sDirIp is string=NetIPAddress() / sNomWin is string=NetMachineName()"
+        },
+        {
+          "type": "window",
+          "name": "WIN_UpdateSolicitudes",
+          "reason": "Abrir edición de la solicitud seleccionada",
+          "evidence": "Open(WIN_UpdateSolicitudes)"
+        }
+      ]
+    },
+    {
+      "event": "Click BTN_Cancelar",
+      "calls_procedures": [],
+      "calls_queries_or_sql": [
+        {
+          "kind": "sql",
+          "name": "SELECT bloqueo LUCCA429 o LUCCA430 por Codigo",
+          "crud": "read",
+          "evidence": "Select Codigo, Usuario, Mac, Ip, Nom from LUCCA429 ... / LUCCA430 ..."
+        }
+      ],
+      "tables_read": ["Solicitudes", "AtencionServicios", "Usuarios", "LUCCA429", "LUCCA430"],
+      "tables_write": ["Solicitudes", "AtencionServicios"],
+      "validations": [
+        {
+          "rule": "Debe existir registro (HFound=True) antes de cancelar.",
+          "severity": "medium",
+          "where": "BTN_Cancelar click",
+          "evidence": "IF HFound(Solicitudes)=True THEN / IF HFound(AtencionServicios)=True THEN"
+        },
+        {
+          "rule": "No debe estar bloqueado por otro usuario (HNbRec(dsBloqueo)=0) para poder cancelar.",
+          "severity": "high",
+          "where": "BTN_Cancelar click",
+          "evidence": "IF HNbRec(dsBloqueo)=0 THEN"
+        },
+        {
+          "rule": "Confirmación del usuario (YesNo) antes de cancelar permanentemente.",
+          "severity": "high",
+          "where": "BTN_Cancelar click",
+          "evidence": "IF YesNo(1,\"¿Estas seguro de Cancelar permanentemente...\")=True THEN"
+        },
+        {
+          "rule": "Solo cancelar si ESTADO está vacío o 'Prestamo' (Bienes) / vacío (Servicios). Si ya fue procesada, no se puede.",
+          "severity": "high",
+          "where": "BTN_Cancelar click",
+          "evidence": "IF NoSpace(Solicitudes.ESTADO)=\"\" OR NoSpace(Solicitudes.ESTADO)=\"Prestamo\" THEN ... ELSE Info(\"ya fue procesada\")"
+        }
+      ],
+      "business_rules": [
+        {
+          "id": "BR-SOL-030",
+          "rule": "Cancelar marca el ESTADO='Cancelada' y actualiza el archivo, además elimina la fila seleccionada de la tabla UI.",
+          "where": "BTN_Cancelar click",
+          "evidence": "Solicitudes.ESTADO=\"Cancelada\"; HModify(Solicitudes); TableDelete(TABLE_Catalogo_Solicitudes,TableSelect(...))"
+        },
+        {
+          "id": "BR-SOL-031",
+          "rule": "No se permite cancelar solicitudes ya procesadas (ESTADO no vacío y distinto a Prestamo en Bienes; no vacío en Servicios).",
+          "where": "BTN_Cancelar click",
+          "evidence": "Info(\"Esta Solicitud ya fue procesada, no es posible Cancelarla.\")"
+        }
+      ],
+      "exceptions_or_errors": [
+        {
+          "type": "db_error",
+          "condition": "Falla en consulta de bloqueo",
+          "handling": "Error(\"HFSQL error: \" + HErrorInfo())",
+          "evidence": "IF HExecuteSQLQuery(dsBloqueo, ...) = False THEN Error(\"HFSQL error: \" + HErrorInfo())"
+        }
+      ],
+      "dependencies": [
+        {
+          "type": "ui",
+          "name": "YesNo/Info dialogs",
+          "reason": "Confirmación y mensajes al usuario",
+          "evidence": "YesNo(...), Info(...)"
+        }
+      ]
+    },
+    {
+      "event": "Click BTN_RecBienes",
+      "calls_procedures": [],
+      "calls_queries_or_sql": [],
+      "tables_read": [],
+      "tables_write": [],
+      "validations": [],
+      "business_rules": [
+        {
+          "id": "BR-SOL-040",
+          "rule": "Abrir ventana de recepción de compras por usuario.",
+          "where": "BTN_RecBienes click",
+          "evidence": "Open(WIN_Browse_RecepCompUsu)"
+        }
+      ],
+      "exceptions_or_errors": [],
+      "dependencies": [
+        {
+          "type": "window",
+          "name": "WIN_Browse_RecepCompUsu",
+          "reason": "Navegación a recepción",
+          "evidence": "Open(WIN_Browse_RecepCompUsu)"
+        }
+      ]
+    },
+    {
+      "event": "Click BTN_Prestamos",
+      "calls_procedures": ["PROC:Carga_Tabla"],
+      "calls_queries_or_sql": [
+        {
+          "kind": "sql",
+          "name": "INSERT Solicitudes tipo Prestamo (OUTPUT Inserted.Codigo) con cálculo Max(Codigo)+1",
+          "crud": "write",
+          "evidence": "Insert Into Solicitudes ... '', 'Prestamo', ... OUTPUT Inserted.Codigo ..."
+        },
+        {
+          "kind": "sql",
+          "name": "INSERT LUCCA429 (bloqueo préstamo)",
+          "crud": "write",
+          "evidence": "Insert into LUCCA429 Select Codigo=..., Usuario=..., Mac=..., IP=..., Nom=..., 'timestamp'"
+        }
+      ],
+      "tables_read": ["Usuarios", "Areas"],
+      "tables_write": ["Solicitudes", "LUCCA429"],
+      "validations": [
+        {
+          "rule": "Solo aplica para gnNVentanaEnUso=1 (Bienes).",
+          "severity": "high",
+          "where": "BTN_Prestamos click",
+          "evidence": "IF gnNVentanaEnUso=1 THEN ... ELSE END"
+        }
+      ],
+      "business_rules": [
+        {
+          "id": "BR-SOL-050",
+          "rule": "Crear solicitud de Bienes con ESTADO='Prestamo' en el insert y abrir edición en modo gnNVentanaEnUso=3.",
+          "where": "BTN_Prestamos click",
+          "evidence": "..., '', 'Prestamo', ... gnNVentanaEnUso=3 ... Open(WIN_UpdateSolicitudes)"
+        }
+      ],
+      "exceptions_or_errors": [
+        {
+          "type": "db_error",
+          "condition": "Falla de inserción en Solicitudes o LUCCA429",
+          "handling": "Error(\"HFSQL error: \" + HErrorInfo())",
+          "evidence": "IF HExecuteSQLQuery(...) = False THEN Error(\"HFSQL error: \" + HErrorInfo())"
+        }
+      ],
+      "dependencies": [
+        {
+          "type": "network",
+          "name": "NetIPAddress / NetMachineName",
+          "reason": "Registrar IP y nombre de máquina para bloqueo",
+          "evidence": "sDirIp is string=NetIPAddress() / sNomWin is string=NetMachineName()"
+        },
+        {
+          "type": "window",
+          "name": "WIN_UpdateSolicitudes",
+          "reason": "Editar/capturar datos del préstamo",
+          "evidence": "Open(WIN_UpdateSolicitudes)"
+        }
+      ]
+    },
+    {
+      "event": "Click BTN_Prestamos1",
+      "calls_procedures": [],
+      "calls_queries_or_sql": [],
+      "tables_read": ["DatosGrales"],
+      "tables_write": [],
+      "validations": [
+        {
+          "rule": "Abrir relación ComprasBienServ solo si DatosGrales.PERMITIRCAPTURAPROYECTOADQUISICIONES=1.",
+          "severity": "medium",
+          "where": "BTN_Prestamos1 click",
+          "evidence": "IF DatosGrales.PERMITIRCAPTURAPROYECTOADQUISICIONES=1 THEN Open(WIN_Ventana_Relación_ComprasBienServ)"
+        }
+      ],
+      "business_rules": [
+        {
+          "id": "BR-SOL-060",
+          "rule": "La captura de proyecto/adquisiciones se habilita por configuración en DatosGrales.",
+          "where": "BTN_Prestamos1 click",
+          "evidence": "HReadSeek(DatosGrales,CODIGO,1,...); IF DatosGrales.PERMITIRCAPTURAPROYECTOADQUISICIONES=1 THEN ..."
+        }
+      ],
+      "exceptions_or_errors": [],
+      "dependencies": [
+        {
+          "type": "window",
+          "name": "WIN_Ventana_Relación_ComprasBienServ",
+          "reason": "Navegación a relación compras bien/serv",
+          "evidence": "Open(WIN_Ventana_Relación_ComprasBienServ)"
+        }
+      ]
+    },
+    {
+      "event": "Click BTN_Postit",
+      "calls_procedures": [],
+      "calls_queries_or_sql": [
+        {
+          "kind": "sql",
+          "name": "UPDATE LUCCA466 (UltPostit) por Mac",
+          "crud": "write",
+          "evidence": "Update L66 set UltPostit=... FROM LUCCA466 L66 Where Mac='...'"
+        }
+      ],
+      "tables_read": [],
+      "tables_write": ["LUCCA466"],
+      "validations": [],
+      "business_rules": [
+        {
+          "id": "BR-SOL-070",
+          "rule": "Al crear un post-it se incrementa gnUltPostit y se persiste UltPostit por MAC en LUCCA466.",
+          "where": "BTN_Postit click",
+          "evidence": "gnUltPostit++; ... ControlCreate(...typRepositionableNote...); Update ... LUCCA466 ... Where Mac='...'"
+        }
+      ],
+      "exceptions_or_errors": [
+        {
+          "type": "db_error",
+          "condition": "Falla al actualizar LUCCA466",
+          "handling": "Error(\"HFSQL error: \" + HErrorInfo())",
+          "evidence": "IF HExecuteSQLQuery(BuscaMac3, ...) = False THEN Error(\"HFSQL error: \" + HErrorInfo())"
+        }
+      ],
+      "dependencies": [
+        {
+          "type": "ui",
+          "name": "ControlCreate typRepositionableNote",
+          "reason": "Crear notas movibles (post-its)",
+          "evidence": "NOTE_MyNote <- ControlCreate(..., typRepositionableNote, ...)"
+        }
+      ]
+    },
+    {
+      "event": "Click BTN_Ayuda",
+      "calls_procedures": [],
+      "calls_queries_or_sql": [],
+      "tables_read": [],
+      "tables_write": [],
+      "validations": [],
+      "business_rules": [
+        {
+          "id": "BR-SOL-080",
+          "rule": "Abrir ayuda CHM en tópico 19.",
+          "where": "BTN_Ayuda click",
+          "evidence": "WHelp(\"Ayuda1007.chm\", 19)"
+        }
+      ],
+      "exceptions_or_errors": [],
+      "dependencies": [
+        {
+          "type": "filesystem",
+          "name": "Ayuda1007.chm",
+          "reason": "Mostrar ayuda local",
+          "evidence": "WHelp( \"Ayuda1007.chm\", 19)"
+        }
+      ]
+    }
+  ],
+  "procedures_called": [
+    {
+      "id": "PROC:Carga_Tabla",
+      "name": "Carga_Tabla",
+      "call_sites": [
+        "End of initialization of WIN_Browse_Solicitudes",
+        "BTN_Agregar.click",
+        "BTN_Editar.click",
+        "BTN_Prestamos.click"
+      ],
+      "unknown": false
+    }
+  ],
+  "data_access_summary": {
+    "tables_read": ["Solicitudes", "AtencionServicios", "AreaX", "Usuarios", "Usuarios", "Areas", "DatosGrales", "LUCCA429", "LUCCA430"],
+    "tables_write": ["Solicitudes", "AtencionServicios", "LUCCA429", "LUCCA430", "LUCCA466"],
+    "stored_procedures": [],
+    "embedded_sql_detected": true
+  },
+  "unknowns": [
+    {
+      "topic": "Definición completa del PROCEDURE Carga_Tabla (parte Servicios truncada y END final no incluido en el fragmento anterior)",
+      "why": "El procedimiento mostrado previamente termina en 'END' parcial para el ELSE IF gnNVentanaEnUso=2; falta cierre completo/posibles ramas adicionales",
+      "how_to_confirm": "Pegar el código completo de PROCEDURE Carga_Tabla (incluyendo cierre de IF/END y cualquier rama extra)"
+    },
+    {
+      "topic": "Origen de COL_Codigo y COL_Estado (columnas de tabla) y su tipo exacto",
+      "why": "Se usan como columnas de la tabla pero no se mostró su definición de control",
+      "how_to_confirm": "Confirmar nombres internos de columnas en TABLE_Catalogo_Solicitudes (COL_Codigo, COL_Estado) y tipos/formatos"
+    },
+    {
+      "topic": "Bloqueo: política de liberación (cuándo se elimina LUCCA429/LUCCA430) y si hay expiración",
+      "why": "El código inserta bloqueos pero no se observa la liberación",
+      "how_to_confirm": "Revisar WIN_UpdateSolicitudes (al guardar/cerrar) y procedimientos relacionados para borrado/limpieza de bloqueos"
+    },
+    {
+      "topic": "Riesgo de concurrencia en generación de Codigo = Max(Codigo)+1",
+      "why": "Se calcula el siguiente Código leyendo Max(Codigo) y sumando 1; puede colisionar con concurrencia",
+      "how_to_confirm": "Validar si hay constraint único + manejo de retries, o si existe serialización/lock en BD; revisar triggers/SPs en Paso 2"
+    }
+  ],
+  "followups": [
+    "Pegar el código completo de PROCEDURE Carga_Tabla (cierre completo y ramas).",
+    "Pegar código de WIN_UpdateSolicitudes (init/close/guardar) para entender liberación de bloqueos LUCCA429/LUCCA430 y reglas de edición.",
+    "Confirmar en diseñador los nombres internos de columnas usadas como COL_Codigo y COL_Estado y cualquier otra columna oculta."
+  ]
+}

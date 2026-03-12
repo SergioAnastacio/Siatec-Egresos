@@ -1,0 +1,19 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Edita_Usuarios:Menu_Banco_Emitidos",
+  "name": "Menu_Banco_Emitidos",
+  "scope": "window_local",
+  "owner_window": "WIN_Edita_Usuarios",
+  "signature": "PROCEDURE Menu_Banco_Emitidos(sIdentifier is string)",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Edita_Usuarios_Menu_Banco_Emitidos.json",
+  "tables_read": [],
+  "tables_write": [],
+  "relations_found": [],
+  "metrics": {
+    "lines": 45,
+    "sql_fragments": 0
+  },
+  "wl_code": "nProcesar is int=0\nIF sIdentifier=\"155\" THEN\ngsResPath=TreeFind(TREE_Example, 155, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=-1 THEN\nTREE_Example[gsResPath]..Checked=0\nEND\nIF TREE_Example[gsResPath]..Checked=1 THEN\ngsResPath=TreeFind(TREE_Example, 156, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 157, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\nELSE\ngsResPath=TreeFind(TREE_Example, 156, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 157, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\nEND\nELSE IF sIdentifier=\"156\" OR sIdentifier=\"157\" THEN\ngsResPath=TreeFind(TREE_Example, sIdentifier, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=-1 THEN\nTREE_Example[gsResPath]..Checked=0\nEND\nnProcesar=1\nEND\nIF nProcesar=1 THEN\ngsResPath=TreeFind(TREE_Example, 156, Null, tvLeaf + tvNode)\nnEstado137 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 157, Null, tvLeaf + tvNode)\nnEstado138 is int=TREE_Example[gsResPath]..Checked\n\n\nPart 1 › WINDEV window › WIN_Edita_Usuarios › Procedures\n3/9/2026\n294\nSIATEC1_IA\ngsResPath=TreeFind(TREE_Example, 155, Null, tvLeaf + tvNode)\nIF nEstado137=1 AND nEstado138=1 THEN\nTREE_Example[gsResPath]..Checked=1\nELSE IF nEstado137=0 AND nEstado138=0 THEN\nTREE_Example[gsResPath]..Checked=0\nELSE IF nEstado137=1 OR nEstado138=1 THEN\nTREE_Example[gsResPath]..Checked=-1\nEND\nEND\nLocal procedure Menu_Bancos"
+}

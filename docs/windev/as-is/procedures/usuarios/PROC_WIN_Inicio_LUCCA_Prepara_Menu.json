@@ -1,0 +1,1354 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Inicio_LUCCA:Prepara_Menu",
+  "name": "Prepara_Menu",
+  "scope": "window_local",
+  "owner_window": "WIN_Inicio_LUCCA",
+  "signature": "PROCEDURE Prepara_Menu()",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Inicio_LUCCA_Prepara_Menu.json",
+  "summary": {
+    "purpose": "Aplica permisos al menú lateral: oculta secciones y deshabilita botones según garrDerNvos[]. Ajusta altura del menú.",
+    "calls": []
+  },
+  "ui_effects": [
+    {
+      "type": "visibility",
+      "target": "SIDE_Menu[2]",
+      "effect": "hidden",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[2]..Visible=False"
+    },
+    {
+      "type": "state",
+      "target": "BTN_SolBienes",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolBienes..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_SolServ",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolServ..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_SolCheqMan",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolCheqMan..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_SolProgAdqbien",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolProgAdqbien..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_SolProgAdqServ",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolProgAdqServ..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_SolVacaciones",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolVacaciones..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_SolRevBien",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolRevBien..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_SolRevServ",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolRevServ..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_SolModPres",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolModPres..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_SolcajaChica",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolcajaChica..State=3"
+    },
+    {
+      "type": "visibility",
+      "target": "SIDE_Menu[3]",
+      "effect": "hidden",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[3]..Visible=False"
+    },
+    {
+      "type": "state",
+      "target": "BTN_Resgresguardos",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[3].BTN_Resgresguardos..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ConumiblesPorResguardar",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[3].BTN_ConumiblesPorResguardar..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ReporteadorResguardos",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[3].BTN_ReporteadorResguardos..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ResgDepreciaciones",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[3].BTN_ResgDepreciaciones..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ResgDepreciacionInmuebles",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[3].BTN_ResgDepreciacionInmuebles..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_Resgtabla",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[3].BTN_Resgtabla..State=3"
+    },
+    {
+      "type": "visibility",
+      "target": "SIDE_Menu[4]",
+      "effect": "hidden",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[4]..Visible=False"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ComisionRegistro",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[4].BTN_ComisionRegistro..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ComisionAutoriza",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[4].BTN_ComisionAutoriza..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ComisionComprobacion",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[4].BTN_ComisionComprobacion..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ComisionRevision",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[4].BTN_ComisionRevision..State=3"
+    },
+    {
+      "type": "visibility",
+      "target": "SIDE_Menu[5]",
+      "effect": "hidden",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[5]..Visible=False"
+    },
+    {
+      "type": "state",
+      "target": "BTN_AutBienes",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutBienes..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_AutoServs",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutoServs..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_AutCheques",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutCheques..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_AutLiqBienes",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutLiqBienes..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_AutLiqServ",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutLiqServ..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_AutEstimNomina",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutEstimNomina..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_AutReqBien",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutReqBien..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_AutReqServ",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutReqServ..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_AutIniObra",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutIniObra..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_AutIniGastosFijos",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutIniGastosFijos..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_AutGFPeriodico",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutGFPeriodico..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_AutVacaciones",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutVacaciones..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_AutCheqSuspendido",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutCheqSuspendido..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_EstimacionObra",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[5].BTN_EstimacionObra..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_AutModPres",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutModPres..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_AutRepCajaChica",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutRepCajaChica..State=3"
+    },
+    {
+      "type": "visibility",
+      "target": "SIDE_Menu[6]",
+      "effect": "hidden",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[6]..Visible=False"
+    },
+    {
+      "type": "state",
+      "target": "BTN_AlmSoli",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[6].BTN_AlmSoli..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_AlmSolEsp",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[6].BTN_AlmSolEsp..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_AlmRecep",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[6].BTN_AlmRecep..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_AlmResguardos",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[6].BTN_AlmResguardos..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_AlmMovAlm",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[6].BTN_AlmMovAlm..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_AlmArticulos",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[6].BTN_AlmArticulos..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_AlmCatMovsAlm",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[6].BTN_AlmCatMovsAlm..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_AlmConvUnidades",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[6].BTN_AlmConvUnidades..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_AlmPrestamosAlm",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[6].BTN_AlmPrestamosAlm..State=3"
+    },
+    {
+      "type": "visibility",
+      "target": "SIDE_Menu[7]",
+      "effect": "hidden",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[7]..Visible=False"
+    },
+    {
+      "type": "state",
+      "target": "BTN_CompReqBien",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[7].BTN_CompReqBien..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_CompAdjudicaBien",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[7].BTN_CompAdjudicaBien..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_CompEmiteOCBien",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[7].BTN_CompEmiteOCBien..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_CompReqServ",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[7].BTN_CompReqServ..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_CompAdjudicaServ",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[7].BTN_CompAdjudicaServ..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_CompEmiteOCServ",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[7].BTN_CompEmiteOCServ..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_CompRecepServ",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[7].BTN_CompRecepServ..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_CompGF",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[7].BTN_CompGF..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_CompCuadFrioBien",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[7].BTN_CompCuadFrioBien..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_CompCuadFrioServ",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[7].BTN_CompCuadFrioServ..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_CompLAdq",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[7].BTN_CompLAdq..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_CompbienSuspendido",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[7].BTN_CompbienSuspendido..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_CompServSuspendido",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[7].BTN_CompServSuspendido..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_CompProv",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[7].BTN_CompProv..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_CompFondoRev",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[7].BTN_CompFondoRev..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_CompMedicinaSubrogada",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[7].BTN_CompMedicinaSubrogada..State=3"
+    },
+    {
+      "type": "visibility",
+      "target": "SIDE_Menu[8]",
+      "effect": "hidden",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[8]..Visible=False"
+    },
+    {
+      "type": "state",
+      "target": "BTN_BanCtas",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[8].BTN_BanCtas..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_BanProgramacion",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[8].BTN_BanProgramacion..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_BanPagXEmitir",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[8].BTN_BanPagXEmitir..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_BanSelForma",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[8].BTN_BanSelForma..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_BanEmitidos",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[8].BTN_BanEmitidos..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_BanEntregados",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[8].BTN_BanEntregados..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_BanCancleados",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[8].BTN_BanCancleados..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_BanIntsCred",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[8].BTN_BanIntsCred..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_BanPagosXFecha",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[8].BTN_BanPagosXFecha..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_BanIngEsp",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[8].BTN_BanIngEsp..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_BanEgrEsp",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[8].BTN_BanEgrEsp..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_BanGastComprobar",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[8].BTN_BanGastComprobar..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_BanConciliaBancaria",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[8].BTN_BanConciliaBancaria..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_BanCierrePagaduria",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[8].BTN_BanCierrePagaduria..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_BanTipoCambio",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[8].BTN_BanTipoCambio..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_BanIntegracionCheqs",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[8].BTN_BanIntegracionCheqs..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_BanDesintegraCheques",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[8].BTN_BanDesintegraCheques..State=3"
+    },
+    {
+      "type": "visibility",
+      "target": "SIDE_Menu[9]",
+      "effect": "hidden",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[9]..Visible=False"
+    },
+    {
+      "type": "state",
+      "target": "BTN_IngCalles",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[9].BTN_IngCalles..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_IngCobros",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[9].BTN_IngCobros..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_IngColonias",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[9].BTN_IngColonias..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_IngContribuyentes",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[9].BTN_IngContribuyentes..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_IngDelegaciones",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[9].BTN_IngDelegaciones..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_IngdocsComplementa",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[9].BTN_IngdocsComplementa..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_IngUnidRecau",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[9].BTN_IngUnidRecau..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_IngFormaPago",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[9].BTN_IngFormaPago..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_IngFormatos",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[9].BTN_IngFormatos..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_IngGiros",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[9].BTN_IngGiros..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_IngImpuestos",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[9].BTN_IngImpuestos..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_IngPadron",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[9].BTN_IngPadron..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_IngConvenios",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[9].BTN_IngConvenios..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_IngCatastro",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[9].BTN_IngCatastro..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_IngPredial",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[9].BTN_IngPredial..State=3"
+    },
+    {
+      "type": "visibility",
+      "target": "SIDE_Menu[10]",
+      "effect": "hidden",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10]..Visible=False"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomEmpleados",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomEmpleados..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomCalcularNomina",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomCalcularNomina..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomEspeciales",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomEspeciales..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomParGen",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomParGen..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomPlazas",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomPlazas..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomInpArchivos",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomInpArchivos..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_Nomasistencia",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_Nomasistencia..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomIncidencias",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomIncidencias..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomPTU",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomPTU..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomCtrolVaca",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomCtrolVaca..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomVisualVaca",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomVisualVaca..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomcajaAhorro",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomcajaAhorro..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_Nomretroactivos",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_Nomretroactivos..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomGrupos",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomGrupos..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomReinst",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomReinst..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomLiquidaciones",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomLiquidaciones..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomPrestamos",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomPrestamos..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomPrestcajAho",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomPrestcajAho..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomDeclaracion",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomDeclaracion..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomPercepciones",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomPercepciones..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomDeducciones",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomDeducciones..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomServsMed",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomServsMed..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomDeducciones",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomDeducciones..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomServsMed",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomServsMed..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomHorMod",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomHorMod..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomTablaISR",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomTablaISR..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomTablaSubs",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomTablaSubs..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomIncapacidades",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomIncapacidades..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomDiasFest",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomDiasFest..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomFestividades",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomFestividades..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_NomZonaEsp",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[10].BTN_NomZonaEsp..State=3"
+    },
+    {
+      "type": "visibility",
+      "target": "SIDE_Menu[11]",
+      "effect": "hidden",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[11]..Visible=False"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ObraCatalogo",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[11].BTN_ObraCatalogo..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ObraCuadrillas",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[11].BTN_ObraCuadrillas..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ObraConceptos",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[11].BTN_ObraConceptos..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ObraTrabajadores",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[11].BTN_ObraTrabajadores..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ObraAvance",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[11].BTN_ObraAvance..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ObraAvanceXTrabajador",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[11].BTN_ObraAvanceXTrabajador..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ObraOficios",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[11].BTN_ObraOficios..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ObraMaquinaria",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[11].BTN_ObraMaquinaria..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ObraEstimaciones",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[11].BTN_ObraEstimaciones..State=3"
+    },
+    {
+      "type": "visibility",
+      "target": "SIDE_Menu[12]",
+      "effect": "hidden",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[12]..Visible=False"
+    },
+    {
+      "type": "state",
+      "target": "BTN_MantoActivos",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[12].BTN_MantoActivos..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_MantoLlantas",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[12].BTN_MantoLlantas..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_MantoBaterias",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[12].BTN_MantoBaterias..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_MantoSolicitudes",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[12].BTN_MantoSolicitudes..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_MantoReparaciones",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[12].BTN_MantoReparaciones..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_MantoPrograma",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[12].BTN_MantoPrograma..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_MantotalleresExternos",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[12].BTN_MantotalleresExternos..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_MantoInsumos",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[12].BTN_MantoInsumos..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_MantoCatServs",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[12].BTN_MantoCatServs..State=3"
+    },
+    {
+      "type": "visibility",
+      "target": "SIDE_Menu[13]",
+      "effect": "hidden",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[13]..Visible=False"
+    },
+    {
+      "type": "state",
+      "target": "BTN_PresProgAnualAdq",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[13].BTN_PresProgAnualAdq..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_PresReporteador",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[13].BTN_PresReporteador..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_PresPlaneacion",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[13].BTN_PresPlaneacion..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_PresTabGral",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[13].BTN_PresTabGral..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_PresCreaCtaEgre",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[13].BTN_PresCreaCtaEgre..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_PresCreaCatIng",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[13].BTN_PresCreaCatIng..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_PresIndica",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[13].BTN_PresIndica..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_PresadqBien",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[13].BTN_PresadqBien..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_PresAdqServ",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[13].BTN_PresAdqServ..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_PresModPresIng",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[13].BTN_PresModPresIng..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_PresModPres",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[13].BTN_PresModPres..State=3"
+    },
+    {
+      "type": "visibility",
+      "target": "SIDE_Menu[14]",
+      "effect": "hidden",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[14]..Visible=False"
+    },
+    {
+      "type": "state",
+      "target": "BTN_Contareas",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[14].BTN_Contareas..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ContArts",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[14].BTN_ContArts..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ContBancos",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[14].BTN_ContBancos..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ContCenCost",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[14].BTN_ContCenCost..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ContParadigma",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[14].BTN_ContParadigma..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ContFinFunSub",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[14].BTN_ContFinFunSub..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ContOrigRecs",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[14].BTN_ContOrigRecs..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ContServicios",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[14].BTN_ContServicios..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ContCOG",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[14].BTN_ContCOG..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ContMatEgre",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[14].BTN_ContMatEgre..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_MatConvIngresos",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[14].BTN_MatConvIngresos..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ContProgramas",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[14].BTN_ContProgramas..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ContGF",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[14].BTN_ContGF..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ContProveedores",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[14].BTN_ContProveedores..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ContProyectos",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[14].BTN_ContProyectos..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ContImpuestos",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[14].BTN_ContImpuestos..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ContContribuyentes",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[14].BTN_ContContribuyentes..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_Glosa",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[14].BTN_Glosa..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ContCodCheques",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[14].BTN_ContCodCheques..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ContComprobarGastos",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[14].BTN_ContComprobarGastos..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ContComprobarGastos1",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[14].BTN_ContComprobarGastos1..State=3"
+    },
+    {
+      "type": "visibility",
+      "target": "SIDE_Menu[15]",
+      "effect": "hidden",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[15]..Visible=False"
+    },
+    {
+      "type": "state",
+      "target": "BTN_Paramsistema",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[15].BTN_Paramsistema..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ParamCotrolUsuario",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[15].BTN_ParamCotrolUsuario..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ParamAdmomProy",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[15].BTN_ParamAdmomProy..State=3"
+    },
+    {
+      "type": "visibility",
+      "target": "SIDE_Menu[16]",
+      "effect": "hidden",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[16]..Visible=False"
+    },
+    {
+      "type": "state",
+      "target": "BTN_DeudaPublicaCatDeuPub",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[16].BTN_DeudaPublicaCatDeuPub..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_DeudaPublicaCatDivisas",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[16].BTN_DeudaPublicaCatDivisas..State=3"
+    },
+    {
+      "type": "visibility",
+      "target": "SIDE_Menu[17]",
+      "effect": "hidden",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[17]..Visible=False"
+    },
+    {
+      "type": "state",
+      "target": "BTN_LicitInicio",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[17].BTN_LicitInicio..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_LicitInvita",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[17].BTN_LicitInvita..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_LicitProTecnicas",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[17].BTN_LicitProTecnicas..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_LicitPropEconomicas",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[17].BTN_LicitPropEconomicas..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_LicitAdjudica",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[17].BTN_LicitAdjudica..State=3"
+    },
+    {
+      "type": "visibility",
+      "target": "SIDE_Menu[18]",
+      "effect": "hidden",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[18]..Visible=False"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ContraModelo",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[18].BTN_ContraModelo..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ContraBienes",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[18].BTN_ContraBienes..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ContraServ",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[18].BTN_ContraServ..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ContraObra",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[18].BTN_ContraObra..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ContraGF",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[18].BTN_ContraGF..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_ContraModLicita",
+      "effect": "disabled",
+      "evidence": "//\t\tWIN_Inicio_LUCCA.SIDE_Menu[18].BTN_ContraModLicita..State=3"
+    },
+    {
+      "type": "visibility",
+      "target": "SIDE_Menu[19]",
+      "effect": "hidden",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[19]..Visible=False"
+    },
+    {
+      "type": "state",
+      "target": "BTN_TranspFormatos",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[19].BTN_TranspFormatos..State=3"
+    },
+    {
+      "type": "visibility",
+      "target": "SIDE_Menu[20]",
+      "effect": "hidden",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[20]..Visible=False"
+    },
+    {
+      "type": "state",
+      "target": "BTN_CatCatalogos",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[20].BTN_CatCatalogos..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_CatReportes",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[20].BTN_CatReportes..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_CatRepAvanzada",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[20].BTN_CatRepAvanzada..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_CatBitacoraact",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[20].BTN_CatBitacoraact..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_CatInterfases",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[20].BTN_CatInterfases..State=3"
+    },
+    {
+      "type": "visibility",
+      "target": "SIDE_Menu[21]",
+      "effect": "hidden",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[21]..Visible=False"
+    },
+    {
+      "type": "state",
+      "target": "BTN_Programas_Sociales",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[21].BTN_Programas_Sociales..State=3"
+    },
+    {
+      "type": "state",
+      "target": "BTN_Participa_Aporta",
+      "effect": "disabled",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[21].BTN_Participa_Aporta..State=3"
+    },
+    {
+      "type": "visibility",
+      "target": "SIDE_Menu[22]",
+      "effect": "hidden",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu[22]..Visible=False"
+    }
+  ],
+  "tables_read": [],
+  "tables_write": [],
+  "business_rules": [
+    {
+      "id": "BR-SHELL-PERM-001",
+      "rule": "El menú lateral se oculta por secciones (SIDE_Menu[n]) y se deshabilitan opciones (State=3) según garrDerNvos[i]=0.",
+      "evidence": "IF garrDerNvos[<idx>]=0 THEN ... Visible=False / State=3"
+    },
+    {
+      "id": "BR-SHELL-UI-001",
+      "rule": "La altura del SIDE_Menu se ajusta restando 34px por sección oculta: SIDE_Menu..Height=1218-gnRestaAltMenu.",
+      "evidence": "WIN_Inicio_LUCCA.SIDE_Menu..Height=1218 - gnRestaAltMenu"
+    }
+  ],
+  "dependencies": [],
+  "raw_wl_excerpt": "IF garrDerNvos[1]=0 THEN\n\t\tWIN_Inicio_LUCCA.SIDE_Menu[2]..Visible=False\n\t\tgnRestaAltMenu+=34\n\tELSE\n\t\tIF garrDerNvos[2]=0 THEN\n\t\tWIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolBienes..State=3\t\n\t\tEND\n\t\tIF garrDerNvos[12]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolServ..State=3\t\t\n\t\tEND\n\t\tIF garrDerNvos[31]=0 THEN\n\t\tWIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolCheqMan..State=3\n\t\tEND\n\t\tIF garrDerNvos[21]=0 THEN\n\t\tWIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolProgAdqbien..State=3\n\t\tEND\n\t\tIF garrDerNvos[26]=0 THEN\n\t\tWIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolProgAdqServ..State=3\n\t\tEND\n\t\tIF garrDerNvos[34]=0 THEN\n\t\tWIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolVacaciones..State=3\n\t\tEND\n\t\tIF garrDerNvos[37]=0 THEN\n\t\tWIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolRevBien..State=3\n\t\tEND\n\t\tIF garrDerNvos[38]=0 THEN\n\t\tWIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolRevServ..State=3\n\t\tEND\n\t\tIF garrDerNvos[39]=0 THEN\n\t\tWIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolModPres..State=3\n\t\tEND\n\t\tIF garrDerNvos[44]=0 THEN\n\t\tWIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolcajaChica..State=3\n\t\tEND\n\tEND\n\tIF garrDerNvos[45]=0 THEN\n\t\tWIN_Inicio_LUCCA.SIDE_Menu[3]..Visible=False\n\t\tgnRestaAltMenu+=34\n\tELSE\n\t\tIF garrDerNvos[46]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[3].BTN_Resgresguardos..State=3\n\t\tEND\n\t\tIF garrDerNvos[50]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[3].BTN_ConumiblesPorResguardar..State=3\n\t\tEND\n\t\tIF garrDerNvos[51]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[3].BTN_ReporteadorResguardos..State=3\n\t\tEND\n\t\tIF garrDerNvos[52]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[3].BTN_ResgDepreciaciones..State=3\n\t\tEND\n\t\tIF garrDerNvos[55]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[3].BTN_ResgDepreciacionInmuebles..State=3\n\t\tEND\n\t\tIF garrDerNvos[58]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[3].BTN_Resgtabla..State=3\n\t\tEND\n\tEND\n\tIF garrDerNvos[59]=0 THEN\n\t\tWIN_Inicio_LUCCA.SIDE_Menu[4]..Visible=False",
+  "unknowns": [
+    {
+      "topic": "Eventos click reales de botones del SIDE_Menu",
+      "why": "Prepara_Menu solo aplica permisos; no incluye navegación",
+      "how_to_confirm": "Subir eventos Click/Select de botones clave (SolBienes/SolServ/etc.)."
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "step": 1,
+  "artifact_type": "ui_control_event",
+  "id": "CTRL:WIN:WIN_Catalogo_Usuarios:BTN_Aceptar:Click",
+  "window_or_page": "WIN:WIN_Catalogo_Usuarios",
+  "module": "Admin/Usuarios",
+  "control": {
+    "name": "BTN_Aceptar",
+    "type": "Button",
+    "purpose": "Crear usuario base (INSERT Usuarios con MAX+1) y abrir WIN_Edita_Usuarios para completar; luego recargar tabla.",
+    "visibility_or_permissions": []
+  },
+  "output_dir": "docs/as-is/windows/",
+  "output_filename": "CTRL_WIN_WIN_Catalogo_Usuarios_BTN_Aceptar_Click.json",
+  "events": [
+    {
+      "event": "Click BTN_Aceptar",
+      "summary": "Crear usuario base (INSERT Usuarios con MAX+1) y abrir WIN_Edita_Usuarios para completar; luego recargar tabla.",
+      "calls_procedures": [
+        "PROC:Carga_Tabla"
+      ],
+      "calls_windows": [
+        "WIN:WIN_Edita_Usuarios"
+      ],
+      "calls_queries_or_sql": [],
+      "tables_read": [
+        "dbo.Usuarios"
+      ],
+      "tables_write": [
+        "dbo.Usuarios"
+      ],
+      "business_rules": [
+        {
+          "id": "BR-USR-ID-001",
+          "rule": "Alta usa MAX(Codigo)+1 (riesgo concurrencia).",
+          "evidence": "Max(Codigo)+1"
+        }
+      ],
+      "validations": [],
+      "exceptions_or_errors": [
+        {
+          "type": "db_error",
+          "condition": "HExecuteSQLQuery returns False",
+          "handling": "Error('HFSQL error: '+HErrorInfo())",
+          "evidence": "IF HExecuteSQLQuery(...)=False THEN Error('HFSQL error: ' + HErrorInfo()) END"
+        }
+      ],
+      "dependencies": [],
+      "wl_code": "BuscaIns is Data Source\n\n\t\t\tIF HExecuteSQLQuery(BuscaIns, MyConnectionLucca, hQueryWithoutCorrection + hNoBind,\"Insert Into Usuarios OUTPUT Inserted.Codigo SELECT  ( (SELECT IsNull(Max(Codigo),0) As UlPt FROM Usuarios ) + 1) As Codigo, \" + ...\n\t\t\t\t\" '', '', '', 0, '', 0, '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, 1, '' \") = False THEN\n\t\t\t\tError(\"HFSQL error: \" + HErrorInfo())\n\t\t\tEND\t\n\n\t\t\tHReadFirst(BuscaIns)\n\t\t\tnCodAux is int=BuscaIns.Codigo\n\t\t\tOpen(WIN_Edita_Usuarios,nCodAux,1)\n\n\t\t\tCarga_Tabla()\n\t\t\tTablePosition(TABLE_Catalog_Cont,TABLE_Catalog_Cont..Occurrence)\n\t\t\tTableSelectPlus(TABLE_Catalog_Cont,TABLE_Catalog_Cont..Occurrence)"
+    }
+  ],
+  "unknowns": [],
+  "followups": []
+}

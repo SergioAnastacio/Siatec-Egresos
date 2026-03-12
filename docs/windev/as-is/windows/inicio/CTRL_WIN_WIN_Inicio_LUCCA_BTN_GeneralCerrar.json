@@ -1,0 +1,33 @@
+{
+  "step": 1,
+  "artifact_type": "ui_control_event",
+  "id": "CTRL:WIN:WIN_Inicio_LUCCA:BTN_GeneralCerrar",
+  "window_or_page": "WIN:WIN_Inicio_LUCCA",
+  "module": "Shell/Inicio",
+  "control": {
+    "name": "BTN_GeneralCerrar",
+    "type": "Button",
+    "purpose": "Salir de la aplicación (acción predefinida WinDev).",
+    "visibility_or_permissions": []
+  },
+  "output_dir": "docs/as-is/windows/",
+  "output_filename": "CTRL_WIN_WIN_Inicio_LUCCA_BTN_GeneralCerrar.json",
+  "events": [
+    {
+      "event": "Click BTN_GeneralCerrar",
+      "summary": "Salir de la aplicación (acción predefinida WinDev).",
+      "calls_procedures": [],
+      "calls_windows": [],
+      "calls_queries_or_sql": [],
+      "tables_read": [],
+      "tables_write": [],
+      "business_rules": [],
+      "validations": [],
+      "exceptions_or_errors": [],
+      "dependencies": [],
+      "wl_code": "Preset action:\t<Exit application>"
+    }
+  ],
+  "unknowns": [],
+  "followups": []
+}

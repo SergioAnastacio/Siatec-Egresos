@@ -1,0 +1,19 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Edita_Usuarios:Menu_Solicitudes",
+  "name": "Menu_Solicitudes",
+  "scope": "window_local",
+  "owner_window": "WIN_Edita_Usuarios",
+  "signature": "PROCEDURE Menu_Solicitudes()",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Edita_Usuarios_Menu_Solicitudes.json",
+  "tables_read": [],
+  "tables_write": [],
+  "relations_found": [],
+  "metrics": {
+    "lines": 55,
+    "sql_fragments": 0
+  },
+  "wl_code": "gsResPath=TreeFind(TREE_Example, 2, Null, tvLeaf + tvNode)\nnEstado2 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 12, Null, tvLeaf + tvNode)\nnEstado12 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 21, Null, tvLeaf + tvNode)\nnEstado21 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 31, Null, tvLeaf + tvNode)\nnEstado31 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 26, Null, tvLeaf + tvNode)\nnEstado26 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 34, Null, tvLeaf + tvNode)\nnEstado34 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 37, Null, tvLeaf + tvNode)\nnEstado37 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 38, Null, tvLeaf + tvNode)\nnEstado38 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 39, Null, tvLeaf + tvNode)\nnEstado39 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 44, Null, tvLeaf + tvNode)\nnEstado44 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 1, Null, tvLeaf + tvNode)\nIF nEstado2=0 AND nEstado12=0 AND nEstado21=0 AND nEstado31=0 AND nEstado26=0 AND nEstado34=0 AND nEstado37\n=0 AND nEstado38=0 AND nEstado39=0 AND nEstado44=0 THEN\nTREE_Example[gsResPath]..Checked=0\nELSE IF nEstado2=1 AND nEstado12=1 AND nEstado21=1 AND nEstado31=1 AND nEstado26=1 AND nEstado34=1 AND\nnEstado37=1 AND nEstado38=1 AND nEstado39=1 AND nEstado44=1 THEN\nTREE_Example[gsResPath]..Checked=1\n\n\nPart 1 › WINDEV window › WIN_Edita_Usuarios › Procedures\n3/9/2026\n326\nSIATEC1_IA\nELSE IF nEstado2=1 OR nEstado12=1 OR nEstado21=1 OR nEstado31=1 OR nEstado26=1 OR nEstado34=1 OR nEstado37=\n1 OR nEstado38=1 OR nEstado39=1 OR nEstado44=1 THEN\nTREE_Example[gsResPath]..Checked=-1\nELSE IF nEstado2=-1 OR nEstado12=-1 OR nEstado21=-1 OR nEstado31=-1 OR nEstado26=-1 OR nEstado34=-1 OR\nnEstado37=-1 OR nEstado38=-1 OR nEstado39=-1 OR nEstado44=-1 THEN\nTREE_Example[gsResPath]..Checked=-1\nEND\nLocal procedure Prende_Ajustes\nLocal procedure Prende_Comercial\n\n\n\n\n\n\n\n\nLocal procedure Prende_Contratos\nLocal procedure Prende_Descuentos\n\n\nLocal procedure Prende_Lecturas"
+}

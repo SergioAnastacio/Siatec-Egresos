@@ -1,0 +1,78 @@
+{
+  "step": 1,
+  "artifact_type": "ui_control_event",
+  "id": "CTRL:WIN:WIN_CambiaUsuarioLUCCA:BTN_Agregar:Click",
+  "window_or_page": "WIN:WIN_CambiaUsuarioLUCCA",
+  "module": "Auth/ChangeUser",
+  "control": {
+    "name": "BTN_Agregar",
+    "type": "Button",
+    "purpose": "",
+    "visibility_or_permissions": []
+  },
+  "output_dir": "docs/as-is/windows/",
+  "output_filename": "CTRL_WIN_WIN_CambiaUsuarioLUCCA_BTN_Agregar_Click.json",
+  "events": [
+    {
+      "event": "Click BTN_Agregar",
+      "summary": "Ver WL",
+      "calls_procedures": [
+        "PROC:Habilita_Menu",
+        "PROC:Prepara_Menu"
+      ],
+      "calls_windows": [],
+      "calls_queries_or_sql": [],
+      "tables_read": [
+        "LUCCA182",
+        "LUCCA333",
+        "LUCCA410",
+        "Usuarios"
+      ],
+      "tables_write": [
+        "BitMovs",
+        "LUCCA333",
+        "Usuarios"
+      ],
+      "business_rules": [
+        {
+          "id": "BR-AUTH-CHG-001",
+          "rule": "Para confirmar cambio de usuario: requiere gnUSUARIO>0 y Usuario no bloqueado; valida contraseña desencriptando Usuarios.Firma con passphrase fija y comparando con EDT_PASSWORD.",
+          "evidence": "IF gnUSUARIO>0 THEN IF Usuarios.BLOQUEADO NOT=1 THEN ... DECRYPTBYPASSPHRASE('C1traseña',U1.Firma) ... IF EDT_PASSWORD=Contrasena"
+        },
+        {
+          "id": "BR-AUTH-CHG-002",
+          "rule": "Tras >3 intentos fallidos, bloquear usuario (si no es admin) y registrar evento en BitMovs; cerrar y resetear sesión.",
+          "evidence": "IF nIntentos NOT < 4 THEN ... Usuarios.BLOQUEADO=1 ... BitMovs.MODALIDAD='Bloqueo de contraseña' ... gnUSUARIO=0 Close()"
+        }
+      ],
+      "validations": [
+        {
+          "rule": "Si contraseña incorrecta, incrementar nIntentos, limpiar campo y regresar foco a password.",
+          "severity": "high",
+          "evidence": "nIntentos+=1 EDT_PASSWORD='' ReturnToCapture(EDT_PASSWORD)"
+        }
+      ],
+      "exceptions_or_errors": [
+        {
+          "type": "db_error",
+          "condition": "HExecuteSQLQuery returns False",
+          "handling": "Error('HFSQL error: ' + HErrorInfo())",
+          "evidence": "IF HExecuteSQLQuery(...)=False THEN Error('HFSQL error: ' + HErrorInfo()) END"
+        }
+      ],
+      "dependencies": [
+        {
+          "type": "database_crypto",
+          "name": "SQL Server ENCRYPT/DECRYPTBYPASSPHRASE",
+          "reason": "Validación/recuperación de contraseña",
+          "evidence": "DECRYPTBYPASSPHRASE/ENCRYPTBYPASSPHRASE"
+        }
+      ],
+      "wl_code": "IF gnUSUARIO>0 THEN\n\t\t\tIF Usuarios.BLOQUEADO NOT=1 THEN\n\t\t\t\t\n\t\t\t\tdsDesencriptaPass is Data Source\n\t\t\t\t\n\t\t\t\tIF HExecuteSQLQuery(dsDesencriptaPass, MyConnectionLucca,hQueryWithoutCorrection + hNoBind, [\n\t\t\t\t\t\tSelect CONVERT(VARCHAR(100), DECRYPTBYPASSPHRASE('C1traseña',U1.Firma)) As contrasena\n\t\t\t\t\t\tFrom Usuarios U1\n\t\t\t\t\t\tWhere U1.Codigo=\n\t\t\t\t\t] + gnUSUARIO ) = False THEN\n\t\t\t\t\tError(\"HFSQL error: \" + HErrorInfo())\n\t\t\t\tEND\n\t\t\t\t\n\t\t\t\tHReadLast(dsDesencriptaPass)\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\tIF NoSpace(EDT_PASSWORD)=NoSpace(dsDesencriptaPass.Contrasena) THEN\n\t\t\t\t\tgnUSUARIO=Usuarios.CODIGO\n\t\t\t\t\tgsNombreUsuario=Usuarios.NOMBRE\n\t\t\t\t\t\n\t\t\t\t\tHReadSeek(LUCCA182,CODIGO,Usuarios.CODIGO,hIdentical)\n\t\t\t\t\t\n\t\t\t\t\tHReadSeek(LUCCA333,CODIGO,Usuarios.CODIGO,hIdentical)\n\t\t\t\t\t\n\t\t\t\t\tIF LUCCA333.CODIGO NOT=Usuarios.CODIGO THEN\n\t\t\t\t\t\tLUCCA333.CODIGO=Usuarios.CODIGO\n\t\t\t\t\t\tLUCCA333.MENUPREF=3\n\t\t\t\t\t\tLUCCA333.DER=0\n\t\t\t\t\t\tLUCCA333.DERCUADFRIOB=0\n\t\t\t\t\t\tLUCCA333.DERCUADFRIOS=0\n\t\t\t\t\t\tLUCCA333.DERCOMPRASPROV=0\n\t\t\t\t\t\tLUCCA333.DERFONREV=0\n\t\t\t\t\t\tLUCCA333.DERCOMPGIROS=0\n\t\t\t\t\t\tLUCCA333.DERLICITARREQ=0\n\t\t\t\t\t\tLUCCA333.DERADJUDICARREQB=0\n\t\t\t\t\t\tLUCCA333.DERADJUDICARREQS=0\n\t\t\t\t\t\tLUCCA333.DERLICITAINICIO=0\n\t\t\t\t\t\tLUCCA333.DERLICITAINVITA=0\n\t\t\t\t\t\tLUCCA333.DERLICITATECNICA=0\n\t\t\t\t\t\tLUCCA333.DERLICITAECONOMICA=0\n\t\t\t\t\t\tLUCCA333.DERLICITAADJUDICA=0\n\t\t\t\t\t\tLUCCA333.DERCONTRATOSMODELO=0\n\t\t\t\t\t\tLUCCA333.DERCONTRATOSBIENES=0\n\t\t\t\t\t\tLUCCA333.DERCONTRATOSSERVICIOS=0\n\t\t\t\t\t\tLUCCA333.DERCONTRATOSOBRA=0\n\t\t\t\t\t\tLUCCA333.DERCONTRATOSGASTOSFIJOS=0\n\t\t\t\t\t\tLUCCA333.DERCONTRATOSMODELOLICITA=0\n\t\t\t\t\t\tLUCCA333.DERTRANSPARENCIA=0\n\t\t\t\t\t\tLUCCA333.DERPROGRAMASSOCIALES=0\n\t\t\t\t\t\tLUCCA333.DERNORMATECAMODIFICA=0\n\t\t\t\t\t\tLUCCA333.DERAUTORIZARVIATICO=0\n\t\t\t\t\t\tHAdd(LUCCA333)\n\t\t\t\t\tEND\n\t\t\t\t\t\n\t\t\t\t\tgarrDerechos[1]=Usuarios.DERECHOALMACEN1\n\t\t\t\t\tgarrDerechos[2]=Usuarios.DERECHOALMACEN2\n\t\t\t\t\tgarrDerechos[3]=Usuarios.DERECHOALMACEN3\n\t\t\t\t\tgarrDerechos[4]=Usuarios.DERECHOALMACEN4\n\t\t\t\t\tgarrDerechos[5]=Usuarios.DERECHOS1\n\t\t\t\t\tgarrDerechos[6]=Usuarios.DERECHOS2\n\t\t\t\t\tgarrDerechos[7]=Usuarios.DERECHOS3\n\t\t\t\t\tgarrDerechos[8]=Usuarios.DERECHOS4\n\t\t\t\t\tgarrDerechos[9]=Usuarios.DERECHO5\n\t\t\t\t\tgarrDerechos[10]=Usuarios.DERECHO6\n\t\t\t\t\tgarrDerechos[11]=Usuarios.DERECHO7\n\t\t\t\t\tgarrDerechos[12]=Usuarios.DERECHO8\n\t\t\t\t\tgarrDerechos[13]=Usuarios.DERECHO9\n\t\t\t\t\tgarrDerechos[14]=Usuarios.DERECHO10\n\t\t\t\t\tgarrDerechos[15]=Usuarios.DERECHO11\n\t\t\t\t\tgarrDerechos[16]=Usuarios.DERECHO12\n\t\t\t\t\tgarrDerechos[17]=Usuarios.DERECHO13\n\t\t\t\t\tgarrDerechos[18]=Usuarios.NOMINA\n\t\t\t\t\tgarrDerechos[19]=LUCCA182.AUTCHEQUES\n\t\t\t\t\tgarrDerechos[20]=LUCCA182.AUTPAGOCOMPRAS\n\t\t\t\t\tgarrDerechos[21]=LUCCA182.AUTPAGOSERVICIOS\n\t\t\t\t\tgarrDerechos[22]=LUCCA182.AUTGASTOS\n\t\t\t\t\tgarrDerechos[23]=LUCCA182.AUTVARIACIONBIENES\n\t\t\t\t\tgarrDerechos[24]=LUCCA182.AUTVARIACIONSERVICIOS\n\t\t\t\t\tgarrDerechos[25]=LUCCA182.AUTOBRA\n\t\t\t\t\tgarrDerechos[26]=LUCCA182.AUTCONTRATOSGF\n\t\t\t\t\tgarrDerechos[27]=LUCCA182.AUTPAGOCONTRATOGF\n\t\t\t\t\tgarrDerechos[28]=LUCCA182.CAPTURAINCIDENCIASGRALES\n\t\t\t\t\tgarrDerechos[29]=LUCCA182.INCIDENCIASPARTICULARES\n\t\t\t\t\tgarrDerechos[30]=LUCCA182.CAPTURAPERCEPDEDUCGRALES\n\t\t\t\t\tgarrDerechos[31]=LUCCA182.CAPTURAPERCEPDEDUCPARTICULARES\n\t\t\t\t\tgarrDerechos[32]=LUCCA182.EDITAREMPRESA\n\t\t\t\t\tgarrDerechos[33]=LUCCA182.CATALOGOEMPLEADOS\n\t\t\t\t\tgarrDerechos[34]=LUCCA182.CALCULONOMINA\n\t\t\t\t\tgarrDerechos[35]=LUCCA182.DEDUCCIONES\n\t\t\t\t\tgarrDerechos[36]=LUCCA182.PARAMETROSGRALES\n\t\t\t\t\tgarrDerechos[37]=LUCCA182.PERCEPCIONES\n\t\t\t\t\tgarrDerechos[38]=LUCCA182.PLAZAS\n\t\t\t\t\tgarrDerechos[39]=LUCCA182.TABLAISR\n\t\t\t\t\tgarrDerechos[40]=LUCCA182.TABLASUBSIDIO\n\t\t\t\t\tgarrDerechos[41]=LUCCA182.CALCULARPTU\n\t\t\t\t\tgarrDerechos[42]=LUCCA182.OFICIOSCOMISION\n\t\t\t\t\tgarrDerechos[43]=LUCCA182.ZONAESPECIFICA\n\t\t\t\t\tgarrDerechos[44]=LUCCA182.FESTIVIDADES\n\t\t\t\t\tgarrDerechos[45]=LUCCA182.PERCEPCIONDEDUCCIONXLOTE\n\t\t\t\t\tgarrDerechos[46]=LUCCA182.CONFIGURACIONINTERFAZCONTABLE\n\t\t\t\t\tgarrDerechos[47]=LUCCA182.MATRICESCONVERSION\n\t\t\t\t\tgarrDerechos[48]=LUCCA182.CAJERO\n\t\t\t\t\tgarrDerechos[49]=LUCCA182.PADRON\n\t\t\t\t\tgarrDerechos[50]=LUCCA182.CATASTRO\n\t\t\t\t\tgarrDerechos[51]=LUCCA182.PREDIAL\n\t\t\t\t\tgarrDerechos[52]=LUCCA182.RESGUARDO\n\t\t\t\t\tgarrDerechos[53]=LUCCA182.DEPRESIACIONES\n\t\t\t\t\tgarrDerechos[54]=LUCCA333.DERCUADFRIOB\n\t\t\t\t\tgarrDerechos[55]=LUCCA333.DERCUADFRIOS\n\t\t\t\t\tgarrDerechos[56]=LUCCA333.DERCOMPRASPROV\n\t\t\t\t\tgarrDerechos[57]=LUCCA333.DERFONREV\n\t\t\t\t\tgarrDerechos[58]=LUCCA333.DERCOMPGIROS\n\t\t\t\t\tgarrDerechos[59]=LUCCA333.DERLICITARREQ\n\t\t\t\t\tgarrDerechos[60]=LUCCA333.DERADJUDICARREQB\n\t\t\t\t\tgarrDerechos[61]=LUCCA333.DERADJUDICARREQS\n\t\t\t\t\tgarrDerechos[62]=LUCCA333.DERLICITAINICIO\n\t\t\t\t\tgarrDerechos[63]=LUCCA333.DERLICITAINVITA\n\t\t\t\t\tgarrDerechos[64]=LUCCA333.DERLICITATECNICA\n\t\t\t\t\tgarrDerechos[65]=LUCCA333.DERLICITAECONOMICA\n\t\t\t\t\tgarrDerechos[66]=LUCCA333.DERLICITAADJUDICA\n\t\t\t\t\tgarrDerechos[67]=LUCCA333.DERCONTRATOSMODELO\n\t\t\t\t\tgarrDerechos[68]=LUCCA333.DERCONTRATOSBIENES\n\t\t\t\t\tgarrDerechos[69]=LUCCA333.DERCONTRATOSSERVICIOS\n\t\t\t\t\tgarrDerechos[70]=LUCCA333.DERCONTRATOSOBRA\n\t\t\t\t\tgarrDerechos[71]=LUCCA333.DERCONTRATOSGASTOSFIJOS\n\t\t\t\t\tgarrDerechos[72]=LUCCA333.DERCONTRATOSMODELOLICITA\n\t\t\t\t\tgarrDerechos[73]=LUCCA333.DERTRANSPARENCIA\n\t\t\t\t\tgarrDerechos[74]=LUCCA333.DERPROGRAMASSOCIALES\n\t\t\t\t\tgarrDerechos[75]=LUCCA333.DERNORMATECAMODIFICA\n\t\t\t\t\tgarrDerechos[76]=LUCCA333.DERAUTORIZARVIATICO\n\t\t\t\t\tgarrDerechos[77]=LUCCA333.DERAUTPROCVIATICO\n\t\t\t\t\tgarrDerechos[78]=0\n\t\t\t\t\tgarrDerechos[79]=0\n\t\t\t\t\tgarrDerechos[80]=0\n\t\t\t\t\t\n\t\t\t\t\tdtFechaEspecial is DateTime\t\n\t\t\t\t\tdtFechaEspecial..Date=gdFechaGral\n\t\t\t\t\tdtFechaEspecial..Time=Now()\t\n\t\t\t\t\tBitMovs.FECHAHORA=dtFechaEspecial\t\n\t\t\t\t\tBitMovs.USUARIO=Usuarios.CODIGO\n\t\t\t\t\tBitMovs.NIVEL=1\n\t\t\t\t\tBitMovs.PROCESO=\"Registro\"\t\n\t\t\t\t\tBitMovs.MODALIDAD=\"Inicio\"\t\n\t\t\t\t\tBitMovs.REGISTRO=Usuarios.CODIGO\n\t\t\t\t\tHAdd(BitMovs)\n\t\t\t\t\t\n\t\t\t\t\tUsuarios.ULTIMOREGISTRO=DateToInteger(gdFechaGral)-362\n\t\t\t\t\tHModify(Usuarios)\n\t\t\t\t\tHReadSeek(LUCCA410,CODIGO,Usuarios.CODIGO,hIdentical)\n\t\t\t\t\tIF HFound(LUCCA410)=True THEN\n\t\t\t\t\t\tHabilita_Menu()\n\t\t\t\t\t\tPrepara_Menu()\n\t\t\t\t\t\tgnSeActivoNuevoMenu=1\n\t\t\t\t\tEND\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\tClose()\n\t\t\t\t\t\n\t\t\t\tELSE\n\t\t\t\t\tInfo(\"Error: La contraseña es incorrecta\" + CR + \"Tienes \" + (3 - nIntentos) + \" intento(s) más antes de bloquear el usuario\")\n\t\t\t\t\tnIntentos+=1\n\t\t\t\t\tEDT_PASSWORD=\"\"\n\t\t\t\t\tReturnToCapture(EDT_PASSWORD)\n\t\t\t\t\t\n\t\t\t\t\tIF nIntentos NOT < 4 THEN\n\t\t\t\t\t\tInfo(\"Usuario Bloqueado Temporalmente, solicita al Administrador del Sistema su desbloqueo\")\n\t\t\t\t\t\tIF Usuarios.CODIGO>0 THEN\n\t\t\t\t\t\t\tIF Usuarios.CODIGO NOT=1 THEN\n\t\t\t\t\t\t\t\tUsuarios.BLOQUEADO=1\n\t\t\t\t\t\t\t\tHModify(Usuarios)\n\t\t\t\t\t\t\tEND\t\t\t\t\n\t\t\t\t\t\t\tdtFechaEspecial is DateTime\t\n\t\t\t\t\t\t\tdtFechaEspecial..Date=gdFechaGral\n\t\t\t\t\t\t\tdtFechaEspecial..Time=Now()\t\n\t\t\t\t\t\t\tBitMovs.FECHAHORA=dtFechaEspecial\t\n\t\t\t\t\t\t\tBitMovs.USUARIO=Usuarios.CODIGO\n\t\t\t\t\t\t\tBitMovs.NIVEL=1\n\t\t\t\t\t\t\tBitMovs.PROCESO=\"Registro\"\t\n\t\t\t\t\t\t\tBitMovs.MODALIDAD=\"Bloqueo de contraseña\"\t\n\t\t\t\t\t\t\tBitMovs.REGISTRO=Usuarios.CODIGO\n\t\t\t\t\t\t\tHAdd(BitMovs)\n\t\t\t\t\t\tEND\n\t\t\t\t\t\tgsNombreUsuario=\"\"\n\t\t\t\t\t\tgnUSUARIO=0\n\t\t\t\t\t\tClose()\n\t\t\t\t\tEND\n\t\t\t\tEND\n\t\t\tELSE\n\t\t\t\tInfo(\"Usuario Bloqueado por sistema, solicita al administrador su desbloqueo\")\n\t\t\t\tgsNombreUsuario=\"\"\n\t\t\t\tgnUSUARIO=0\n\t\t\t\tClose()\n\t\t\tEND\n\t\tELSE\n\t\t\tInfo(\"Error: El Login es incorrecto\" + CR + \"Tienes \" + (3 - nIntentos) + \" intento(s) más antes de bloquear el usuario\")\n\t\t\tnIntentos+=1\n\t\t\tEDT_PASSWORD=\"\"\n\t\t\tReturnToCapture(EDT_LOGIN)\n\t\tEND"
+    }
+  ],
+  "unknowns": [],
+  "followups": [
+    "Confirmar si esta ventana solo cambia usuario (sin cambiar conexión/basedatos) o también cambia contexto multiempresa."
+  ]
+}

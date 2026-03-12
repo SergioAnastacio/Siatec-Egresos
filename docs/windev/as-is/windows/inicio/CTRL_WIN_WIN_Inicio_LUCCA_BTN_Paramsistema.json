@@ -1,0 +1,48 @@
+{
+  "step": 1,
+  "artifact_type": "ui_control_event",
+  "id": "CTRL:WIN:WIN_Inicio_LUCCA:BTN_Paramsistema",
+  "window_or_page": "WIN:WIN_Inicio_LUCCA",
+  "module": "Shell/Inicio",
+  "control": {
+    "name": "BTN_Paramsistema",
+    "type": "Button",
+    "purpose": "Abrir Datos Generales (configuración) si admin o menú nuevo activo.",
+    "visibility_or_permissions": []
+  },
+  "output_dir": "docs/as-is/windows/",
+  "output_filename": "CTRL_WIN_WIN_Inicio_LUCCA_BTN_Paramsistema.json",
+  "events": [
+    {
+      "event": "Click BTN_Paramsistema",
+      "summary": "Abrir Datos Generales (configuración) si admin o menú nuevo activo.",
+      "calls_procedures": [],
+      "calls_windows": [
+        "WIN_Datos_Generales"
+      ],
+      "calls_queries_or_sql": [],
+      "tables_read": [],
+      "tables_write": [],
+      "business_rules": [
+        {
+          "id": "BR-SHELL-ADMIN-001",
+          "rule": "Solo administrador (gnUSUARIO=1) o menú nuevo activo puede abrir Datos Generales.",
+          "evidence": "IF gnUSUARIO=1 OR gnSeActivoNuevoMenu=1 THEN ... ELSE Info('No Tienes Derecho a este modulo')"
+        }
+      ],
+      "validations": [],
+      "exceptions_or_errors": [],
+      "dependencies": [
+        {
+          "type": "ui",
+          "name": "WinStatus/Restore/SetFocus",
+          "reason": "Reusar ventana si ya está abierta; abrir child si no existe",
+          "evidence": "SWITCH WinStatus(...)"
+        }
+      ],
+      "wl_code": "IF gnUSUARIO=1 OR gnSeActivoNuevoMenu=1 THEN\n\tSWITCH WinStatus(WIN_Datos_Generales)\n\t\tCASE Active, Grayed\n\t\t\tRestore(WIN_Datos_Generales)\n\t\t\tSetFocus(WIN_Datos_Generales)\n\t\tCASE NotFound\n\t\t\tOpenChild(WIN_Datos_Generales)\n\tEND\n\tELSE\n\t\tInfo(\"No Tienes Derecho a este modulo\")\n\tEND"
+    }
+  ],
+  "unknowns": [],
+  "followups": []
+}

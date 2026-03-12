@@ -1,0 +1,42 @@
+{
+  "step": 1,
+  "artifact_type": "ui_control_event",
+  "id": "CTRL:WIN:WIN_RegistroUsuarioLUCCA:BTN_Cancelar:Click",
+  "window_or_page": "WIN:WIN_RegistroUsuarioLUCCA",
+  "module": "Auth/DeviceGate",
+  "control": {
+    "name": "BTN_Cancelar",
+    "type": "Button",
+    "purpose": "Cancelar/Salir del registro: resetear gnUSUARIO=0 y cerrar ventana.",
+    "visibility_or_permissions": []
+  },
+  "output_dir": "docs/as-is/windows/",
+  "output_filename": "CTRL_WIN_WIN_RegistroUsuarioLUCCA_BTN_Cancelar_Click.json",
+  "events": [
+    {
+      "event": "Click BTN_Cancelar",
+      "summary": "Cancelar/Salir del registro: resetear gnUSUARIO=0 y cerrar ventana.",
+      "calls_procedures": [],
+      "calls_windows": [],
+      "calls_queries_or_sql": [],
+      "tables_read": [],
+      "tables_write": [],
+      "business_rules": [
+        {
+          "id": "BR-AUTH-CANCEL-001",
+          "rule": "Cancelar fuerza gnUSUARIO=0 y cierra.",
+          "evidence": "gnUSUARIO=0 Close()"
+        }
+      ],
+      "validations": [],
+      "exceptions_or_errors": [],
+      "dependencies": [],
+      "wl_code": "gnUSUARIO=0\n\tClose()"
+    }
+  ],
+  "unknowns": [],
+  "followups": [
+    "Confirmar si existe ventana de Login adicional (WIN_Login) o si esta ventana es el login definitivo.",
+    "Confirmar tabla BitMovs (estructura y campos) para logging TO-BE."
+  ]
+}

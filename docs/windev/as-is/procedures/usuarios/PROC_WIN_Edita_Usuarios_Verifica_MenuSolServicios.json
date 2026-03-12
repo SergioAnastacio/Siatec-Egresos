@@ -1,0 +1,19 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Edita_Usuarios:Verifica_MenuSolServicios",
+  "name": "Verifica_MenuSolServicios",
+  "scope": "window_local",
+  "owner_window": "WIN_Edita_Usuarios",
+  "signature": "PROCEDURE Verifica_MenuSolServicios()",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Edita_Usuarios_Verifica_MenuSolServicios.json",
+  "tables_read": [],
+  "tables_write": [],
+  "relations_found": [],
+  "metrics": {
+    "lines": 58,
+    "sql_fragments": 0
+  },
+  "wl_code": "gsResPath=TreeFind(TREE_Example, 13, Null, tvLeaf + tvNode)\nnEstado13 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 14, Null, tvLeaf + tvNode)\nnEstado14 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 15, Null, tvLeaf + tvNode)\nnEstado15 is int=TREE_Example[gsResPath]..Checked\nIF nEstado13=0 AND nEstado14=0 AND nEstado15=0 THEN\ngsResPath=TreeFind(TREE_Example, 16, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 17, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 18, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 19, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 20, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\nELSE IF nEstado13=1 AND nEstado14=1 AND nEstado15=1 THEN\ngsResPath=TreeFind(TREE_Example, 16, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=0 THEN\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 17, Null, tvLeaf + tvNode)\n\n\nPart 1 › WINDEV window › WIN_Edita_Usuarios › Procedures\n3/9/2026\n358\nSIATEC1_IA\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 18, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 19, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 20, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\nEND\nELSE IF nEstado13=1 OR nEstado14=1 OR nEstado15=1 THEN\ngsResPath=TreeFind(TREE_Example, 16, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=0 THEN\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 17, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 18, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 19, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 20, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\nEND\nEND\ngsResPath=TreeFind(TREE_Example, 12, Null, tvLeaf + tvNode)\nIF nEstado13=1 AND nEstado14=1 AND nEstado15=1 THEN\nTREE_Example[gsResPath]..Checked=1\nELSE IF nEstado13=0 AND nEstado14=0 AND nEstado15=0 THEN\nTREE_Example[gsResPath]..Checked=0\nELSE IF nEstado13=1 OR nEstado14=1 OR nEstado15=1THEN\nTREE_Example[gsResPath]..Checked=-1\nEND"
+}

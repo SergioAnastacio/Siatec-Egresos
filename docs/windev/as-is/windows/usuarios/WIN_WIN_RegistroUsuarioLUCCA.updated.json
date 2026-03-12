@@ -1,0 +1,32 @@
+{
+  "name": "WIN_RegistroUsuarioLUCCA",
+  "artifacts": {
+    "controls": [
+      "docs/as-is/windows/CTRL_WIN_WIN_RegistroUsuarioLUCCA_BTN_Agregar_Click.json",
+      "docs/as-is/windows/CTRL_WIN_WIN_RegistroUsuarioLUCCA_BTN_Cancelar_Click.json",
+      "docs/as-is/windows/CTRL_WIN_WIN_RegistroUsuarioLUCCA_EDT_LOGIN_Exit.json"
+    ],
+    "procedures": [
+      "docs/as-is/procedures/PROC_WIN_RegistroUsuarioLUCCA_Habilita_Menu.json",
+      "docs/as-is/procedures/PROC_WIN_RegistroUsuarioLUCCA_Prepara_Menu.json",
+      "docs/as-is/procedures/PROC_WIN_RegistroUsuarioLUCCA_Prepara_Menu1.json"
+    ]
+  },
+  "data_access": {
+    "tables_read": [
+      "DatosGrales",
+      "LUCCA182",
+      "LUCCA333",
+      "LUCCA410",
+      "Usuarios"
+    ],
+    "tables_written": [
+      "BitMovs",
+      "LUCCA182",
+      "LUCCA333",
+      "LUCCA410",
+      "LUCCA466",
+      "Usuarios"
+    ]
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "step": 1,
+  "artifact_type": "ui_control_event",
+  "id": "CTRL:WIN:WIN_Inicio_LUCCA:BTN_ParamCotrolUsuario",
+  "window_or_page": "WIN:WIN_Inicio_LUCCA",
+  "module": "Shell/Inicio",
+  "control": {
+    "name": "BTN_ParamCotrolUsuario",
+    "type": "Button",
+    "purpose": "Abrir catálogo de usuarios (administración de usuarios/permisos).",
+    "visibility_or_permissions": [
+      {
+        "condition": "gnUSUARIO=1 OR gnSeActivoNuevoMenu=1",
+        "effect": "enabled",
+        "evidence": "IF gnUSUARIO=1 OR gnSeActivoNuevoMenu=1 THEN ..."
+      },
+      {
+        "condition": "ELSE",
+        "effect": "blocked_with_message",
+        "evidence": "Info(\"No Tienes Derecho a este modulo\")"
+      }
+    ]
+  },
+  "output_dir": "docs/as-is/windows/",
+  "output_filename": "CTRL_WIN_WIN_Inicio_LUCCA_BTN_ParamCotrolUsuario.json",
+  "events": [
+    {
+      "event": "Click BTN_ParamCotrolUsuario",
+      "summary": "Si es admin o menú nuevo activo, reusa o abre como child la ventana WIN_Catalogo_Usuarios; si no, muestra mensaje.",
+      "calls_procedures": [],
+      "calls_windows": ["WIN:WIN_Catalogo_Usuarios"],
+      "calls_queries_or_sql": [],
+      "tables_read": [],
+      "tables_write": [],
+      "business_rules": [
+        {
+          "id": "BR-SHELL-ADMIN-002",
+          "rule": "Solo administrador (gnUSUARIO=1) o menú nuevo activo puede abrir el catálogo de usuarios.",
+          "evidence": "IF gnUSUARIO=1 OR gnSeActivoNuevoMenu=1 THEN ... ELSE Info(\"No Tienes Derecho a este modulo\")"
+        }
+      ],
+      "validations": [
+        {
+          "rule": "Si no tiene derecho, no abrir ventana y mostrar mensaje.",
+          "severity": "high",
+          "evidence": "Info(\"No Tienes Derecho a este modulo\")"
+        }
+      ],
+      "exceptions_or_errors": [],
+      "dependencies": [
+        {
+          "type": "ui",
+          "name": "WinStatus/Restore/SetFocus/OpenChild",
+          "reason": "Reusar ventana si ya existe; abrir child si no existe.",
+          "evidence": "SWITCH WinStatus(WIN_Catalogo_Usuarios) ... Restore/SetFocus ... OpenChild"
+        }
+      ],
+      "wl_code": "IF gnUSUARIO=1 OR gnSeActivoNuevoMenu=1 THEN\nSWITCH WinStatus(WIN_Catalogo_Usuarios)\n\tCASE Active, Grayed\n\t\tRestore(WIN_Catalogo_Usuarios)\n\t\tSetFocus(WIN_Catalogo_Usuarios)\n\tCASE NotFound\n\t\tOpenChild(WIN_Catalogo_Usuarios)\nEND\nELSE\n\tInfo(\"No Tienes Derecho a este modulo\")\nEND"
+    }
+  ],
+  "unknowns": [],
+  "followups": [
+    "Pegar WIN_Catalogo_Usuarios (init + eventos principales) para documentar procesos de administración y tablas afectadas."
+  ]
+}

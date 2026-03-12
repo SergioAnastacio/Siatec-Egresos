@@ -1,0 +1,40 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Edita_Usuarios:AACarga_ZDerechos_Cuadrilla",
+  "name": "AACarga_ZDerechos_Cuadrilla",
+  "scope": "window_local",
+  "owner_window": "WIN_Edita_Usuarios",
+  "signature": "PROCEDURE AACarga_ZDerechos_Cuadrilla()",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Edita_Usuarios_AACarga_ZDerechos_Cuadrilla.json",
+  "tables_read": [
+    "BuscaQry",
+    "LUCCA285",
+    "LUCCA286"
+  ],
+  "tables_write": [],
+  "relations_found": [
+    {
+      "type": "field_assignment",
+      "child_table": "P1",
+      "child_column": "Codigo",
+      "parent_table": "U1",
+      "parent_column": "Cuadrilla",
+      "evidence": "P1.Codigo=U1.Cuadrilla",
+      "source": "PROC:AACarga_ZDerechos_Cuadrilla"
+    },
+    {
+      "type": "sql_join",
+      "join_table": "LUCCA285",
+      "on": "P1.Codigo=U1.Cuadrilla",
+      "evidence": " FROM LUCCA286 U1 Left Join LUCCA285 P1 On P1.Codigo=U1.Cuadrilla  ...",
+      "source": "PROC:AACarga_ZDerechos_Cuadrilla"
+    }
+  ],
+  "metrics": {
+    "lines": 18,
+    "sql_fragments": 3
+  },
+  "wl_code": "Part 1 › WINDEV window › WIN_Edita_Usuarios › Procedures\n3/9/2026\n262\nSIATEC1_IA\nBuscaQry is Data Source\nTableDeleteAll(TABLE_DerechosCuadrilla)\nIF HExecuteSQLQuery(BuscaQry, MyConnectionLucca, hQueryWithoutCorrection + hNoBind,\n\"SELECT U1.Usuario, U1.Renglon, U1.Cuadrilla, P1.Descripcion \" + ...\n\" FROM LUCCA286 U1 Left Join LUCCA285 P1 On P1.Codigo=U1.Cuadrilla  \" + ...\n\"Where U1.Usuario=\" + Usuarios.CODIGO + \" Order by U1.Renglon \") = False THEN\nError(\"HFSQL error: \" + HErrorInfo())\nEND\nHReadFirst(BuscaQry)\nLOOP (HNbRec(BuscaQry))\nTableAddLine(TABLE_DerechosCuadrilla, BuscaQry.Usuario, BuscaQry.Renglon, BuscaQry.Descripcion)\nHReadNext(BuscaQry)\nEND\nLocal procedure AACarga_ZDerechos_GruposRoles"
+}

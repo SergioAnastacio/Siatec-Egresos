@@ -1,0 +1,44 @@
+{
+  "tables": [
+    {
+      "schema_name": "dbo",
+      "table_name": "Usuarios"
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "Areax"
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "DatosGrales"
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "ConfInter"
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "LUCCA410"
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "LUCCA182"
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "LUCCA333"
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "LUCCA466"
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "UsuHist"
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "BitMovs"
+    }
+  ]
+}

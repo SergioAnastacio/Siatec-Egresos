@@ -1,0 +1,19 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Edita_Usuarios:Verifica_MenuPrgBien",
+  "name": "Verifica_MenuPrgBien",
+  "scope": "window_local",
+  "owner_window": "WIN_Edita_Usuarios",
+  "signature": "PROCEDURE Verifica_MenuPrgBien()",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Edita_Usuarios_Verifica_MenuPrgBien.json",
+  "tables_read": [],
+  "tables_write": [],
+  "relations_found": [],
+  "metrics": {
+    "lines": 44,
+    "sql_fragments": 0
+  },
+  "wl_code": "gsResPath=TreeFind(TREE_Example, 22, Null, tvLeaf + tvNode)\nnEstado22 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 23, Null, tvLeaf + tvNode)\nnEstado23 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 24, Null, tvLeaf + tvNode)\nnEstado24 is int=TREE_Example[gsResPath]..Checked\nIF nEstado22=0 AND nEstado23=0 THEN\ngsResPath=TreeFind(TREE_Example, 24, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 25, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\nELSE IF nEstado22=1 AND nEstado23=1 THEN\ngsResPath=TreeFind(TREE_Example, 24, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=0 THEN\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 25, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\nEND\nELSE IF nEstado22=1 OR nEstado23=1 THEN\ngsResPath=TreeFind(TREE_Example, 24, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=0 THEN\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 25, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\nEND\nEND\nnEstado24=TREE_Example[gsResPath]..Checked\n\n\nPart 1 › WINDEV window › WIN_Edita_Usuarios › Procedures\n3/9/2026\n355\nSIATEC1_IA\ngsResPath=TreeFind(TREE_Example, 21, Null, tvLeaf + tvNode)\nIF nEstado22=1 AND nEstado23=1 AND nEstado24=1 THEN\nTREE_Example[gsResPath]..Checked=1\nELSE IF nEstado22=0 AND nEstado23=0 AND nEstado24=0 THEN\nTREE_Example[gsResPath]..Checked=0\nELSE IF nEstado22=1 OR nEstado23=1 OR nEstado24=1 THEN\nTREE_Example[gsResPath]..Checked=-1\nELSE IF nEstado22=-1 OR nEstado23=-1 OR nEstado24=-1 THEN\nTREE_Example[gsResPath]..Checked=-1\nEND\nLocal procedure Verifica_MenuPrgServ"
+}

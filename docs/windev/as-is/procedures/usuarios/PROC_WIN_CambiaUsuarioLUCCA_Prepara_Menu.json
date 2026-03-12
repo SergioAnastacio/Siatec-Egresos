@@ -1,0 +1,34 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_CambiaUsuarioLUCCA:Prepara_Menu",
+  "name": "Prepara_Menu",
+  "scope": "window_local",
+  "owner_window": "WIN_CambiaUsuarioLUCCA",
+  "signature": "PROCEDURE Prepara_Menu()",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_CambiaUsuarioLUCCA_Prepara_Menu.json",
+  "summary": {
+    "purpose": "Aplica garrDerNvos al menú lateral del shell (oculta secciones, deshabilita botones, ajusta altura).",
+    "calls": []
+  },
+  "tables_read": [],
+  "tables_write": [],
+  "ui_effects": [
+    {
+      "type": "menu_permissions",
+      "target": "WIN_Inicio_LUCCA.SIDE_Menu",
+      "effect": "apply_permissions"
+    }
+  ],
+  "business_rules": [
+    {
+      "id": "BR-SHELL-PERM-001",
+      "rule": "Oculta secciones del SIDE_Menu y deshabilita botones según garrDerNvos[]. Ajusta altura del menú.",
+      "evidence": "IF garrDerNvos[x]=0 THEN ... Visible=False/State=3 ... SIDE_Menu..Height=1218-gnRestaAltMenu"
+    }
+  ],
+  "dependencies": [],
+  "raw_wl_excerpt": "\t\tgnRestaAltMenu=0\n\t\tIF garrDerNvos[1]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[2]..Visible=False\n\t\t\tgnRestaAltMenu+=34\n\t\tELSE\n\t\t\tIF garrDerNvos[2]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolBienes..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[12]=0 THEN\n\t\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolServ..State=3\t\t\n\t\t\tEND\n\t\t\tIF garrDerNvos[31]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolCheqMan..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[21]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolProgAdqbien..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[26]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolProgAdqServ..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[34]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolVacaciones..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[37]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolRevBien..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[38]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolRevServ..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[39]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolModPres..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[44]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[2].BTN_SolcajaChica..State=3\n\t\t\tEND\n\t\tEND\n\t\tIF garrDerNvos[45]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[3]..Visible=False\n\t\t\tgnRestaAltMenu+=34\n\t\tELSE\n\t\t\tIF garrDerNvos[46]=0 THEN\n\t\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[3].BTN_Resgresguardos..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[50]=0 THEN\n\t\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[3].BTN_ConumiblesPorResguardar..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[51]=0 THEN\n\t\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[3].BTN_ReporteadorResguardos..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[52]=0 THEN\n\t\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[3].BTN_ResgDepreciaciones..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[55]=0 THEN\n\t\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[3].BTN_ResgDepreciacionInmuebles..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[58]=0 THEN\n\t\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[3].BTN_Resgtabla..State=3\n\t\t\tEND\n\t\tEND\n\t\tIF garrDerNvos[59]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[4]..Visible=False\n\t\t\tgnRestaAltMenu+=34\n\t\tELSE\n\t\t\tIF garrDerNvos[60]=0 THEN\n\t\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[4].BTN_ComisionRegistro..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[61]=0 THEN\n\t\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[4].BTN_ComisionAutoriza..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[62]=0 THEN\n\t\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[4].BTN_ComisionComprobacion..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[63]=0 THEN\n\t\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[4].BTN_ComisionRevision..State=3\n\t\t\tEND\n\t\tEND\n\t\tIF garrDerNvos[64]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[5]..Visible=False\n\t\t\tgnRestaAltMenu+=34\n\t\tELSE\n\t\t\tIF garrDerNvos[65]=0 THEN\n\t\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutBienes..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[72]=0 THEN\n\t\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutoServs..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[76]=0 THEN\n\t\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutCheques..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[77]=0 THEN\n\t\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutLiqBienes..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[81]=0 THEN\n\t\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutLiqServ..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[90]=0 THEN\n\t\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutEstimNomina..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[84]=0 THEN\n\t\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutReqBien..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[85]=0 THEN\n\t\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutReqServ..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[86]=0 THEN\n\t\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutIniObra..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[89]=0 THEN\n\t\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutIniGastosFijos..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[91]=0 THEN\n\t\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutGFPeriodico..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[92]=0 THEN\n\t\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutVacaciones..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[93]=0 THEN\n\t\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutCheqSuspendido..State=3\n\t\t\tEND\n\t\t\tIF garrDerNvos[94]=0 THEN",
+  "unknowns": []
+}

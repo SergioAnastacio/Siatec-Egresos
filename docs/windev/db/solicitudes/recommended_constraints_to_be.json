@@ -1,0 +1,242 @@
+{
+  "artifact_type": "recommended_constraints_to_be",
+  "schema": "dbo",
+  "output_dir": "docs/db/metadata/",
+  "output_filename": "recommended_constraints_to_be.json",
+  "principles": [
+    "En TO-BE, mover reglas críticas desde la app hacia la BD donde sea seguro (FK + NOT NULL + índices) para reducir spaghetti y asegurar integridad.",
+    "Aplicar constraints por etapas (modo 'observación' primero: detectar inconsistencias antes de hacer NOT NULL/FK).",
+    "Evitar romper legacy: introducir columnas nuevas y backfill cuando haya mismatches de tipo."
+  ],
+  "targets": {
+    "tables": [
+      "dbo.Solicitudes",
+      "dbo.AtencionServicios",
+      "dbo.Usuarios",
+      "dbo.Areax",
+      "dbo.LUCCA429",
+      "dbo.LUCCA430",
+      "dbo.LUCCA466"
+    ],
+    "table_aliases": [
+      {
+        "wl_name": "Areas",
+        "sql_name": "Areax",
+        "note": "Normalización: WL 'Areas' es dbo.Areax."
+      }
+    ]
+  },
+  "data_integrity_recommendations": [
+    {
+      "id": "FK-001",
+      "type": "foreign_key",
+      "table": "dbo.Solicitudes",
+      "column": "AREA",
+      "ref_table": "dbo.Areax",
+      "ref_column": "CODIGO",
+      "on_delete": "NO ACTION",
+      "on_update": "NO ACTION",
+      "preconditions": [
+        "No debe haber Solicitudes.AREA con valores que no existan en Areax.CODIGO",
+        "Resolver NULLs existentes si hay (por backfill o regla de negocio)"
+      ],
+      "risk": "Si hay datos históricos inconsistentes, el FK fallará al crearse."
+    },
+    {
+      "id": "FK-002",
+      "type": "foreign_key",
+      "table": "dbo.Solicitudes",
+      "column": "USUARIOS",
+      "ref_table": "dbo.Usuarios",
+      "ref_column": "CODIGO",
+      "on_delete": "NO ACTION",
+      "on_update": "NO ACTION",
+      "preconditions": [
+        "No debe haber Solicitudes.USUARIOS que no existan en Usuarios.CODIGO",
+        "Resolver NULLs existentes"
+      ]
+    },
+    {
+      "id": "FK-003",
+      "type": "foreign_key",
+      "table": "dbo.AtencionServicios",
+      "column": "AREA",
+      "ref_table": "dbo.Areax",
+      "ref_column": "CODIGO",
+      "on_delete": "NO ACTION",
+      "on_update": "NO ACTION",
+      "preconditions": [
+        "No debe haber AtencionServicios.AREA fuera del catálogo Areax",
+        "Resolver NULLs existentes"
+      ]
+    },
+    {
+      "id": "FK-004",
+      "type": "foreign_key_with_migration",
+      "table": "dbo.AtencionServicios",
+      "legacy_column": "USUARIOS (smallint)",
+      "target_column": "USUARIO_ID (int)",
+      "ref_table": "dbo.Usuarios",
+      "ref_column": "CODIGO",
+      "strategy": "add_new_column_backfill_switch",
+      "why": "Evitar casting y overflow por mismatch smallint vs int; habilita FK real.",
+      "steps": [
+        "Agregar columna nueva AtencionServicios.USUARIO_ID int NULL",
+        "Backfill: USUARIO_ID = CAST(USUARIOS as int) donde aplique",
+        "Validar que todos los USUARIO_ID existan en Usuarios.CODIGO",
+        "Cambiar app para usar USUARIO_ID",
+        "Hacer NOT NULL a USUARIO_ID (si regla lo exige)",
+        "Crear FK AtencionServicios.USUARIO_ID -> Usuarios.CODIGO",
+        "Opcional: deprecar/eliminar columna USUARIOS legacy cuando ya no se use"
+      ]
+    },
+    {
+      "id": "NN-001",
+      "type": "not_null",
+      "table": "dbo.Solicitudes",
+      "columns": ["AREA", "USUARIOS"],
+      "why": "Confirmado como obligatorio por regla de negocio; reduce estados inválidos.",
+      "preconditions": [
+        "No NULLs en estas columnas (corregir/balancear datos históricos)"
+      ]
+    },
+    {
+      "id": "NN-002",
+      "type": "not_null",
+      "table": "dbo.AtencionServicios",
+      "columns": ["AREA"],
+      "why": "Confirmado como obligatorio por negocio.",
+      "preconditions": [
+        "No NULLs en AtencionServicios.AREA"
+      ]
+    },
+    {
+      "id": "NN-003",
+      "type": "not_null_after_migration",
+      "table": "dbo.AtencionServicios",
+      "columns": ["USUARIO_ID"],
+      "why": "Confirmado como obligatorio por negocio; se aplica tras migración USUARIOS->USUARIO_ID.",
+      "preconditions": [
+        "USUARIO_ID backfilled y sin NULLs"
+      ]
+    }
+  ],
+  "locking_recommendations": [
+    {
+      "id": "LOCK-UX-001",
+      "type": "unique_constraint",
+      "table": "dbo.LUCCA429",
+      "columns": ["Codigo"],
+      "status": "already_enforced_by_pk",
+      "why": "Garantiza 1 lock activo por solicitud."
+    },
+    {
+      "id": "LOCK-UX-002",
+      "type": "unique_constraint",
+      "table": "dbo.LUCCA430",
+      "columns": ["Codigo"],
+      "status": "already_enforced_by_pk",
+      "why": "Garantiza 1 lock activo por servicio."
+    },
+    {
+      "id": "LOCK-TTL-001",
+      "type": "design_recommendation",
+      "component": "locking",
+      "recommendation": "Agregar expiración (TTL) o heartbeat al lock",
+      "why": "Evita locks huérfanos si el cliente se cierra inesperadamente.",
+      "implementation_options": [
+        "Agregar columna ExpiresAt datetime2 + job de limpieza",
+        "Agregar UpdatedAt datetime2 + refresh periódicamente",
+        "Manejar locks en capa API (TO-BE) usando transacciones o Redis/DB lock manager"
+      ]
+    }
+  ],
+  "index_recommendations": [
+    {
+      "id": "IX-001",
+      "type": "index",
+      "table": "dbo.Solicitudes",
+      "definition": "CREATE NONCLUSTERED INDEX IX_Solicitudes_USUARIOS ON dbo.Solicitudes(USUARIOS) INCLUDE (CODIGO, FECHA, AREA, ESTADO, REVISION, UBICACION)",
+      "why": "Predicado principal del catálogo: WHERE Solicitudes.USUARIOS = <id> + ORDER BY Codigo DESC."
+    },
+    {
+      "id": "IX-002",
+      "type": "index",
+      "table": "dbo.Solicitudes",
+      "definition": "CREATE NONCLUSTERED INDEX IX_Solicitudes_USUARIOS_REVISION ON dbo.Solicitudes(USUARIOS, REVISION) INCLUDE (CODIGO, FECHA, AREA, ESTADO, UBICACION)",
+      "why": "Optimiza filtro adicional REVISION=0 en bienes."
+    },
+    {
+      "id": "IX-003",
+      "type": "index",
+      "table": "dbo.Solicitudes",
+      "definition": "CREATE NONCLUSTERED INDEX IX_Solicitudes_AREA ON dbo.Solicitudes(AREA) INCLUDE (CODIGO)",
+      "why": "Join soft/real con Areax por AREA."
+    },
+    {
+      "id": "IX-004",
+      "type": "index",
+      "table": "dbo.AtencionServicios",
+      "definition": "CREATE NONCLUSTERED INDEX IX_AtencionServicios_USUARIO_ID ON dbo.AtencionServicios(USUARIO_ID) INCLUDE (CODIGO, FECHA, AREA, ESTADO, NECESITADO)",
+      "why": "Predicado principal (equivalente a USUARIOS) en el catálogo de servicios, pero usando columna int migrada."
+    },
+    {
+      "id": "IX-005",
+      "type": "index",
+      "table": "dbo.AtencionServicios",
+      "definition": "CREATE NONCLUSTERED INDEX IX_AtencionServicios_AREA ON dbo.AtencionServicios(AREA) INCLUDE (CODIGO)",
+      "why": "Join con Areax por AREA."
+    },
+    {
+      "id": "IX-006",
+      "type": "index",
+      "table": "dbo.LUCCA429",
+      "definition": "CREATE NONCLUSTERED INDEX IX_LUCCA429_Usuario ON dbo.LUCCA429(Usuario) INCLUDE (Codigo, Mac, IP, Nom, FechaReg)",
+      "why": "Mejora reporting/diagnóstico: locks por usuario (no afecta lookup por Codigo que ya cubre la PK)."
+    },
+    {
+      "id": "IX-007",
+      "type": "index",
+      "table": "dbo.LUCCA430",
+      "definition": "CREATE NONCLUSTERED INDEX IX_LUCCA430_Usuario ON dbo.LUCCA430(Usuario) INCLUDE (Codigo, Mac, IP, Nom)",
+      "why": "Mejora reporting/diagnóstico: locks por usuario."
+    }
+  ],
+  "lucca466_recommendations": [
+    {
+      "id": "LUCCA466-001",
+      "type": "schema_change",
+      "table": "dbo.LUCCA466",
+      "recommendation": "Introducir PK surrogate (DeviceId) y tratar Mac como atributo no-único",
+      "why": "Confirmaste que Mac no es único; TO-BE necesita identificador estable y único.",
+      "options": [
+        "Agregar DeviceId uniqueidentifier DEFAULT NEWSEQUENTIALID() y hacerlo PK",
+        "Agregar índice no-único por Mac si se consulta por Mac",
+        "Si el comportamiento real es 1 registro por Mac, entonces corregir datos + agregar UNIQUE(Mac)"
+      ]
+    }
+  ],
+  "execution_plan": [
+    {
+      "phase": "Phase 1 - Observe",
+      "actions": [
+        "Ejecutar queries de detección de inconsistencias (orphans, NULLs, tipos fuera de rango).",
+        "Crear índices no disruptivos primero (IX-001, IX-002, IX-003, IX-005)."
+      ]
+    },
+    {
+      "phase": "Phase 2 - Migrate mismatch column",
+      "actions": [
+        "Agregar AtencionServicios.USUARIO_ID (int), backfill, actualizar aplicación, crear índice IX-004.",
+        "Crear FK-004 sobre USUARIO_ID."
+      ]
+    },
+    {
+      "phase": "Phase 3 - Enforce integrity",
+      "actions": [
+        "Aplicar NOT NULL (NN-001, NN-002, NN-003) cuando no existan NULLs.",
+        "Aplicar FKs (FK-001, FK-002, FK-003) cuando no existan orphans."
+      ]
+    }
+  ]
+}

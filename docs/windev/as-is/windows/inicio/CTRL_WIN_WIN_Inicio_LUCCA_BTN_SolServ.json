@@ -1,0 +1,59 @@
+{
+  "step": 1,
+  "artifact_type": "ui_control_event",
+  "id": "CTRL:WIN:WIN_Inicio_LUCCA:BTN_SolServ",
+  "window_or_page": "WIN:WIN_Inicio_LUCCA",
+  "module": "Shell/Inicio",
+  "control": {
+    "name": "BTN_SolServ",
+    "type": "Button",
+    "purpose": "Navegar a catálogo de Solicitudes (Servicios). Reusa ventana si está abierta; si no, abre como child y configura gnNVentanaEnUso=2.",
+    "visibility_or_permissions": []
+  },
+  "output_dir": "docs/as-is/windows/",
+  "output_filename": "CTRL_WIN_WIN_Inicio_LUCCA_BTN_SolServ.json",
+  "events": [
+    {
+      "event": "Click BTN_SolServ",
+      "summary": "Navegar a catálogo de Solicitudes (Servicios). Reusa ventana si está abierta; si no, abre como child y configura gnNVentanaEnUso=2.",
+      "calls_procedures": [],
+      "calls_windows": [
+        "WIN_Browse_Solicitudes"
+      ],
+      "calls_queries_or_sql": [],
+      "tables_read": [],
+      "tables_write": [],
+      "business_rules": [
+        {
+          "id": "BR-SHELL-NAV-001",
+          "rule": "Acceso a Solicitudes requiere derecho garrDerechos[9]=1 o menú nuevo activo (gnSeActivoNuevoMenu=1).",
+          "evidence": "IF garrDerechos[9]=1 OR gnSeActivoNuevoMenu=1 THEN ... ELSE Info('No tienes derecho a este proceso')"
+        },
+        {
+          "id": "BR-SOL-CTX-002",
+          "rule": "BTN_SolServ abre WIN_Browse_Solicitudes en modo Servicios (gnNVentanaEnUso=2).",
+          "evidence": "gnNVentanaEnUso=2; OpenChild(WIN_Browse_Solicitudes)"
+        }
+      ],
+      "validations": [
+        {
+          "rule": "Si el usuario no tiene derecho, mostrar mensaje y no abrir ventana.",
+          "severity": "high",
+          "evidence": "Info(\"No tienes derecho a este proceso\")"
+        }
+      ],
+      "exceptions_or_errors": [],
+      "dependencies": [
+        {
+          "type": "ui",
+          "name": "WinStatus/Restore/SetFocus",
+          "reason": "Reusar ventana si ya está abierta; abrir child si no existe",
+          "evidence": "SWITCH WinStatus(...)"
+        }
+      ],
+      "wl_code": "IF garrDerechos[9]=1 OR gnSeActivoNuevoMenu=1 THEN\n\tSWITCH WinStatus(WIN_Browse_Solicitudes)\n\t\tCASE Active, Grayed\n\t\t\tRestore(WIN_Browse_Solicitudes)\n\t\t\tSetFocus(WIN_Browse_Solicitudes)\n\t\tCASE NotFound\n\t\t\tgnNVentanaEnUso=2\n\t\t\tOpenChild(WIN_Browse_Solicitudes)\n\tEND\n\tELSE\n\t\tInfo(\"No tienes derecho a este proceso\")\n\tEND"
+    }
+  ],
+  "unknowns": [],
+  "followups": []
+}

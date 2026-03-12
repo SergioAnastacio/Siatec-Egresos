@@ -1,0 +1,604 @@
+{
+  "step": 1,
+  "artifact_type": "procedure_index",
+  "owner_window": "WIN_Edita_Usuarios",
+  "procedures": [
+    {
+      "name": "WIN_Edita_Usuarios",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_WIN_Edita_Usuarios.json",
+      "tables_read": [
+        "Areax",
+        "BuscaIns",
+        "DatosGrales",
+        "LUCCA102",
+        "LUCCA103",
+        "LUCCA104",
+        "LUCCA105",
+        "LUCCA111",
+        "LUCCA185",
+        "LUCCA187",
+        "LUCCA213",
+        "LUCCA249",
+        "LUCCA254",
+        "LUCCA286",
+        "LUCCA296",
+        "LUCCA410",
+        "LUCCA411",
+        "LUCCA663",
+        "SIVEC001C",
+        "UsuHist",
+        "Usuarios"
+      ],
+      "tables_write": [
+        "BitMovs",
+        "LUCCA105",
+        "LUCCA182",
+        "LUCCA185",
+        "LUCCA187",
+        "LUCCA249",
+        "LUCCA254",
+        "LUCCA286",
+        "LUCCA296",
+        "LUCCA333",
+        "LUCCA410",
+        "LUCCA663",
+        "UsuHist",
+        "Usuarios"
+      ]
+    },
+    {
+      "name": "AACarga_Tabla",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_AACarga_Tabla.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "AACarga_Tabla_RecepDocts",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_AACarga_Tabla_RecepDocts.json",
+      "tables_read": [
+        "BuscaQry",
+        "LUCCA663",
+        "Usuarios"
+      ],
+      "tables_write": []
+    },
+    {
+      "name": "AACarga_TablaAut_Compras",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_AACarga_TablaAut_Compras.json",
+      "tables_read": [
+        "Areax",
+        "BuscaQry",
+        "LUCCA105"
+      ],
+      "tables_write": []
+    },
+    {
+      "name": "AACarga_TablaSoloDerechos",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_AACarga_TablaSoloDerechos.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "AACarga_ZDerechos_AreaCompras",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_AACarga_ZDerechos_AreaCompras.json",
+      "tables_read": [
+        "Areax",
+        "BuscaQry",
+        "LUCCA254"
+      ],
+      "tables_write": []
+    },
+    {
+      "name": "AACarga_ZDerechos_BancosRev",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_AACarga_ZDerechos_BancosRev.json",
+      "tables_read": [
+        "Bancos",
+        "BuscaQry",
+        "LUCCA296"
+      ],
+      "tables_write": []
+    },
+    {
+      "name": "AACarga_ZDerechos_Cuadrilla",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_AACarga_ZDerechos_Cuadrilla.json",
+      "tables_read": [
+        "BuscaQry",
+        "LUCCA285",
+        "LUCCA286"
+      ],
+      "tables_write": []
+    },
+    {
+      "name": "AACarga_ZDerechos_GruposRoles",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_AACarga_ZDerechos_GruposRoles.json",
+      "tables_read": [
+        "BuscaQry",
+        "LUCCA187",
+        "LUCCA411"
+      ],
+      "tables_write": []
+    },
+    {
+      "name": "AACarga_ZDerechos_Nomina",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_AACarga_ZDerechos_Nomina.json",
+      "tables_read": [
+        "BuscaQry",
+        "Deducciones",
+        "LUCCA185",
+        "Percepciones"
+      ],
+      "tables_write": []
+    },
+    {
+      "name": "AACarga_ZDerechos_Revision",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_AACarga_ZDerechos_Revision.json",
+      "tables_read": [
+        "BuscaQry",
+        "LUCCA247",
+        "LUCCA249"
+      ],
+      "tables_write": []
+    },
+    {
+      "name": "AACarga_ZZZGuarda410",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_AACarga_ZZZGuarda410.json",
+      "tables_read": [],
+      "tables_write": [
+        "LUCCA410"
+      ]
+    },
+    {
+      "name": "Carga_Der_Nomina",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Carga_Der_Nomina.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Guarda_DerNomina",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Guarda_DerNomina.json",
+      "tables_read": [],
+      "tables_write": [
+        "LUCCA685"
+      ]
+    },
+    {
+      "name": "Menu_Alm_Sol",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Alm_Sol.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Almacen",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Almacen.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Aut_Bien",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Aut_Bien.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Aut_Ini_Obra",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Aut_Ini_Obra.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Aut_Liq_Bienes",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Aut_Liq_Bienes.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Aut_Liq_Serv",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Aut_Liq_Serv.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Aut_Serv",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Aut_Serv.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Autorizaciones",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Autorizaciones.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Banco_EmisionPag",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Banco_EmisionPag.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Banco_Emitidos",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Banco_Emitidos.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Bancos",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Bancos.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_CatyReps",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_CatyReps.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Comisiones",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Comisiones.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Comp_adj_Bien",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Comp_adj_Bien.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Comp_adj_Serv",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Comp_adj_Serv.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Comp_GtosFijos",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Comp_GtosFijos.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Comp_Req_Cot_Bien",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Comp_Req_Cot_Bien.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Comp_Req_Cot_Serv",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Comp_Req_Cot_Serv.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Compras",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Compras.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Contrato",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Contrato.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Depreciaciones",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Depreciaciones.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_DepreciacionesInmuebkes",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_DepreciacionesInmuebkes.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_DeuPub",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_DeuPub.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Ingresos",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Ingresos.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Licita",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Licita.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Mantto",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Mantto.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Nomina",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Nomina.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Obra",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Obra.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_ParCont",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_ParCont.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_ParGen",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_ParGen.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Presupuesto",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Presupuesto.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Prg_Bienes",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Prg_Bienes.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Prg_ChequesManuales",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Prg_ChequesManuales.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Prg_Servicios",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Prg_Servicios.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_ProgSoc",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_ProgSoc.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Resguardo_Patrimonial",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Resguardo_Patrimonial.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Resguardos",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Resguardos.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Sol_Bien",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Sol_Bien.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Sol_MofdifPres",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Sol_MofdifPres.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Sol_Servicios",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Sol_Servicios.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Sol_Vacaciones",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Sol_Vacaciones.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Menu_Solicitudes",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Menu_Solicitudes.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Prende_Lecturas",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Prende_Lecturas.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Prende_Recaudadoras",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Prende_Recaudadoras.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_EdicionprgBien",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_EdicionprgBien.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_EdicionPrgServicios",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_EdicionPrgServicios.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_EdicionSolBien",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_EdicionSolBien.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_EdicionSolModPres",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_EdicionSolModPres.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_EdicionSolServicios",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_EdicionSolServicios.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_Menu_Almacen",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_Menu_Almacen.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_Menu_Autorizaciones",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_Menu_Autorizaciones.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_Menu_Bancos",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_Menu_Bancos.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_Menu_CatyReps",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_Menu_CatyReps.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_Menu_Compras",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_Menu_Compras.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_Menu_Contratos",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_Menu_Contratos.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_Menu_DeuPub",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_Menu_DeuPub.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_Menu_Ingresos",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_Menu_Ingresos.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_Menu_Licita",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_Menu_Licita.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_Menu_Mantenimiento",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_Menu_Mantenimiento.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_Menu_Mantto",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_Menu_Mantto.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_Menu_Nomina",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_Menu_Nomina.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_Menu_Obra",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_Menu_Obra.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_Menu_ParCont",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_Menu_ParCont.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_Menu_ParGen",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_Menu_ParGen.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_Menu_Presupuesto",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_Menu_Presupuesto.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_Menu_ProgSoc",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_Menu_ProgSoc.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_Menu_Resguardo_Patrimonial",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_Menu_Resguardo_Patrimonial.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_Menu_Solicitudes",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_Menu_Solicitudes.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_MenuPrgBien",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_MenuPrgBien.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_MenuPrgServ",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_MenuPrgServ.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_MenuSolBien",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_MenuSolBien.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_MenuSolModPres",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_MenuSolModPres.json",
+      "tables_read": [],
+      "tables_write": []
+    },
+    {
+      "name": "Verifica_MenuSolServicios",
+      "file": "docs/as-is/procedures/PROC_WIN_Edita_Usuarios_Verifica_MenuSolServicios.json",
+      "tables_read": [],
+      "tables_write": []
+    }
+  ],
+  "generated_at": "2026-03-09T16:08:25.732689+00:00"
+}

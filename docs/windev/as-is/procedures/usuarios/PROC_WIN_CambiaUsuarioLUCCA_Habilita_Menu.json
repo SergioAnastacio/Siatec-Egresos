@@ -1,0 +1,30 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_CambiaUsuarioLUCCA:Habilita_Menu",
+  "name": "Habilita_Menu",
+  "scope": "window_local",
+  "owner_window": "WIN_CambiaUsuarioLUCCA",
+  "signature": "PROCEDURE Habilita_Menu()",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_CambiaUsuarioLUCCA_Habilita_Menu.json",
+  "summary": {
+    "purpose": "Mapea permisos del 'nuevo menú' desde LUCCA410 a garrDerNvos[1..360].",
+    "calls": []
+  },
+  "tables_read": [
+    "LUCCA410"
+  ],
+  "tables_write": [],
+  "ui_effects": [],
+  "business_rules": [
+    {
+      "id": "BR-AUTH-MENU-001",
+      "rule": "Carga garrDerNvos[1..360] desde columnas dinámicas LUCCA410.'1'..'360'.",
+      "evidence": "garrDerNvos[n]=LUCCA410.'n'"
+    }
+  ],
+  "dependencies": [],
+  "raw_wl_excerpt": "\t\tgarrDerNvos[1]=LUCCA410.'1'\n\t\tgarrDerNvos[2]=LUCCA410.'2'\n\t\tgarrDerNvos[3]=LUCCA410.'3'\n\t\tgarrDerNvos[4]=LUCCA410.'4'\n\t\tgarrDerNvos[5]=LUCCA410.'5'\n\t\tgarrDerNvos[6]=LUCCA410.'6'\n\t\tgarrDerNvos[7]=LUCCA410.'7'\n\t\tgarrDerNvos[8]=LUCCA410.'8'\n\t\tgarrDerNvos[9]=LUCCA410.'9'     \n\t\tgarrDerNvos[10]=LUCCA410.'10'\n\t\tgarrDerNvos[11]=LUCCA410.'11'\n\t\tgarrDerNvos[12]=LUCCA410.'12'\n\t\tgarrDerNvos[13]=LUCCA410.'13'\n\t\tgarrDerNvos[14]=LUCCA410.'14'\n\t\tgarrDerNvos[15]=LUCCA410.'15'\n\t\tgarrDerNvos[16]=LUCCA410.'16'\n\t\tgarrDerNvos[17]=LUCCA410.'17'\n\t\tgarrDerNvos[18]=LUCCA410.'18'\n\t\tgarrDerNvos[19]=LUCCA410.'19'\n\t\tgarrDerNvos[20]=LUCCA410.'20'\n\t\tgarrDerNvos[21]=LUCCA410.'21'\n\t\tgarrDerNvos[22]=LUCCA410.'22'\n\t\tgarrDerNvos[23]=LUCCA410.'23'\n\t\tgarrDerNvos[24]=LUCCA410.'24'\n\t\tgarrDerNvos[25]=LUCCA410.'25'\n\t\tgarrDerNvos[26]=LUCCA410.'26'\n\t\tgarrDerNvos[27]=LUCCA410.'27'\n\t\tgarrDerNvos[28]=LUCCA410.'28'\n\t\tgarrDerNvos[29]=LUCCA410.'29'\n\t\tgarrDerNvos[30]=LUCCA410.'30'\n\t\tgarrDerNvos[31]=LUCCA410.'31'\n\t\tgarrDerNvos[32]=LUCCA410.'32'\n\t\tgarrDerNvos[33]=LUCCA410.'33'\n\t\tgarrDerNvos[34]=LUCCA410.'34'\n\t\tgarrDerNvos[35]=LUCCA410.'35'\n\t\tgarrDerNvos[36]=LUCCA410.'36'\n\t\tgarrDerNvos[37]=LUCCA410.'37'\n\t\tgarrDerNvos[38]=LUCCA410.'38'\n\t\tgarrDerNvos[39]=LUCCA410.'39'\n\t\tgarrDerNvos[40]=LUCCA410.'40'\n\t\tgarrDerNvos[41]=LUCCA410.'41'\n\t\tgarrDerNvos[42]=LUCCA410.'42'\n\t\tgarrDerNvos[43]=LUCCA410.'43'\n\t\tgarrDerNvos[44]=LUCCA410.'44'\n\t\tgarrDerNvos[45]=LUCCA410.'45'\n\t\tgarrDerNvos[46]=LUCCA410.'46'\n\t\tgarrDerNvos[47]=LUCCA410.'47'\n\t\tgarrDerNvos[48]=LUCCA410.'48'\n\t\tgarrDerNvos[49]=LUCCA410.'49'\n\t\tgarrDerNvos[50]=LUCCA410.'50'\n\t\tgarrDerNvos[51]=LUCCA410.'51'\n\t\tgarrDerNvos[52]=LUCCA410.'52'\n\t\tgarrDerNvos[53]=LUCCA410.'53'\n\t\tgarrDerNvos[54]=LUCCA410.'54'\n\t\tgarrDerNvos[55]=LUCCA410.'55'\n\t\tgarrDerNvos[56]=LUCCA410.'56'\n\t\tgarrDerNvos[57]=LUCCA410.'57'\n\t\tgarrDerNvos[58]=LUCCA410.'58'\n\t\tgarrDerNvos[59]=LUCCA410.'59'\n\t\tgarrDerNvos[60]=LUCCA410.'60'\n\t\tgarrDerNvos[61]=LUCCA410.'61'\n\t\tgarrDerNvos[62]=LUCCA410.'62'\n\t\tgarrDerNvos[63]=LUCCA410.'63'\n\t\tgarrDerNvos[64]=LUCCA410.'64'\n\t\tgarrDerNvos[65]=LUCCA410.'65'\n\t\tgarrDerNvos[66]=LUCCA410.'66'\n\t\tgarrDerNvos[67]=LUCCA410.'67'\n\t\tgarrDerNvos[68]=LUCCA410.'68'\n\t\tgarrDerNvos[69]=LUCCA410.'69'\n\t\tgarrDerNvos[70]=LUCCA410.'70'\n\t\tgarrDerNvos[71]=LUCCA410.'71'\n\t\tgarrDerNvos[72]=LUCCA410.'72'\n\t\tgarrDerNvos[73]=LUCCA410.'73'\n\t\tgarrDerNvos[74]=LUCCA410.'74'\n\t\tgarrDerNvos[75]=LUCCA410.'75'\n\t\tgarrDerNvos[76]=LUCCA410.'76'\n\t\tgarrDerNvos[77]=LUCCA410.'77'\n\t\tgarrDerNvos[78]=LUCCA410.'78'\n\t\tgarrDerNvos[79]=LUCCA410.'79'\n\t\tgarrDerNvos[80]=LUCCA410.'80'\n\t\tgarrDerNvos[81]=LUCCA410.'81'\n\t\tgarrDerNvos[82]=LUCCA410.'82'\n\t\tgarrDerNvos[83]=LUCCA410.'83'\n\t\tgarrDerNvos[84]=LUCCA410.'84'\n\t\tgarrDerNvos[85]=LUCCA410.'85'\n\t\tgarrDerNvos[86]=LUCCA410.'86'\n\t\tgarrDerNvos[87]=LUCCA410.'87'\n\t\tgarrDerNvos[88]=LUCCA410.'88'\n\t\tgarrDerNvos[89]=LUCCA410.'89'\n\t\tgarrDerNvos[90]=LUCCA410.'90'\n\t\tgarrDerNvos[91]=LUCCA410.'91'\n\t\tgarrDerNvos[92]=LUCCA410.'92'\n\t\tgarrDerNvos[93]=LUCCA410.'93'\n\t\tgarrDerNvos[94]=LUCCA410.'94'\n\t\tgarrDerNvos[95]=LUCCA410.'95'\n\t\tgarrDerNvos[96]=LUCCA410.'96'\n\t\tgarrDerNvos[97]=LUCCA410.'97'\n\t\tgarrDerNvos[98]=LUCCA410.'98'\n\t\tgarrDerNvos[99]=LUCCA410.'99'\n\t\tgarrDerNvos[100]=LUCCA410.'100'\n\t\tgarrDerNvos[101]=LUCCA410.'101'\n\t\tgarrDerNvos[102]=LUCCA410.'102'\n\t\tgarrDerNvos[103]=LUCCA410.'103'\n\t\tgarrDerNvos[104]=LUCCA410.'104'\n\t\tgarrDerNvos[105]=LUCCA410.'105'\n\t\tgarrDerNvos[106]=LUCCA410.'106'\n\t\tgarrDerNvos[107]=LUCCA410.'107'\n\t\tgarrDerNvos[108]=LUCCA410.'108'\n\t\tgarrDerNvos[109]=LUCCA410.'109'\n\t\tgarrDerNvos[110]=LUCCA410.'110'\n\t\tgarrDerNvos[111]=LUCCA410.'111'\n\t\tgarrDerNvos[112]=LUCCA410.'112'\n\t\tgarrDerNvos[113]=LUCCA410.'113'\n\t\tgarrDerNvos[114]=LUCCA410.'114'\n\t\tgarrDerNvos[115]=LUCCA410.'115'\n\t\tgarrDerNvos[116]=LUCCA410.'116'\n\t\tgarrDerNvos[117]=LUCCA410.'117'\n\t\tgarrDerNvos[118]=LUCCA410.'118'\n\t\tgarrDerNvos[119]=LUCCA410.'119'\n\t\tgarrDerNvos[120]=LUCCA410.'120'",
+  "unknowns": []
+}

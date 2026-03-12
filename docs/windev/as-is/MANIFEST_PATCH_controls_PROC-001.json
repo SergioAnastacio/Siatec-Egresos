@@ -1,0 +1,12 @@
+{
+  "manifest_patch_type": "append_controls",
+  "target_process_id": "PROC-001",
+  "controls_to_add": [
+    "docs/as-is/windows/CTRL_WIN_WIN_Inicio_LUCCA_BTN_SolBienes.json",
+    "docs/as-is/windows/CTRL_WIN_WIN_Inicio_LUCCA_BTN_SolServ.json",
+    "docs/as-is/windows/CTRL_WIN_WIN_Inicio_LUCCA_BTN_GeneralCerrar.json",
+    "docs/as-is/windows/CTRL_WIN_WIN_Inicio_LUCCA_BTN_GeneralCamUsu.json",
+    "docs/as-is/windows/CTRL_WIN_WIN_Inicio_LUCCA_BTN_Paramsistema.json"
+	"docs/as-is/windows/CTRL_WIN_WIN_Inicio_LUCCA_BTN_ParamCotrolUsuario.json"
+  ]
+}

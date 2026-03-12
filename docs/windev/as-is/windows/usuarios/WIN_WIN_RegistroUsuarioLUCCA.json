@@ -1,0 +1,108 @@
+{
+  "step": 1,
+  "artifact_type": "window_or_page",
+  "id": "WIN:WIN_RegistroUsuarioLUCCA",
+  "name": "WIN_RegistroUsuarioLUCCA",
+  "module": "Auth/DeviceGate",
+  "output_dir": "docs/as-is/windows/",
+  "output_filename": "WIN_WIN_RegistroUsuarioLUCCA.json",
+  "purpose": "Ventana de registro/login inicial (gate) usada cuando gnUSUARIO=0 desde WIN_Inicio_LUCCA. Valida si el dispositivo (MAC) está bloqueado en LUCCA466 y crea registro si no existe.",
+  "ui": {
+    "controls": [
+      "BTN_Agregar",
+      "BTN_Agregar1",
+      "BTN_Cancelar",
+      "BTN_NoName1",
+      "EDT_LOGIN",
+      "EDT_PASSWORD",
+      "IMG_NoName1"
+    ],
+    "assets": [
+      {
+        "control": "IMG_NoName1",
+        "path": "D:\\ASUS_D\\WINDEV_AVR\\SIATEC1_IA\\login_512_1.png"
+      }
+    ]
+  },
+  "entrypoints": [
+    {
+      "event": "Global declarations",
+      "summary": "Declara contador de intentos (nIntentos).",
+      "evidence_excerpt": "\t\tPROCEDURE WIN_RegistroUsuarioLUCCA()\n\t\tnIntentos is int=0"
+    },
+    {
+      "event": "End of initialization",
+      "summary": "Consulta LUCCA466 por gsMacAdd; inserta registro si no existe; si Bloqueado=1 muestra mensaje y cierra (resetea sesión).",
+      "evidence_excerpt": "\t\tHReadSeek(DatosGrales,CODIGO,1,hIdentical)\n\t\tBuscaMac is Data Source\n\t\tnMacBloquado is int=\"\"\n\t\tIF HExecuteSQLQuery(BuscaMac, MyConnectionLucca, hQueryWithoutCorrection + hNoBind,\"SELECT Mac, Bloqueado, UltPostit \" + ...\n\t\t\t\" FROM LUCCA466 \" + ...\n\t\t\t\"Where Mac='\" + gsMacAdd + \"' \") = False THEN\n\t\t\tError(\"HFSQL error: \" + HErrorInfo())\n\t\tEND\t\n\t\tIF HNbRec(BuscaMac)=0 THEN\n\t\t\tIF HExecuteSQLQuery(BuscaMac, MyConnectionLucca, hQueryWithoutCorrection + hNoBind,\"Insert into LUCCA466 Select '\" + gsMacAdd + \"', 0, 0, 0, 0, '', 0 \" ) = False THEN\n\t\t\t\tError(\"HFSQL error: \" + HErrorInfo())\n\t\t\tEND\t\n\t\t\tnMacBloquado=0\n\t\t\tgnUltPostit=0\n\t\tELSE\n\t\t\tHReadFirst(BuscaMac)\n\t\t\tnMacBloquado=BuscaMac.Bloqueado\n\t\t\tgnUltPostit=BuscaMac.UltPostit\n\t\tEND\n\t\tIF nMacBloquado=1 THEN\n\t\t\tInfo(\"Este equipo ha sido bloqueado por seguridad, Solicita a la DTI su desbloqueo\")\n\t\t\tgsNombreUsuario=\"\"\n\t\t\tgnUSUARIO=0\n\t\t\tClose()\n\t\tEND"
+    }
+  ],
+  "local_procedures_declared": [
+    "Habilita_Menu",
+    "Prepara_Menu",
+    "Prepara_Menu1"
+  ],
+  "local_variables_declared": [
+    "nIntentos",
+    "gnUltPostit (global updated from LUCCA466.UltPostit)"
+  ],
+  "data_access": {
+    "tables_read": [
+      "DatosGrales",
+      "LUCCA466"
+    ],
+    "tables_written": [
+      "LUCCA466"
+    ],
+    "embedded_sql": [
+      {
+        "crud": "read",
+        "table": "LUCCA466",
+        "sql_summary": "SELECT Mac, Bloqueado, UltPostit FROM LUCCA466 WHERE Mac = gsMacAdd"
+      },
+      {
+        "crud": "write",
+        "table": "LUCCA466",
+        "sql_summary": "INSERT INTO LUCCA466 SELECT gsMacAdd, 0, 0, 0, 0, '', 0 (si no existe)"
+      }
+    ]
+  },
+  "business_rules": [
+    {
+      "id": "BR-AUTH-DEV-001",
+      "rule": "Si el equipo (MAC) está marcado como Bloqueado=1 en LUCCA466, no permitir acceso; resetear gnUSUARIO y cerrar.",
+      "evidence": "IF nMacBloquado=1 THEN Info(...); gsNombreUsuario=''; gnUSUARIO=0; Close()"
+    },
+    {
+      "id": "BR-AUTH-DEV-002",
+      "rule": "Si no existe registro en LUCCA466 para la MAC, crearlo con valores por defecto y setear gnUltPostit=0.",
+      "evidence": "IF HNbRec(BuscaMac)=0 THEN Insert into LUCCA466 ...; gnUltPostit=0"
+    }
+  ],
+  "navigation": {
+    "called_from": [
+      {
+        "window": "WIN_Inicio_LUCCA",
+        "condition": "gnUSUARIO=0 en End of initialization"
+      }
+    ],
+    "next_steps_unknown": [
+      "Eventos Click de BTN_Agregar/BTN_Agregar1/BTN_Cancelar para autenticar/registrar usuario no incluidos."
+    ]
+  },
+  "unknowns": [
+    {
+      "topic": "Lógica de login (validación de EDT_LOGIN/EDT_PASSWORD)",
+      "why": "No se incluyó código de Click de botones",
+      "how_to_confirm": "Pegar eventos Click de BTN_Agregar y BTN_Agregar1 (y Cancelar)."
+    },
+    {
+      "topic": "Procedimientos Habilita_Menu/Prepara_Menu/Prepara_Menu1",
+      "why": "Solo inventario, sin código",
+      "how_to_confirm": "Pegar código de esos procedimientos (si están en la ventana o en colección global)."
+    }
+  ],
+  "followups": [
+    "Pegar evento Click de BTN_Agregar (probable 'Login') y BTN_Cancelar.",
+    "Confirmar si WIN_RegistroUsuarioLUCCA es 'Login' definitivo o un gate previo a WIN_Login (si existe)."
+  ]
+}

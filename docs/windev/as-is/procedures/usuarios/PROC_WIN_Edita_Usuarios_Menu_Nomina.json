@@ -1,0 +1,19 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Edita_Usuarios:Menu_Nomina",
+  "name": "Menu_Nomina",
+  "scope": "window_local",
+  "owner_window": "WIN_Edita_Usuarios",
+  "signature": "PROCEDURE Menu_Nomina()",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Edita_Usuarios_Menu_Nomina.json",
+  "tables_read": [],
+  "tables_write": [],
+  "relations_found": [],
+  "metrics": {
+    "lines": 41,
+    "sql_fragments": 0
+  },
+  "wl_code": "nSumaCeros is int=0\nnSumaUnos is int=0\nnSumaNegativos is int=0\nNGuardaValor is int=0\nFOR i=187 TO 215\ngsResPath=TreeFind(TREE_Example, i, Null, tvLeaf + tvNode)\nNGuardaValor=TREE_Example[gsResPath]..Checked\nIF NGuardaValor=0 THEN\nnSumaCeros++\nELSE IF NGuardaValor=1 THEN\nnSumaUnos++\nELSE IF NGuardaValor=-1 THEN\nnSumaNegativos++\nEND\nEND\nFOR i=303 TO 306\ngsResPath=TreeFind(TREE_Example, i, Null, tvLeaf + tvNode)\nNGuardaValor=TREE_Example[gsResPath]..Checked\nIF NGuardaValor=0 THEN\nnSumaCeros++\nELSE IF NGuardaValor=1 THEN\nnSumaUnos++\nELSE IF NGuardaValor=-1 THEN\nnSumaNegativos++\nEND\nEND\ngsResPath=TreeFind(TREE_Example, 186, Null, tvLeaf + tvNode)\nIF nSumaCeros=33  THEN\nTREE_Example[gsResPath]..Checked=0\nELSE IF nSumaUnos=33 THEN\nTREE_Example[gsResPath]..Checked=1\nELSE IF nSumaUnos>0 OR nSumaNegativos>0 THEN\nTREE_Example[gsResPath]..Checked=-1\nEND\nLocal procedure Menu_Obra\n\n\nPart 1 › WINDEV window › WIN_Edita_Usuarios › Procedures\n3/9/2026\n312\nSIATEC1_IA"
+}

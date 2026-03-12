@@ -1,0 +1,19 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Edita_Usuarios:Menu_Sol_MofdifPres",
+  "name": "Menu_Sol_MofdifPres",
+  "scope": "window_local",
+  "owner_window": "WIN_Edita_Usuarios",
+  "signature": "PROCEDURE Menu_Sol_MofdifPres(sIdentifier is string)",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Edita_Usuarios_Menu_Sol_MofdifPres.json",
+  "tables_read": [],
+  "tables_write": [],
+  "relations_found": [],
+  "metrics": {
+    "lines": 66,
+    "sql_fragments": 0
+  },
+  "wl_code": "IF sIdentifier=\"39\" THEN\ngsResPath=TreeFind(TREE_Example, 39, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=-1 THEN\nTREE_Example[gsResPath]..Checked=0\nEND\nIF TREE_Example[gsResPath]..Checked=1 THEN\ngsResPath=TreeFind(TREE_Example, 40, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 41, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 42, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 43, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\nELSE\ngsResPath=TreeFind(TREE_Example, 40, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 41, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 42, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 43, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\nEND\n\n\nPart 1 › WINDEV window › WIN_Edita_Usuarios › Procedures\n3/9/2026\n322\nSIATEC1_IA\nELSE IF sIdentifier=\"40\" THEN\ngsResPath=TreeFind(TREE_Example, 40, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=-1 THEN\nTREE_Example[gsResPath]..Checked=0\nEND\nVerifica_MenuSolModPres()\nELSE IF sIdentifier=\"41\" THEN\ngsResPath=TreeFind(TREE_Example, 41, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=-1 THEN\nTREE_Example[gsResPath]..Checked=0\nEND\nVerifica_MenuSolModPres()\nELSE IF sIdentifier=\"42\" THEN\ngsResPath=TreeFind(TREE_Example, 42, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=-1 THEN\nTREE_Example[gsResPath]..Checked=0\nEND\nIF TREE_Example[gsResPath]..Checked=0 THEN\ngsResPath=TreeFind(TREE_Example, 43, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\nELSE\ngsResPath=TreeFind(TREE_Example, 42, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 43, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\nEND\n//\nVerifica_EdicionPrgServicios()\nELSE IF sIdentifier=\"43\" THEN\ngsResPath=TreeFind(TREE_Example, 43, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=-1 THEN\nTREE_Example[gsResPath]..Checked=0\nEND\nVerifica_EdicionSolModPres()\nEND\nLocal procedure Menu_Sol_Servicios"
+}

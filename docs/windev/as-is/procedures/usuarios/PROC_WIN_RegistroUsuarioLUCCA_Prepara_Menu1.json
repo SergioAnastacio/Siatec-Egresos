@@ -1,0 +1,26 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_RegistroUsuarioLUCCA:Prepara_Menu1",
+  "name": "Prepara_Menu1",
+  "scope": "window_local",
+  "owner_window": "WIN_RegistroUsuarioLUCCA",
+  "signature": "PROCEDURE Prepara_Menu1()",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_RegistroUsuarioLUCCA_Prepara_Menu1.json",
+  "summary": {
+    "purpose": "Aplicar permisos de garrDerNvos[] al Ribbon/Menu (deshabilitar opciones).",
+    "calls": []
+  },
+  "tables_read": [],
+  "tables_write": [],
+  "business_rules": [
+    {
+      "id": "BR-SHELL-PERM-001",
+      "rule": "Se ocultan secciones del menú y se deshabilitan opciones según garrDerNvos[].",
+      "evidence": "IF garrDerNvos[x]=0 THEN ... Visible=False / State=3"
+    }
+  ],
+  "raw_wl_excerpt": "\tIF garrDerNvos[1]=0 THEN\n\t\tWIN_InicioRibon_LUCCA.BTN_Soilicitudes..State=3\n\tELSE\n\t\tIF garrDerNvos[2]=0 THEN\n\t\t\tWIN_InicioRibon_LUCCA.MENU_Solicituddes.OPT_SolBien..State=3\t\n\t\tEND\n\t\tIF garrDerNvos[12]=0 THEN\n\t\t\tWIN_InicioRibon_LUCCA.MENU_Solicituddes.OPT_Servicios..State=3\t\t\n\t\tEND\n\t\tIF garrDerNvos[31]=0 THEN\n\t\tWIN_InicioRibon_LUCCA.MENU_Solicituddes.OPT_Cheques_Manuales..State=3\n\t\tEND\n\t\tIF garrDerNvos[21]=0 THEN\n\t\tWIN_InicioRibon_LUCCA.MENU_Solicituddes.OPT_Programa_de_Adquisición_de_Bienes..State=3\n\t\tEND\n\t\tIF garrDerNvos[26]=0 THEN\n\t\tWIN_InicioRibon_LUCCA.MENU_Solicituddes.OPT_Programa_de_Adquisición_de_Servicios..State=3\n\t\tEND\n\t\tIF garrDerNvos[34]=0 THEN\n\t\tWIN_InicioRibon_LUCCA.MENU_Solicituddes.OPT_Vacaciones..State=3\n\t\tEND\n\t\tIF garrDerNvos[37]=0 THEN\n\t\tWIN_InicioRibon_LUCCA.MENU_Solicituddes.OPT_Revisón_de_Bienes..State=3\n\t\tEND\n\t\tIF garrDerNvos[38]=0 THEN\n\t\tWIN_InicioRibon_LUCCA.MENU_Solicituddes.OPT_Revisión_de_Servicios..State=3\n\t\tEND\n\t\tIF garrDerNvos[39]=0 THEN\n\t\tWIN_InicioRibon_LUCCA.MENU_Solicituddes.OPT_Modificación_Presupuestal..State=3\n\t\tEND\n\t\tIF garrDerNvos[44]=0 THEN\n\t\tWIN_InicioRibon_LUCCA.MENU_Solicituddes.OPT_Caja_Chica..State=3\n\t\tEND\n\tEND\n\tIF garrDerNvos[45]=0 THEN\n\t\tWIN_Inicio_LUCCA.SIDE_Menu[3]..Visible=False\n\t\tgnRestaAltMenu+=34\n\tELSE\n\t\tIF garrDerNvos[46]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[3].BTN_Resgresguardos..State=3\n\t\tEND\n\t\tIF garrDerNvos[50]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[3].BTN_ConumiblesPorResguardar..State=3\n\t\tEND\n\t\tIF garrDerNvos[51]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[3].BTN_ReporteadorResguardos..State=3\n\t\tEND\n\t\tIF garrDerNvos[52]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[3].BTN_ResgDepreciaciones..State=3\n\t\tEND\n\t\tIF garrDerNvos[55]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[3].BTN_ResgDepreciacionInmuebles..State=3\n\t\tEND\n\t\tIF garrDerNvos[58]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[3].BTN_Resgtabla..State=3\n\t\tEND\n\tEND\n\tIF garrDerNvos[59]=0 THEN\n\t\tWIN_Inicio_LUCCA.SIDE_Menu[4]..Visible=False\n\t\tgnRestaAltMenu+=34\n\tELSE\n\t\tIF garrDerNvos[60]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[4].BTN_ComisionRegistro..State=3\n\t\tEND\n\t\tIF garrDerNvos[61]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[4].BTN_ComisionAutoriza..State=3\n\t\tEND\n\t\tIF garrDerNvos[62]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[4].BTN_ComisionComprobacion..State=3\n\t\tEND\n\t\tIF garrDerNvos[63]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[4].BTN_ComisionRevision..State=3\n\t\tEND\n\tEND\n\tIF garrDerNvos[64]=0 THEN\n\t\tWIN_Inicio_LUCCA.SIDE_Menu[5]..Visible=False\n\t\tgnRestaAltMenu+=34\n\tELSE\n\t\tIF garrDerNvos[65]=0 THEN\n\t\t\tWIN_Inicio_LUCCA.SIDE_Menu[5].BTN_AutBienes..State=3",
+  "unknowns": []
+}

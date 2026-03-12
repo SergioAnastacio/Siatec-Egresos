@@ -1,0 +1,40 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Edita_Usuarios:AACarga_ZDerechos_BancosRev",
+  "name": "AACarga_ZDerechos_BancosRev",
+  "scope": "window_local",
+  "owner_window": "WIN_Edita_Usuarios",
+  "signature": "PROCEDURE AACarga_ZDerechos_BancosRev()",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Edita_Usuarios_AACarga_ZDerechos_BancosRev.json",
+  "tables_read": [
+    "Bancos",
+    "BuscaQry",
+    "LUCCA296"
+  ],
+  "tables_write": [],
+  "relations_found": [
+    {
+      "type": "field_assignment",
+      "child_table": "P1",
+      "child_column": "Numero",
+      "parent_table": "U1",
+      "parent_column": "Cuenta",
+      "evidence": "P1.Numero=U1.Cuenta",
+      "source": "PROC:AACarga_ZDerechos_BancosRev"
+    },
+    {
+      "type": "sql_join",
+      "join_table": "Bancos",
+      "on": "P1.Numero=U1.Cuenta",
+      "evidence": " FROM LUCCA296 U1 Left Join Bancos P1 On P1.Numero=U1.Cuenta  ...",
+      "source": "PROC:AACarga_ZDerechos_BancosRev"
+    }
+  ],
+  "metrics": {
+    "lines": 15,
+    "sql_fragments": 3
+  },
+  "wl_code": "BuscaQry is Data Source\nTableDeleteAll(TABLE_FondoRevolvente)\nIF HExecuteSQLQuery(BuscaQry, MyConnectionLucca, hQueryWithoutCorrection + hNoBind,\n\"SELECT U1.Codigo, U1.Renglon, P1.Nombre, P1.Numero_Cuenta \" + ...\n\" FROM LUCCA296 U1 Left Join Bancos P1 On P1.Numero=U1.Cuenta  \" + ...\n\"Where U1.Codigo=\" + Usuarios.CODIGO + \" Order by P1.Nombre \") = False THEN\nError(\"HFSQL error: \" + HErrorInfo())\nEND\nHReadFirst(BuscaQry)\nLOOP (HNbRec(BuscaQry))\nTableAddLine(TABLE_FondoRevolvente, BuscaQry.Codigo, BuscaQry.Renglon, BuscaQry.Nombre, BuscaQry.\nNumero_Cuenta)\nHReadNext(BuscaQry)\nEND\nLocal procedure AACarga_ZDerechos_Cuadrilla"
+}

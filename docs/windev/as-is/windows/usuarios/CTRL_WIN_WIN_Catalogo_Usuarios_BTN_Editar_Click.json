@@ -1,0 +1,39 @@
+{
+  "step": 1,
+  "artifact_type": "ui_control_event",
+  "id": "CTRL:WIN:WIN_Catalogo_Usuarios:BTN_Editar:Click",
+  "window_or_page": "WIN:WIN_Catalogo_Usuarios",
+  "module": "Admin/Usuarios",
+  "control": {
+    "name": "BTN_Editar",
+    "type": "Button",
+    "purpose": "Abrir edición de usuario seleccionado en WIN_Edita_Usuarios (modo 2) y recargar tabla manteniendo selección.",
+    "visibility_or_permissions": []
+  },
+  "output_dir": "docs/as-is/windows/",
+  "output_filename": "CTRL_WIN_WIN_Catalogo_Usuarios_BTN_Editar_Click.json",
+  "events": [
+    {
+      "event": "Click BTN_Editar",
+      "summary": "Abrir edición de usuario seleccionado en WIN_Edita_Usuarios (modo 2) y recargar tabla manteniendo selección.",
+      "calls_procedures": [
+        "PROC:Carga_Tabla"
+      ],
+      "calls_windows": [
+        "WIN:WIN_Edita_Usuarios"
+      ],
+      "calls_queries_or_sql": [],
+      "tables_read": [
+        "dbo.Usuarios"
+      ],
+      "tables_write": [],
+      "business_rules": [],
+      "validations": [],
+      "exceptions_or_errors": [],
+      "dependencies": [],
+      "wl_code": "nRenglonActual is int=TablePosition(TABLE_Catalog_Cont)\n\t\t\tNRenglonExacto is int=TableSelect(TABLE_Catalog_Cont)\n\t\t\tIF COL_Codigo>0 THEN\n\t\t\t\tgnTipoOperacion=2\n\t\t\t\tgnCodigoTabla=COL_Codigo\n\t\t\t\tOpen(WIN_Edita_Usuarios,COL_Codigo,2)\n\t\t\t\tCarga_Tabla()\n\t\t\t\tTablePosition(TABLE_Catalog_Cont,nRenglonActual)\n\t\t\t\tTableSelectPlus(TABLE_Catalog_Cont,NRenglonExacto)\n\t\t\tEND"
+    }
+  ],
+  "unknowns": [],
+  "followups": []
+}

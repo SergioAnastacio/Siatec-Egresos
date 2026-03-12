@@ -1,0 +1,122 @@
+{
+  "step": 2,
+  "artifact_type": "soft_foreign_keys",
+  "output_dir": "docs/db/metadata/",
+  "output_filename": "soft_foreign_keys.json",
+  "schema": "dbo",
+  "source_files": {
+    "tables": "docs/db/metadata/tables.json",
+    "keys": "docs/db/metadata/keys.json",
+    "indexes": "docs/db/metadata/indexes.json",
+    "columns": "docs/db/metadata/columns.json",
+    "soft_relationships": "docs/as-is/processes/RELATIONS_soft_from_windev.json"
+  },
+  "notes": [
+    "No existen foreign keys declaradas en SQL Server; estas relaciones están inferidas del código (JOIN/HReadSeek) y se validan con metadata disponible.",
+    "El archivo columns.json subido está incompleto (no contiene todas las tablas del set)."
+  ],
+  "relationships": [
+    {
+      "id": "SFK-001",
+      "from_table": "dbo.Solicitudes",
+      "from_column": "AREA",
+      "to_table": "dbo.Areax",
+      "to_column": "CODIGO",
+      "cardinality": "many_to_one",
+      "verified_by_columns_json": false,
+      "verified_by_keys_or_indexes": true,
+      "type_compatibility": "unknown",
+      "evidence": "JOIN AreaX A1 ON A1.CODIGO = S1.AREA",
+      "index_recommendation": {
+        "should_exist": true,
+        "recommended_index": "IX_Solicitudes_AREA",
+        "reason": "JOIN por AREA (soft FK) + filtro por usuario; actualmente solo se observa PK por CODIGO."
+      }
+    },
+    {
+      "id": "SFK-002",
+      "from_table": "dbo.Solicitudes",
+      "from_column": "USUARIOS",
+      "to_table": "dbo.Usuarios",
+      "to_column": "CODIGO",
+      "cardinality": "many_to_one",
+      "verified_by_columns_json": false,
+      "verified_by_keys_or_indexes": true,
+      "type_compatibility": "unknown",
+      "evidence": "JOIN Usuarios U1 ON U1.CODIGO = S1.Usuarios; WHERE S1.Usuarios = gnUSUARIO",
+      "index_recommendation": {
+        "should_exist": true,
+        "recommended_index": "IX_Solicitudes_USUARIOS",
+        "reason": "Filtro por usuario es el predicado principal del catálogo."
+      }
+    },
+    {
+      "id": "SFK-003",
+      "from_table": "dbo.AtencionServicios",
+      "from_column": "AREA",
+      "to_table": "dbo.Areax",
+      "to_column": "CODIGO",
+      "cardinality": "many_to_one",
+      "verified_by_columns_json": true,
+      "verified_by_keys_or_indexes": true,
+      "type_compatibility": "check_needed (smallint -> int likely ok)",
+      "evidence": "JOIN AreaX A1 ON A1.CODIGO = S1.AREA",
+      "index_recommendation": {
+        "should_exist": true,
+        "recommended_index": "IX_AtencionServicios_AREA",
+        "reason": "JOIN por AREA."
+      }
+    },
+    {
+      "id": "SFK-004",
+      "from_table": "dbo.AtencionServicios",
+      "from_column": "USUARIOS",
+      "to_table": "dbo.Usuarios",
+      "to_column": "CODIGO",
+      "cardinality": "many_to_one",
+      "verified_by_columns_json": true,
+      "verified_by_keys_or_indexes": true,
+      "type_compatibility": "unknown (Usuarios.CODIGO not present in columns.json)",
+      "evidence": "JOIN Usuarios U1 ON U1.CODIGO = S1.Usuarios; WHERE S1.Usuarios = gnUSUARIO",
+      "index_recommendation": {
+        "should_exist": true,
+        "recommended_index": "IX_AtencionServicios_USUARIOS",
+        "reason": "Filtro por usuario es el predicado principal."
+      }
+    },
+    {
+      "id": "SFK-005",
+      "from_table": "dbo.LUCCA429",
+      "from_column": "Codigo",
+      "to_table": "dbo.Solicitudes",
+      "to_column": "CODIGO",
+      "cardinality": "zero_or_one_to_one (lock per record, enforced by PK on LUCCA429.Codigo)",
+      "verified_by_columns_json": false,
+      "verified_by_keys_or_indexes": true,
+      "type_compatibility": "unknown",
+      "evidence": "SELECT/INSERT LUCCA429 WHERE Codigo=<gnCodigoTabla>",
+      "index_recommendation": {
+        "should_exist": true,
+        "recommended_index": "PK_LUCCA429 (exists)",
+        "reason": "PK por Codigo ya cubre búsquedas por lock."
+      }
+    },
+    {
+      "id": "SFK-006",
+      "from_table": "dbo.LUCCA430",
+      "from_column": "Codigo",
+      "to_table": "dbo.AtencionServicios",
+      "to_column": "CODIGO",
+      "cardinality": "zero_or_one_to_one (lock per record, enforced by PK on LUCCA430.Codigo)",
+      "verified_by_columns_json": false,
+      "verified_by_keys_or_indexes": true,
+      "type_compatibility": "unknown",
+      "evidence": "SELECT/INSERT LUCCA430 WHERE Codigo=<gnCodigoTabla>",
+      "index_recommendation": {
+        "should_exist": true,
+        "recommended_index": "PK_LUCCA430 (exists)",
+        "reason": "PK por Codigo ya cubre búsquedas por lock."
+      }
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Edita_Usuarios:AACarga_Tabla_RecepDocts",
+  "name": "AACarga_Tabla_RecepDocts",
+  "scope": "window_local",
+  "owner_window": "WIN_Edita_Usuarios",
+  "signature": "PROCEDURE AACarga_Tabla_RecepDocts()",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Edita_Usuarios_AACarga_Tabla_RecepDocts.json",
+  "tables_read": [
+    "BuscaQry",
+    "LUCCA663",
+    "Usuarios"
+  ],
+  "tables_write": [],
+  "relations_found": [
+    {
+      "type": "field_assignment",
+      "child_table": "U1",
+      "child_column": "Codigo",
+      "parent_table": "L63",
+      "parent_column": "Usuario",
+      "evidence": "U1.Codigo=L63.Usuario",
+      "source": "PROC:AACarga_Tabla_RecepDocts"
+    },
+    {
+      "type": "sql_join",
+      "join_table": "Usuarios",
+      "on": "U1.Codigo=L63.Usuario",
+      "evidence": "FROM LUCCA663 L63 Left Join Usuarios U1 On U1.Codigo=L63.Usuario Where L63.Codigo=...",
+      "source": "PROC:AACarga_Tabla_RecepDocts"
+    }
+  ],
+  "metrics": {
+    "lines": 14,
+    "sql_fragments": 2
+  },
+  "wl_code": "BuscaQry is Data Source\nTableDeleteAll(TABLE_ReceptoresDoctos)\nIF HExecuteSQLQuery(BuscaQry, MyConnectionLucca, hQueryWithoutCorrection + hNoBind,\n\"SELECT L63.Codigo, L63.Renglon, U1.NOMBRE \" + ...\n\"FROM LUCCA663 L63 Left Join Usuarios U1 On U1.Codigo=L63.Usuario Where L63.Codigo=\" + EDT_CODIGO +\n\" Order by L63.Renglon \") = False THEN\nError(\"HFSQL error: \" + HErrorInfo())\nEND\nHReadFirst(BuscaQry)\nLOOP (HNbRec(BuscaQry))\nTableAddLine(TABLE_ReceptoresDoctos, BuscaQry.Codigo, BuscaQry.Renglon, BuscaQry.Nombre)\nHReadNext(BuscaQry)\nEND\nLocal procedure AACarga_TablaAut_Compras"
+}

@@ -1,0 +1,19 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Edita_Usuarios:Menu_Resguardo_Patrimonial",
+  "name": "Menu_Resguardo_Patrimonial",
+  "scope": "window_local",
+  "owner_window": "WIN_Edita_Usuarios",
+  "signature": "PROCEDURE Menu_Resguardo_Patrimonial()",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Edita_Usuarios_Menu_Resguardo_Patrimonial.json",
+  "tables_read": [],
+  "tables_write": [],
+  "relations_found": [],
+  "metrics": {
+    "lines": 49,
+    "sql_fragments": 0
+  },
+  "wl_code": "gsResPath=TreeFind(TREE_Example, 46, Null, tvLeaf + tvNode)\nnEstado46 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 47, Null, tvLeaf + tvNode)\nnEstado47 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 48, Null, tvLeaf + tvNode)\nnEstado48 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 49, Null, tvLeaf + tvNode)\nnEstado49 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 50, Null, tvLeaf + tvNode)\nnEstado50 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 51, Null, tvLeaf + tvNode)\nnEstado51 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 52, Null, tvLeaf + tvNode)\nnEstado52 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 53, Null, tvLeaf + tvNode)\nnEstado53 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 54, Null, tvLeaf + tvNode)\nnEstado54 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 55, Null, tvLeaf + tvNode)\nnEstado55 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 56, Null, tvLeaf + tvNode)\nnEstado56 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 57, Null, tvLeaf + tvNode)\nnEstado57 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 58, Null, tvLeaf + tvNode)\nnEstado58 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 309, Null, tvLeaf + tvNode)\nnEstado309 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 45, Null, tvLeaf + tvNode)\nIF nEstado46=0 AND nEstado47=0 AND nEstado48=0 AND nEstado49=0 AND nEstado50=0 AND nEstado51=0 AND\nnEstado52=0 AND nEstado53=0 AND nEstado54=0 AND nEstado55=0 AND nEstado56=0 AND nEstado57=0 AND nEstado58=0\n  AND nEstado309=0 THEN\nTREE_Example[gsResPath]..Checked=0\nELSE IF nEstado46=1 AND nEstado47=1AND nEstado48=1 AND nEstado49=1 AND nEstado50=1 AND nEstado51=1 AND\nnEstado52=1 AND nEstado53=1 AND nEstado54=1 AND nEstado55=1 AND nEstado56=0 AND nEstado57=0 AND nEstado58=1\nAND nEstado309=1  THEN\nTREE_Example[gsResPath]..Checked=1\nELSE IF nEstado46=1 OR nEstado47=1 OR nEstado48=1 OR nEstado49=1 OR nEstado50=1 OR nEstado51=1 OR nEstado52\n\n\nPart 1 › WINDEV window › WIN_Edita_Usuarios › Procedures\n3/9/2026\n318\nSIATEC1_IA\n=1 OR nEstado53=1 OR nEstado54=1 OR nEstado55=1 OR nEstado56=0 OR nEstado57=1 OR nEstado58=1 OR nEstado309=\n1  THEN\nTREE_Example[gsResPath]..Checked=-1\nEND\nLocal procedure Menu_Resguardos"
+}
