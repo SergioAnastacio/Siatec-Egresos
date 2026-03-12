@@ -17,6 +17,9 @@ Monorepo para el canal **Desktop (Tauri)**, **Web (Next.js)** y **API** del proy
 
 ## Comandos
 
+### Runbook (probar en otra máquina)
+Ver: `docs/RUNBOOK_LOCAL_DEV.md`
+
 ### API
 ```powershell
 cd services\api
