@@ -3,12 +3,33 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev:frontend": "node -e \"console.log('TODO: scaffold Next.js desktop frontend')\"",
-    "dev:tauri": "node -e \"console.log('TODO: scaffold Tauri desktop app')\"",
+    "dev:frontend": "pnpm --filter @siatec-egresos/ui build && pnpm exec next dev -p 3100",
+    "build:frontend": "pnpm --filter @siatec-egresos/ui build && pnpm exec next build && pnpm exec next export",
+    "dev:tauri": "pnpm exec tauri dev",
+    "build:tauri": "pnpm exec tauri build",
     "dev": "pnpm dev:frontend",
-    "build": "node -e \"console.log('TODO: build desktop')\"",
-    "lint": "node -e \"console.log('TODO: lint desktop')\"",
-    "typecheck": "node -e \"console.log('TODO: typecheck desktop')\"",
-    "test": "node -e \"console.log('TODO: test desktop')\""
+    "build": "pnpm build:frontend",
+    "lint": "pnpm exec next lint",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node -e \"console.log('no tests yet')\""
+  },
+  "dependencies": {
+    "@siatec-egresos/ui": "workspace:*",
+    "@tauri-apps/api": "^2.0.0",
+    "next": "^14.2.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.0.0",
+    "@types/node": "^20.14.10",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.5",
+    "postcss": "^8.4.39",
+    "tailwindcss": "^3.4.7",
+    "typescript": "^5.5.4"
   }
 }

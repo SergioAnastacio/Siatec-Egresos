@@ -1,0 +1,10 @@
+# next
+.next/
+out/
+
+# misc
+node_modules/
+.DS_Store
+
+# tauri
+src-tauri/target/
