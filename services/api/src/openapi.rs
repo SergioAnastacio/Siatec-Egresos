@@ -30,6 +30,7 @@ impl Modify for SecurityAddon {
     paths(
         routes::health::get_health,
         routes::version::get_version,
+        routes::db::get_db_health,
         routes::auth::login,
         routes::auth::me,
         routes::users::list_users,
@@ -48,6 +49,7 @@ impl Modify for SecurityAddon {
         schemas(
             routes::health::HealthResponse,
             routes::version::VersionResponse,
+            routes::db::DbHealthResponse,
             ApiError,
             routes::auth::LoginRequest,
             routes::auth::LoginResponse,
