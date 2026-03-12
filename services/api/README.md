@@ -4,10 +4,26 @@ Skeleton inicial del servicio API.
 
 ## Endpoints
 
+### Ops
+
 - `GET /health` → `200` `{ "status": "ok" }`
 - `GET /version` → `200` `{ "name": "...", "version": "..." }`
 
-> Nota: El namespace `/api/v1` está **reservado** para endpoints de negocio futuros (aún sin implementar).
+### OpenAPI
+
+- `GET /openapi.json` → documento OpenAPI (JSON)
+- `/docs` (Swagger UI) está deshabilitado por ahora para evitar bloqueos de build en algunos entornos Windows; usa `/openapi.json`.
+
+### Negocio (planeado / stubs)
+
+> Nota: El namespace `/api/v1` está **reservado** para endpoints de negocio.
+>
+> Actualmente los endpoints de egresos existen como **stubs** (responden `501 Not Implemented`) para poder publicar contratos y esquemas en OpenAPI.
+
+- `GET /api/v1/egresos`
+- `POST /api/v1/egresos`
+- `GET /api/v1/egresos/{egreso_id}`
+- `PATCH /api/v1/egresos/{egreso_id}/status`
 
 ## Requisitos
 

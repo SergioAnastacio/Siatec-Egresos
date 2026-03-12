@@ -1,6 +1,7 @@
 mod app;
 mod config;
 mod http;
+mod openapi;
 mod routes;
 mod telemetry;
 
