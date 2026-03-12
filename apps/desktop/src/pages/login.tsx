@@ -28,7 +28,14 @@ export default function LoginPage() {
           <p className="text-sm text-gray-700">TODO: formulario real (usuario/contraseña).</p>
 
           <div className="mt-4 flex gap-3">
-            <Button onClick={() => alert('TODO: login')}>Entrar</Button>
+            <Button
+              onClick={() => {
+                // TODO: login
+                console.log('TODO: login');
+              }}
+            >
+              Entrar
+            </Button>
             <Link href="/">
               <Button variant="secondary">Volver</Button>
             </Link>

@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev:frontend": "pnpm --filter @siatec-egresos/ui build && pnpm exec next dev -p 3100",
-    "build:frontend": "pnpm --filter @siatec-egresos/ui build && pnpm exec next build && pnpm exec next export",
+    "build:frontend": "pnpm --filter @siatec-egresos/ui build && pnpm exec next build",
     "dev:tauri": "pnpm exec tauri dev",
     "build:tauri": "pnpm exec tauri build",
     "dev": "pnpm dev:frontend",

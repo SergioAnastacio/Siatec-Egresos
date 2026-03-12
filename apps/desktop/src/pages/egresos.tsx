@@ -61,7 +61,13 @@ export default function EgresosPage() {
           <Button onClick={load} disabled={state.status === 'loading'}>
             {state.status === 'loading' ? 'Cargando…' : 'Recargar'}
           </Button>
-          <Button variant="secondary" onClick={() => alert('TODO: acción de egreso')}>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              // TODO: acción de egreso
+              console.log('TODO: acción de egreso');
+            }}
+          >
             Acción
           </Button>
         </div>
