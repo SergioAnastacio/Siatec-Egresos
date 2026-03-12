@@ -1,0 +1,12 @@
+{
+  "name": "@siatec-egresos/api",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "node -e \"console.log('TODO: scaffold API')\"",
+    "build": "node -e \"console.log('TODO: build API')\"",
+    "lint": "node -e \"console.log('TODO: lint API')\"",
+    "typecheck": "node -e \"console.log('TODO: typecheck API')\"",
+    "test": "node -e \"console.log('TODO: test API')\""
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "siatec-egresos",
+  "private": true,
+  "version": "0.0.0",
+  "packageManager": "pnpm@10.30.3",
+  "engines": {
+    "node": ">=18.18.0",
+    "pnpm": ">=10.0.0"
+  },
+  "scripts": {
+    "dev": "turbo run dev --parallel --filter=@siatec-egresos/desktop --filter=@siatec-egresos/web --filter=@siatec-egresos/api",
+    "dev:desktop": "pnpm --filter @siatec-egresos/desktop dev:tauri",
+    "dev:desktop:frontend": "pnpm --filter @siatec-egresos/desktop dev:frontend",
+    "dev:web": "pnpm --filter @siatec-egresos/web dev",
+    "dev:api": "pnpm --filter @siatec-egresos/api dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "validate:structure": "node tools/validate-structure.mjs",
+    "validate": "pnpm validate:structure && pnpm lint && pnpm typecheck && pnpm test"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0"
+  }
+}

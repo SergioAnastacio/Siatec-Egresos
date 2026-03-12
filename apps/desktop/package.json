@@ -1,0 +1,14 @@
+{
+  "name": "@siatec-egresos/desktop",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev:frontend": "node -e \"console.log('TODO: scaffold Next.js desktop frontend')\"",
+    "dev:tauri": "node -e \"console.log('TODO: scaffold Tauri desktop app')\"",
+    "dev": "pnpm dev:frontend",
+    "build": "node -e \"console.log('TODO: build desktop')\"",
+    "lint": "node -e \"console.log('TODO: lint desktop')\"",
+    "typecheck": "node -e \"console.log('TODO: typecheck desktop')\"",
+    "test": "node -e \"console.log('TODO: test desktop')\""
+  }
+}
