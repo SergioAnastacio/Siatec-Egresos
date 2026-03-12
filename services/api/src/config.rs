@@ -8,6 +8,9 @@ pub struct AppConfig {
     pub log_level: String,
     /// Dev-mode static token (Bearer) to protect write endpoints.
     pub dev_token: Option<String>,
+
+    /// Optional SQL Server connection string for smoke checks.
+    pub sqlserver_url: Option<String>,
 }
 
 impl AppConfig {
@@ -29,11 +32,19 @@ impl AppConfig {
             .parse::<u16>()
             .map_err(|e| format!("API_PORT invalid: {e}"))?;
 
+        let sqlserver_url = env::var("SQLSERVER_URL")
+            .ok()
+            .and_then(|s| {
+                let t = s.trim().to_string();
+                if t.is_empty() { None } else { Some(t) }
+            });
+
         Ok(Self {
             host,
             port,
             log_level,
             dev_token,
+            sqlserver_url,
         })
     }
 }
