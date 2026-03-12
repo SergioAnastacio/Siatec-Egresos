@@ -44,10 +44,25 @@ pub fn build_router(state: AppState, dev_auth: DevAuth) -> Router {
             auth::require_dev_token,
         ));
 
+    let solicitudes_router = Router::new()
+        .route("/", get(routes::solicitudes::list_solicitudes))
+        .route("/", axum::routing::post(routes::solicitudes::create_solicitud))
+        .route("/{id}", get(routes::solicitudes::get_solicitud))
+        .route("/{id}", axum::routing::patch(routes::solicitudes::update_solicitud))
+        .route(
+            "/{id}/status",
+            axum::routing::patch(routes::solicitudes::update_solicitud_status),
+        )
+        .route_layer(middleware::from_fn_with_state(
+            dev_auth.clone(),
+            auth::require_dev_token,
+        ));
+
     let v1 = Router::new()
         .nest("/auth", auth_router)
         .nest("/users", users_router)
-        .nest("/egresos", egresos);
+        .nest("/egresos", egresos)
+        .nest("/solicitudes", solicitudes_router);
 
     Router::new()
         .route("/health", get(routes::health::get_health))

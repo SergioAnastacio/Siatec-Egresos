@@ -4,10 +4,13 @@ use tokio::sync::Mutex;
 
 use siatec_egresos_egresos::Egreso;
 
+use crate::routes::solicitudes::SolicitudDto;
+
 /// Estado compartido de la aplicación (in-memory).
 #[derive(Clone)]
 pub struct AppState {
     pub egresos: Arc<Mutex<HashMap<String, Egreso>>>,
+    pub solicitudes: Arc<Mutex<HashMap<String, SolicitudDto>>>,
 
     /// Token dev estático (si está configurado). Se usa para emitirlo en /auth/login.
     pub dev_token: Option<String>,
@@ -20,6 +23,7 @@ impl Default for AppState {
     fn default() -> Self {
         Self {
             egresos: Arc::new(Mutex::new(HashMap::new())),
+            solicitudes: Arc::new(Mutex::new(HashMap::new())),
             dev_token: None,
             dev_user_id: "00000000-0000-0000-0000-000000000001".to_string(),
         }
