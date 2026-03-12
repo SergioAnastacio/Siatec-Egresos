@@ -12,3 +12,9 @@ tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt", "json"] }
 dotenvy = "0.15"
 tower-http = { version = "0.5", features = ["trace"] }
+
+# OpenAPI
+utoipa = { version = "4", features = ["axum_extras"] }
+
+# Domain modules
+siatec-egresos-egresos = { path = "../../modules/egresos" }
