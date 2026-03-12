@@ -23,6 +23,9 @@ export default function HomePage() {
           <Link href="/egresos">
             <Button variant="secondary">Egresos</Button>
           </Link>
+          <Link href="/usuarios">
+            <Button variant="secondary">Usuarios</Button>
+          </Link>
         </div>
       </main>
     </>

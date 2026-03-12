@@ -6,6 +6,7 @@ import { Button } from '@siatec-egresos/ui';
 
 import type { HttpError } from '@/services/http';
 import { getEgresos } from '@/services/egresos';
+import { useRequireAuth } from '@/shared/auth/useRequireAuth';
 import { env } from '@/shared/config/env';
 
 type State =
@@ -14,6 +15,8 @@ type State =
   | { status: 'error'; error: HttpError | Error };
 
 export default function EgresosPage() {
+  useRequireAuth();
+
   const [state, setState] = useState<State>({ status: 'idle' });
 
   const load = useCallback(async () => {
@@ -47,7 +50,10 @@ export default function EgresosPage() {
 
           <nav className="flex items-center gap-4">
             <Link className="text-sm underline" href="/login">
-              Ir a login
+              Login
+            </Link>
+            <Link className="text-sm underline" href="/usuarios">
+              Usuarios
             </Link>
           </nav>
         </header>
