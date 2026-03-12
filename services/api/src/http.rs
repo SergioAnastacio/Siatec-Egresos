@@ -2,7 +2,7 @@ use std::net::SocketAddr;
 
 use axum::Router;
 use tokio::net::TcpListener;
-use tower_http::trace::TraceLayer;
+use tower_http::{cors::CorsLayer, trace::TraceLayer};
 use tracing::info;
 
 use crate::{app::build_router, auth::DevAuth, config::AppConfig, state::AppState};
@@ -15,7 +15,13 @@ pub async fn serve(cfg: AppConfig) -> Result<(), Box<dyn std::error::Error + Sen
         token: cfg.dev_token.clone(),
     };
 
-    let app: Router = build_router(state, dev_auth).layer(TraceLayer::new_for_http());
+    // Dev CORS: allow all (avoid browser CORS friction during development).
+    // NOTE: tighten this for production.
+    let cors = CorsLayer::permissive();
+
+    let app: Router = build_router(state, dev_auth)
+        .layer(cors)
+        .layer(TraceLayer::new_for_http());
 
     let listener = TcpListener::bind(addr).await?;
     info!(listen_addr = %addr, "listening");
