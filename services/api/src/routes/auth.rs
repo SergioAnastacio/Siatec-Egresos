@@ -55,9 +55,14 @@ pub async fn login(State(state): State<AppState>, Json(req): Json<LoginRequest>)
     // - Aceptamos cualquier combinación (por ahora).
     // - Emitimos un token estático (si está configurado) para que la web lo use como Bearer.
     let login = req.login.trim();
-    if login.is_empty() {
-        return api_error(StatusCode::UNAUTHORIZED, "invalid_credentials", "login is required")
-            .into_response();
+    let password = req.password.trim();
+    if login.is_empty() || password.is_empty() {
+        return api_error(
+            StatusCode::UNAUTHORIZED,
+            "invalid_credentials",
+            "login and password are required",
+        )
+        .into_response();
     }
 
     let user = UserDto {

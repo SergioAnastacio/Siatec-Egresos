@@ -127,13 +127,57 @@ pub struct ListSolicitudesQuery {
 )]
 pub async fn list_solicitudes(
     State(state): State<AppState>,
-    _query: Query<ListSolicitudesQuery>,
+    Query(query): Query<ListSolicitudesQuery>,
 ) -> impl IntoResponse {
     let guard = state.solicitudes.lock().await;
     let mut list: Vec<SolicitudDto> = guard.values().cloned().collect();
 
+    // Filters (MVP)
+    // q -> por ahora busca contra `id` (sirve como "código"/folio en in-memory)
+    if let Some(q) = query.q.as_deref().map(str::trim).filter(|s| !s.is_empty()) {
+        let q = q.to_lowercase();
+        list.retain(|s| s.id.to_lowercase().contains(&q));
+    }
+
+    // estado -> aceptamos string libre, pero mapeamos valores conocidos (es/en)
+    if let Some(estado) = query
+        .estado
+        .as_deref()
+        .map(str::trim)
+        .filter(|s| !s.is_empty())
+    {
+        let estado = estado.to_lowercase();
+        list.retain(|s| {
+            let current = format!("{:?}", s.status).to_lowercase();
+            // internal (draft/sent/canceled) via Debug: Draft/Sent/Canceled
+            match estado.as_str() {
+                "borrador" => matches!(s.status, SolicitudStatus::Draft),
+                "enviada" | "enviado" => matches!(s.status, SolicitudStatus::Sent),
+                "cancelada" | "cancelado" => matches!(s.status, SolicitudStatus::Canceled),
+                // also accept english-ish
+                "draft" => matches!(s.status, SolicitudStatus::Draft),
+                "sent" => matches!(s.status, SolicitudStatus::Sent),
+                "canceled" | "cancelled" => matches!(s.status, SolicitudStatus::Canceled),
+                // fallback: string match against enum name
+                _ => current == estado,
+            }
+        });
+    }
+
+    if let Some(tipo) = query.tipo {
+        list.retain(|s| s.tipo == tipo);
+    }
+
     // Orden estable (created_at) para que no “salte” en UI. Si no hay created_at, por id.
     list.sort_by(|a, b| a.created_at.cmp(&b.created_at).then(a.id.cmp(&b.id)));
+
+    // Pagination (MVP)
+    let page_size = query.page_size.unwrap_or(50).clamp(1, 500) as usize;
+    let page = query.page.unwrap_or(1).max(1) as usize;
+    let start = (page - 1).saturating_mul(page_size);
+    let end = start.saturating_add(page_size);
+
+    let list = list.into_iter().skip(start).take(end - start).collect::<Vec<_>>();
 
     (StatusCode::OK, Json(list))
 }
