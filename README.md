@@ -9,10 +9,26 @@ Monorepo para el canal **Desktop (Tauri)**, **Web (Next.js)** y **API** del proy
 - Monorepo: Turborepo + pnpm workspaces
 - Desktop: Tauri 2.x + Next.js (Pages Router)
 - Web: Next.js (Pages Router)
-- API: (a definir; scaffold inicial en services/api)
+- API: Rust + Axum (OpenAPI en `/openapi.json`)
+
+## Puertos (defaults)
+- Web (Next): `http://localhost:3000`
+- API (Axum): `http://127.0.0.1:3001`
 
 ## Comandos
-- `pnpm dev`
+
+### API
+```powershell
+cd services\api
+cargo run
+```
+
+### Web
+```powershell
+pnpm --filter @siatec-egresos/web dev
+```
+
+### Validación
 - `pnpm build`
 - `pnpm validate`
 
