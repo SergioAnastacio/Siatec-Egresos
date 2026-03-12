@@ -1,0 +1,50 @@
+{
+  "step": 1,
+  "artifact_type": "ui_control_event",
+  "id": "CTRL:WIN:WIN_Inicio_LUCCA:BTN_GeneralCamUsu",
+  "window_or_page": "WIN:WIN_Inicio_LUCCA",
+  "module": "Shell/Inicio",
+  "control": {
+    "name": "BTN_GeneralCamUsu",
+    "type": "Button",
+    "purpose": "Cambiar usuario: abre WIN_CambiaUsuarioLUCCA solo si hay 1 ventana. Refresca pendientes y actualiza barra de estado y scrollbar.",
+    "visibility_or_permissions": []
+  },
+  "output_dir": "docs/as-is/windows/",
+  "output_filename": "CTRL_WIN_WIN_Inicio_LUCCA_BTN_GeneralCamUsu.json",
+  "events": [
+    {
+      "event": "Click BTN_GeneralCamUsu",
+      "summary": "Cambiar usuario: abre WIN_CambiaUsuarioLUCCA solo si hay 1 ventana. Refresca pendientes y actualiza barra de estado y scrollbar.",
+      "calls_procedures": [
+        "IW_Pendientes.Carga_Tabla"
+      ],
+      "calls_windows": [
+        "WIN_CambiaUsuarioLUCCA"
+      ],
+      "calls_queries_or_sql": [],
+      "tables_read": [],
+      "tables_write": [],
+      "business_rules": [
+        {
+          "id": "BR-SHELL-USER-001",
+          "rule": "Para cambiar de usuario, debe existir solo 1 ventana abierta; si hay más, exigir cerrar ventanas antes.",
+          "evidence": "nNoVentanas=WindowCount(); IF nNoVentanas=1 THEN ... ELSE Info('Tienes abiertas ...')"
+        }
+      ],
+      "validations": [],
+      "exceptions_or_errors": [],
+      "dependencies": [
+        {
+          "type": "network",
+          "name": "NetIPAddress/NetMachineName",
+          "reason": "Mostrar IP y nombre de equipo en barra SBC_2",
+          "evidence": "sDirIp=NetIPAddress(); sNomWin=NetMachineName(); SBC_2=... "
+        }
+      ],
+      "wl_code": "sDirIp is string=NetIPAddress()\n\tsNomWin is string=NetMachineName()\n\t\n\t\n\tnNoVentanas is int=WindowCount()\n\tIF nNoVentanas = 1 THEN\n\t\tOpen(WIN_CambiaUsuarioLUCCA)\n\t\tIF gnUSUARIO=0 THEN\t\n\t\t\tClose()\n\t\tEND\n\t\tIW_Pendientes.Carga_Tabla()\n\t\t\n\t\tSBC_2=NoSpace(gsNombreUsuario) + \" \" + sDirIp + \" \" + sNomWin\n\t\t\n\t\tIF SIDE_Menu..Height>WIN_Inicio_LUCCA..Height-66 THEN\n\t\t\tSCROLL_NoName1..Visible=True\n\t\t\tSCROLL_NoName1..Height=WIN_Inicio_LUCCA..Height-66\t\t\n\t\t\tSCROLL_NoName1..MaxValue=SIDE_Menu..Height-(WIN_Inicio_LUCCA..Height-66)\n\t\t\tSCROLL_NoName1..Scroll=SCROLL_NoName1..MaxValue/10\n\t\t\tSCROLL_NoName1..ScrollValue=(SIDE_Menu..Height-(WIN_Inicio_LUCCA..Height-66))*((WIN_Inicio_LUCCA..Height-66)/SIDE_Menu..Height)///((WIN_Inicio_LUCCA..Height-66)/SIDE_Menu..Height)*100\t\t\t\n\t\tELSE\n\t\t\tSIDE_Menu..Y=0\n\t\t\tSCROLL_NoName1..Visible=False\n\t\tEND\n\t\t\n\tELSE\n\t\tInfo(\"Tienes abiertas \" + nNoVentanas + \" ventanas, por favor cierra todas las ventanas antes de cambiar de usuario, gracias\")\n\tEND"
+    }
+  ],
+  "unknowns": [],
+  "followups": []
+}

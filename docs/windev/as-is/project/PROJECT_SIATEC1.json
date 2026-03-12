@@ -1,0 +1,257 @@
+{
+  "step": 1,
+  "artifact_type": "project",
+  "id": "PROJECT:SIATEC1",
+  "name": "SIATEC1",
+  "output_dir": "docs/as-is/project/",
+  "output_filename": "PROJECT_SIATEC1.json",
+  "purpose": "Aplicación de escritorio WinDev/WebDev (GRP) con módulos Administrativo (22 submódulos) y Contable. Conecta a SQL Server mediante conector nativo PCSOFT y opera múltiples bases (LUCCA, SIVEC y otras dinámicas por RFC+Ejercicio).",
+  "runtime_targets": ["Windows x64", "Windows x86"],
+  "business_context": {
+    "domain": "GRP Gobierno (México)",
+    "compliance_notes": [
+      "Lineamientos del CONAC (Armonización Contable)",
+      "Ley de Transparencia",
+      "Ley de Disciplina Financiera"
+    ]
+  },
+  "global_state": {
+    "session_and_user": {
+      "gnUSUARIO": { "type": "int", "default": 0 },
+      "gsLogin": { "type": "string", "default": "" },
+      "gsNombreUsuario": { "type": "string", "default": "" },
+      "gnUsuarioReceptor": { "type": "int", "default": 0 }
+    },
+    "permissions_and_menu": {
+      "garrDerechos": { "type": "array<int>", "growth": true },
+      "garrDerNvos": { "type": "array<numeric(2,0)>", "size": 360 },
+      "gnSeActivoNuevoMenu": { "type": "int", "default": 0 },
+      "gnTipoMenu": { "type": "int", "default": 0 },
+      "gnTipoSubmenu": { "type": "int", "default": 0 },
+      "gnMenuAnteriorActivo": { "type": "int", "default": 0 },
+      "gnRespuestaMenu": { "type": "int", "default": 0 }
+    },
+    "navigation_and_window_state": {
+      "gnNVentanaEnUso": { "type": "int", "default": 0 },
+      "gnTipoOperacion": { "type": "int", "default": 0 },
+      "gnCodigoTabla": { "type": "int", "default": 0 },
+      "gnNcodigoRenglon": { "type": "int", "default": 0 },
+      "gnVantanaActiva": { "type": "int", "default": 0 },
+      "gnVentana": { "type": "int", "default": 0 },
+      "gsControlEditando": { "type": "string", "default": "" }
+    },
+    "date_time": {
+      "gdFechaGral": { "type": "Date", "source": "SQL GETDATE() (MyConnectionIniC)" }
+    },
+    "device_and_identity": {
+      "gsMacAdd": { "type": "string", "source": "NetMACAddress()" },
+      "gsNoHD": { "type": "string", "source": "Replace(NetMACAddress(),\":\",\"\")" }
+    },
+    "financial_and_ops": {
+      "gnCajaEnUso": { "type": "int", "default": 0 },
+      "garrArqueoCaja": { "type": "array<int>", "default": [0, 0, 0, 0] },
+      "gcyAnticipo": { "type": "currency", "default": 0 }
+    },
+    "system_flags": {
+      "gbActivar": { "type": "boolean", "default": false },
+      "gbEjercicioCerrado": { "type": "boolean", "default": false },
+      "gbHayEjercicioAnt": { "type": "boolean", "default": false },
+      "gnReiniciar": { "type": "int", "default": 0 }
+    }
+  },
+  "database": {
+    "engine": "SQL Server",
+    "schema": "dbo",
+    "connector": "PCSOFT Native SQL Server (hNativeAccessSQLServer)",
+    "connections": [
+      {
+        "name": "MyConnectionLucca",
+        "role": "Primary operational DB (LUCCA)",
+        "config_source": {
+          "file": "C:\\SIATEC\\Winpier.CHV",
+          "decrypt": { "fn": "Uncrypt", "key": "FckGW" },
+          "parsing": "ExtractString(..., '<br>') -> Database/Server/User/Password"
+        },
+        "provider": "hNativeAccessSQLServer",
+        "access": "hOReadWrite",
+        "cursor_options": "hClientCursor",
+        "extended_info": "WD Lock Timeout=0; WD Command Timeout=0; TrustServerCertificate=Yes;"
+      },
+      {
+        "name": "MyConnectionSivec",
+        "role": "Secondary DBs configured via ConfInter (conditional)",
+        "provider": "hNativeAccessSQLServer",
+        "access": "hOReadWrite",
+        "cursor_options": "hClientCursor",
+        "extended_info": "WD Lock Timeout=0; WD Command Timeout=0; TrustServerCertificate=Yes;",
+        "notes": "Se inicializa solo si ConfInter.CONTRASENA/SERVIDOR/BASEDATOS no están vacíos."
+      },
+      {
+        "name": "MyConnectionIniC",
+        "role": "Config/Directory DB (sivecc) + lookup Estructura",
+        "provider": "hNativeAccessSQLServer",
+        "access": "hOReadWrite",
+        "cursor_options": "hClientCursor",
+        "extended_info": "WD Lock Timeout=0; WD Command Timeout=0; TrustServerCertificate=Yes;"
+      },
+      {
+        "name": "MyConnectionContAnt",
+        "role": "Contable (legacy/aux)",
+        "status": "declared_only_in_package_1"
+      },
+      {
+        "name": "MyConnectionContable",
+        "role": "Contable (principal)",
+        "status": "declared_only_in_package_1"
+      }
+    ],
+    "connection_switching": {
+      "default": "HChangeConnection('*', MyConnectionLucca)",
+      "conditional_groups": [
+        {
+          "condition": "ConfInter.CONTRASENA/SERVIDOR/BASEDATOS definidos",
+          "switch_targets": [
+            "SIVEC001",
+            "SIVEC001C",
+            "SIVEC002",
+            "SIVEC003",
+            "SIVEC006",
+            "SIVEC048",
+            "SIVEC057",
+            "SIVEC065"
+          ],
+          "connection": "MyConnectionSivec"
+        },
+        {
+          "switch_targets": ["SIAM", "SISKO", "NOBA", "SIVEC0A11", "SIVEC030"],
+          "connection": "MyConnectionIniC"
+        }
+      ]
+    }
+  },
+  "startup_sequence": [
+    {
+      "step": 1,
+      "action": "Load and decrypt connection settings from file",
+      "details": [
+        "If directory C:\\SIATEC exists, load C:\\SIATEC\\Winpier.CHV",
+        "Decrypt with Uncrypt(key='FckGW')",
+        "Extract DB params from '<br>' delimited string"
+      ],
+      "dependencies": [{ "type": "filesystem", "path": "C:\\SIATEC\\Winpier.CHV" }]
+    },
+    {
+      "step": 2,
+      "action": "Open primary connection (LUCCA) and set as default",
+      "details": ["HOpenConnection(MyConnectionLucca)", "HChangeConnection('*', MyConnectionLucca)"],
+      "failure_handling": "Error('Error al cambiar la Base de Datos del sistema administrativo: ' + HErrorInfo())"
+    },
+    {
+      "step": 3,
+      "action": "Read ConfInter (CODIGO=1) and optionally open SIVEC connection group",
+      "details": [
+        "HReadSeekFirst(ConfInter, CODIGO, 1)",
+        "If ConfInter.CONTRASENA/SERVIDOR/BASEDATOS != '' then configure MyConnectionSivec and HOpenConnection",
+        "HChangeConnection for multiple SIVEC* logical connections"
+      ]
+    },
+    {
+      "step": 4,
+      "action": "Configure IniC connection group (sivecc) and load Estructura",
+      "details": [
+        "Configure MyConnectionIniC (Database='sivecc') with password gsContraseñaIciCont",
+        "HChangeConnection for SIAM/SISKO/NOBA/SIVEC0A11/SIVEC030",
+        "Query: SELECT A1.Estructura FROM SISKO A1 Where A1.Directorio = <sCadenaDir>",
+        "Set gsEstruc and derived gsEstrucConA"
+      ],
+      "queries": [
+        {
+          "kind": "sql",
+          "crud": "read",
+          "connection": "MyConnectionIniC",
+          "sql": "SELECT A1.Estructura FROM SISKO A1 Where A1.Directorio = '<sCadenaDir>'"
+        }
+      ]
+    },
+    {
+      "step": 5,
+      "action": "Load server date and set global date",
+      "details": ["Query: Select GETDATE() as Fecha", "gdFechaGral = dtPuente.Date"],
+      "queries": [
+        {
+          "kind": "sql",
+          "crud": "read",
+          "connection": "MyConnectionIniC",
+          "sql": "Select GETDATE() as Fecha"
+        }
+      ]
+    },
+    {
+      "step": 6,
+      "action": "Disable audit",
+      "details": ["dbgAuditStatus(AuditDisabled)"]
+    }
+  ],
+  "global_procedures_inventory": {
+    "groups": [
+      { "group": "COL_GlobalProc", "procedures": ["GConvierte_Cuentas", "Ventana_Flotante"] },
+      { "group": "Errores", "procedures": ["Informa_El_Error"] },
+      { "group": "GLO_Recalcula_Saldos", "procedures": ["Recalcula_Sal2"] },
+      {
+        "group": "NominaRecepcion",
+        "procedures": [
+          "_STPeticionNominaRecepcion_FromXML",
+          "_STPeticionNominaRecepcion_ToXML",
+          "_STRespuestaNominaRecepcion_FromXML",
+          "_STRespuestaNominaRecepcion_ToXML",
+          "ProcesarPaquete"
+        ],
+        "types": ["STPeticionNominaRecepcion", "STRespuestaNominaRecepcion"]
+      },
+      { "group": "PerdidaSolicitudes", "procedures": ["Recupera_Detalle", "Recupera_Renglones", "Recupera_RenglonesAut"] }
+    ],
+    "notes": [
+      "Esta lista es parcial ('corta') y está enfocada en procedimientos usados por Inicio/Login; el inventario completo se extraerá por módulos."
+    ]
+  },
+  "dependencies": [
+    { "type": "filesystem", "name": "Local config directory", "path": "C:\\SIATEC", "purpose": "leer archivo Winpier.CHV" },
+    { "type": "filesystem", "name": "Encrypted connection file", "path": "C:\\SIATEC\\Winpier.CHV", "purpose": "credenciales/servidor/bd" },
+    { "type": "crypto", "name": "Uncrypt", "purpose": "desencriptar cadena de conexión", "notes": "key hardcoded 'FckGW'" },
+    { "type": "network", "name": "NetMACAddress", "purpose": "identidad de dispositivo (MAC)" },
+    { "type": "database", "name": "SQL Server", "purpose": "motor de datos principal", "notes": "TrustServerCertificate=Yes; timeouts=0" }
+  ],
+  "security_observations": [
+    {
+      "topic": "DB credentials handling",
+      "observation": "Credenciales se almacenan localmente y se desencriptan con clave fija embebida.",
+      "risk": "medium"
+    },
+    {
+      "topic": "TLS trust",
+      "observation": "TrustServerCertificate=Yes en ExtendedInfo.",
+      "risk": "medium"
+    },
+    {
+      "topic": "Timeouts",
+      "observation": "WD Lock Timeout=0; WD Command Timeout=0 (sin límite).",
+      "risk": "medium"
+    }
+  ],
+  "unknowns": [
+    {
+      "topic": "Ventana de arranque real (qué WIN se abre primero)",
+      "why": "Paquete 1 solo incluye init del proyecto, no la secuencia de Open(WIN_...)",
+      "how_to_confirm": "Enviar Paquete 2 (ventana de inicio LUCCA) y Paquete 3 (login) con su init/eventos"
+    },
+    {
+      "topic": "Estrategia de multiempresa / multibase por cliente",
+      "why": "Se menciona BD dinámica por RFC+Ejercicio pero no hay código de selección aquí",
+      "how_to_confirm": "Enviar código donde se construye/selecciona la BD RFC+Ejercicio y dónde se hace HChangeConnection correspondiente"
+    }
+  ],
+  "followups": [
+    "Enviar Paquete 2: Ventana de Inicio LUCCA (nombre WIN_*, lista de controles, global declarations, end of init, eventos de menú/side/ribbon).",
+    "Enviar Paquete 3: Ventana de Login (nombre WIN_*, lista de controles, init, click login, validaciones, queries)."
+  ]
+}

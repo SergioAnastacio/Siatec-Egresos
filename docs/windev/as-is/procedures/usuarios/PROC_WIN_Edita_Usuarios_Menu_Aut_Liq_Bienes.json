@@ -1,0 +1,19 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Edita_Usuarios:Menu_Aut_Liq_Bienes",
+  "name": "Menu_Aut_Liq_Bienes",
+  "scope": "window_local",
+  "owner_window": "WIN_Edita_Usuarios",
+  "signature": "PROCEDURE Menu_Aut_Liq_Bienes(sIdentifier is string)",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Edita_Usuarios_Menu_Aut_Liq_Bienes.json",
+  "tables_read": [],
+  "tables_write": [],
+  "relations_found": [],
+  "metrics": {
+    "lines": 63,
+    "sql_fragments": 0
+  },
+  "wl_code": "nProcesar is int=0\nIF sIdentifier=\"77\" THEN\ngsResPath=TreeFind(TREE_Example, 77, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=-1 THEN\nTREE_Example[gsResPath]..Checked=0\nEND\nIF TREE_Example[gsResPath]..Checked=1 THEN\ngsResPath=TreeFind(TREE_Example, 78, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 79, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 80, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\nELSE\ngsResPath=TreeFind(TREE_Example, 78, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 79, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 80, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\nEND\nELSE IF sIdentifier=\"78\" THEN\ngsResPath=TreeFind(TREE_Example, 78, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=-1 THEN\nTREE_Example[gsResPath]..Checked=0\nEND\nnProcesar=1\nELSE IF sIdentifier=\"79\" THEN\ngsResPath=TreeFind(TREE_Example, 79, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=-1 THEN\nTREE_Example[gsResPath]..Checked=0\nEND\nnProcesar=1\nELSE IF sIdentifier=\"80\" THEN\ngsResPath=TreeFind(TREE_Example, 80, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=-1 THEN\nTREE_Example[gsResPath]..Checked=0\nEND\nnProcesar=1\nEND\nIF nProcesar=1 THEN\ngsResPath=TreeFind(TREE_Example, 78, Null, tvLeaf + tvNode)\nnEstado78 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 79, Null, tvLeaf + tvNode)\nnEstado79 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 80, Null, tvLeaf + tvNode)\nnEstado80 is int=TREE_Example[gsResPath]..Checked\n\n\nPart 1 › WINDEV window › WIN_Edita_Usuarios › Procedures\n3/9/2026\n289\nSIATEC1_IA\ngsResPath=TreeFind(TREE_Example, 77, Null, tvLeaf + tvNode)\nIF nEstado78=1 AND nEstado79=1 AND nEstado80=1 THEN\nTREE_Example[gsResPath]..Checked=1\nELSE IF nEstado78=0 AND nEstado79=0 AND nEstado80=0 THEN\nTREE_Example[gsResPath]..Checked=0\nELSE IF nEstado78=1 OR nEstado79=1 OR nEstado80=1 THEN\nTREE_Example[gsResPath]..Checked=-1\nEND\nEND\nLocal procedure Menu_Aut_Liq_Serv"
+}

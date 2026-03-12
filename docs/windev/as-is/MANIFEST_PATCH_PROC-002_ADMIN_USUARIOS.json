@@ -1,0 +1,49 @@
+{
+  "manifest_patch_type": "add_process_or_update",
+  "suggested_process": {
+    "id": "PROC-002",
+    "name": "Administración de Usuarios",
+    "criticality": "high",
+    "bounded_context": "Admin/Usuarios",
+    "entrypoints": [
+      "WIN:WIN_Catalogo_Usuarios",
+      "WIN:WIN_Edita_Usuarios"
+    ],
+    "artifacts": {
+      "windows": [
+        "docs/as-is/windows/WIN_WIN_Catalogo_Usuarios.json"
+      ],
+      "procedures": [
+        "docs/as-is/procedures/PROC_WIN_Catalogo_Usuarios_Carga_Tabla.json"
+      ],
+      "controls": [
+        "docs/as-is/windows/CTRL_WIN_WIN_Catalogo_Usuarios_BTN_Aceptar_Click.json",
+        "docs/as-is/windows/CTRL_WIN_WIN_Catalogo_Usuarios_BTN_Editar_Click.json",
+        "docs/as-is/windows/CTRL_WIN_WIN_Catalogo_Usuarios_BTN_Eliminar_Click.json",
+        "docs/as-is/windows/CTRL_WIN_WIN_Catalogo_Usuarios_BTN_Seleccionar_Click.json",
+        "docs/as-is/windows/CTRL_WIN_WIN_Catalogo_Usuarios_BTN_Ayuda_Click.json",
+        "docs/as-is/windows/CTRL_WIN_WIN_Catalogo_Usuarios_BTN_Cerrar_Click.json",
+        "docs/as-is/windows/CTRL_WIN_WIN_Catalogo_Usuarios_TABLE_Catalog_Cont_Initialization.json"
+      ]
+    },
+    "db_usage": {
+      "read": [
+        "dbo.Usuarios",
+        "dbo.AreaX"
+      ],
+      "write": [
+        "dbo.Usuarios"
+      ]
+    },
+    "business_rules_summary": [
+      "Modo selector (gsGnCodSel=-2/-1) habilita BTN_Seleccionar y controla doble click.",
+      "Alta usuario usa MAX(Codigo)+1 (migrar a SEQUENCE/IDENTITY).",
+      "No se permite borrar por históricos."
+    ],
+    "migration_wave": 1,
+    "to_be_targets": {
+      "api": "services/api (Rust) -> /admin/usuarios",
+      "ui": "libs/ui UsersCatalogPage"
+    }
+  }
+}

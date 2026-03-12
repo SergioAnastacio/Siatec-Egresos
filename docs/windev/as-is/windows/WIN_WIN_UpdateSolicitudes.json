@@ -1,0 +1,315 @@
+{
+  "step": 1,
+  "artifact_type": "window_or_page",
+  "id": "WIN:WIN_UpdateSolicitudes",
+  "name": "WIN_UpdateSolicitudes",
+  "module": "Solicitudes",
+  "output_dir": "docs/as-is/windows/",
+  "output_filename": "WIN_WIN_UpdateSolicitudes.json",
+  "purpose": "Ventana de captura/edición de Solicitudes (Bienes, Servicios y Préstamo). Ajusta UI y permisos por contexto gnNVentanaEnUso, carga datos iniciales y maneja persistencia de notas (.wdnote). En cierre, realiza limpieza de tablas temporales globales (##BIENES/##SERVICIOS) asociadas a la solicitud.",
+  "ui": {
+    "controls": [
+      {
+        "name": "COMBO_Genero",
+        "type": "Combo",
+        "purpose": "Selección de género; se inicializa con Femenino/Masculino.",
+        "events": ["init"],
+        "calls": [],
+        "unknown": false
+      },
+      {
+        "name": "EDT_Solicitante",
+        "type": "Edit",
+        "purpose": "Muestra el nombre del solicitante (Usuarios.NOMBRE).",
+        "events": ["init"],
+        "calls": [],
+        "unknown": false
+      },
+      {
+        "name": "BTN_SelAreaEsp",
+        "type": "Button",
+        "purpose": "Selección de área especial; visible si garrDerNvos[360]=1.",
+        "events": ["visibility_by_permission"],
+        "calls": ["PROC:unknown"],
+        "unknown": true
+      },
+      {
+        "name": "BTN_AgregaArts",
+        "type": "Button",
+        "purpose": "Agregar artículos/servicios; visible según permisos (bienes: garrDerNvos[8], servicios: garrDerNvos[17]).",
+        "events": ["click", "visibility_by_permission"],
+        "calls": ["PROC:unknown"],
+        "unknown": true
+      },
+      {
+        "name": "BTN_EstMerca",
+        "type": "Button",
+        "purpose": "Acción de estado/mercancía; visible según permisos (bienes: garrDerNvos[9], servicios: garrDerNvos[18]) y oculto en préstamo.",
+        "events": ["click", "visibility_by_permission"],
+        "calls": ["PROC:unknown"],
+        "unknown": true
+      },
+      {
+        "name": "BTN_DocsAdj",
+        "type": "Button",
+        "purpose": "Documentos adjuntos; visible según permisos (bienes: garrDerNvos[10], servicios: garrDerNvos[19]) y oculto en préstamo.",
+        "events": ["click", "visibility_by_permission"],
+        "calls": ["PROC:unknown"],
+        "unknown": true
+      },
+      {
+        "name": "BTN_Imprimir",
+        "type": "Button",
+        "purpose": "Impresión; visible según permisos (bienes: garrDerNvos[11], servicios: garrDerNvos[20]).",
+        "events": ["click", "visibility_by_permission"],
+        "calls": ["PROC:unknown"],
+        "unknown": true
+      },
+      {
+        "name": "BTN_Cancelar1",
+        "type": "Button",
+        "purpose": "Acción de cancelación/retorno (visible solo en bienes o préstamo).",
+        "events": ["visibility_by_context"],
+        "calls": ["PROC:unknown"],
+        "unknown": true
+      },
+      {
+        "name": "TAB_General",
+        "type": "Tab",
+        "purpose": "Tabs de captura; cambia el caption del tab 2 según contexto (Artículos/Servicios/Bienes).",
+        "events": ["init"],
+        "calls": [],
+        "unknown": false
+      },
+      {
+        "name": "COL_Solicitado",
+        "type": "Column/Label",
+        "purpose": "Etiqueta/columna que cambia a 'Bienes Solicitados' o 'Servicios Solicitados'.",
+        "events": ["init"],
+        "calls": [],
+        "unknown": false
+      },
+      {
+        "name": "COL_Articulo",
+        "type": "Column/Label",
+        "purpose": "Etiqueta/columna que cambia a 'Catálogo de Artículos/Servicios/Bienes'.",
+        "events": ["init"],
+        "calls": [],
+        "unknown": false
+      }
+    ],
+    "lifecycle_events": [
+      "End of initialization (carga datos y configura UI según contexto)",
+      "Close window (limpieza de tablas temporales ##BIENES/##SERVICIOS y NoteSaveAll)",
+      "Request for refreshing the display (sin código en el objeto)",
+      "Close a child window (sin código en el objeto)"
+    ],
+    "navigation": [
+      {
+        "from": "WIN_UpdateSolicitudes",
+        "action": "close",
+        "to": "WIN:WIN_Browse_Solicitudes",
+        "trigger": "close",
+        "note": "Al cerrar, puede retornar a captura o cerrar definitivamente según nCerroBien."
+      }
+    ]
+  },
+  "entrypoints": [
+    {
+      "event": "End of initialization of WIN_UpdateSolicitudes",
+      "when": "init",
+      "summary": "Carga datos base de la solicitud (Solicitudes o AtencionServicios según operación), carga usuario actual, configura UI por contexto (bienes/servicios/préstamo), aplica permisos, carga información inicial y restaura notas .wdnote."
+    }
+  ],
+  "main_events": [
+    {
+      "event": "End of initialization of WIN_UpdateSolicitudes",
+      "calls_procedures": [
+        "PROC:Recupera_ArtsInicial",
+        "PROC:Carga_Inicial_Bienes",
+        "PROC:Carga_Inicial_Servicios"
+      ],
+      "calls_queries_or_sql": [],
+      "tables_read": ["Solicitudes", "AtencionServicios", "Usuarios", "ConfInter"],
+      "tables_write": [],
+      "validations": [
+        {
+          "rule": "Si gnTipoOperacion=1 o 3, la solicitud se busca en Solicitudes; en caso contrario en AtencionServicios.",
+          "severity": "high",
+          "where": "init",
+          "evidence": "IF gnTipoOperacion=1 OR gnTipoOperacion=3 THEN HReadSeek(Solicitudes,...) ELSE HReadSeek(AtencionServicios,...)"
+        },
+        {
+          "rule": "BTN_SelAreaEsp visible solo si garrDerNvos[360]=1.",
+          "severity": "medium",
+          "where": "init",
+          "evidence": "IF garrDerNvos[360]=1 THEN BTN_SelAreaEsp..Visible=True"
+        },
+        {
+          "rule": "Permisos por contexto para botones (bienes: 8,9,10,11; servicios: 17,18,19,20) cuando gnSeActivoNuevoMenu=1.",
+          "severity": "high",
+          "where": "init",
+          "evidence": "IF garrDerNvos[8]=0 AND gnSeActivoNuevoMenu=1 THEN BTN_AgregaArts..Visible=False ... (y equivalentes para servicios)"
+        },
+        {
+          "rule": "En préstamo (gnNVentanaEnUso=3) se ocultan BTN_EstMerca y BTN_DocsAdj.",
+          "severity": "medium",
+          "where": "init",
+          "evidence": "ELSE IF gnNVentanaEnUso=3 THEN ... BTN_EstMerca..Visible=False; BTN_DocsAdj..Visible=False"
+        },
+        {
+          "rule": "BTN_Cancelar1 visible solo si gnNVentanaEnUso=1 o 3.",
+          "severity": "medium",
+          "where": "init",
+          "evidence": "IF gnNVentanaEnUso=1 OR gnNVentanaEnUso=3 THEN BTN_Cancelar1..Visible=True ELSE ... False"
+        }
+      ],
+      "business_rules": [
+        {
+          "id": "BR-SOL-100",
+          "rule": "La ventana se configura en tres modos: Bienes (1), Servicios (2), Préstamo de Bienes (3), cambiando captions, visibilidad y carga inicial.",
+          "where": "WIN:WIN_UpdateSolicitudes init",
+          "evidence": "IF gnNVentanaEnUso=1 THEN ... ELSE IF gnNVentanaEnUso=2 THEN ... ELSE IF gnNVentanaEnUso=3 THEN ..."
+        },
+        {
+          "id": "BR-SOL-101",
+          "rule": "Se restaura estado de notas de ventana desde un archivo .wdnote asociado al nombre de la ventana y luego se elimina el archivo.",
+          "where": "WIN:WIN_UpdateSolicitudes init",
+          "evidence": "IF fFileExist(fExeDir() + \"\\\" + MySelf..Name + \".wdnote\") THEN NoteLoadAll(...); fDelete(...)"
+        }
+      ],
+      "exceptions_or_errors": [],
+      "dependencies": [
+        {
+          "type": "filesystem",
+          "name": "wdnote en fExeDir()",
+          "reason": "Persistencia/restauración de notas",
+          "evidence": "NoteLoadAll(...MySelf..Name + \".wdnote\")"
+        },
+        {
+          "type": "module",
+          "name": "Permisos/NuevoMenú (garrDerNvos, gnSeActivoNuevoMenu)",
+          "reason": "Controla visibilidad de funciones",
+          "evidence": "IF garrDerNvos[8]=0 AND gnSeActivoNuevoMenu=1 THEN ..."
+        }
+      ]
+    },
+    {
+      "event": "Close WIN_UpdateSolicitudes",
+      "calls_procedures": [],
+      "calls_queries_or_sql": [
+        {
+          "kind": "sql",
+          "name": "DROP TABLE ##BIENES<gnCodigoTabla>",
+          "crud": "write",
+          "evidence": "Drop TABLE [##BIENES\" + gnCodigoTabla + \"]"
+        },
+        {
+          "kind": "sql",
+          "name": "DROP TABLE ##SERVICIOS<gnCodigoTabla>",
+          "crud": "write",
+          "evidence": "Drop TABLE [##SERVICIOS\" + gnCodigoTabla + \"]"
+        }
+      ],
+      "tables_read": [],
+      "tables_write": [],
+      "validations": [
+        {
+          "rule": "Si nCerroBien=0, no se cierra definitivamente: ReturnToCapture(WIN_UpdateSolicitudes).",
+          "severity": "high",
+          "where": "close",
+          "evidence": "IF nCerroBien=0 THEN ReturnToCapture(WIN_UpdateSolicitudes)"
+        },
+        {
+          "rule": "Si nCerroBien<>0 se ejecuta limpieza de tablas temporales según contexto.",
+          "severity": "medium",
+          "where": "close",
+          "evidence": "ELSE ... IF gnNVentanaEnUso=1 OR gnNVentanaEnUso=3 THEN Drop TABLE ##BIENES... ELSE IF gnNVentanaEnUso=2 THEN Drop TABLE ##SERVICIOS..."
+        }
+      ],
+      "business_rules": [
+        {
+          "id": "BR-SOL-110",
+          "rule": "En cierre definitivo, se eliminan tablas temporales globales asociadas a la captura (##BIENES<id> o ##SERVICIOS<id>) para limpiar recursos de sesión.",
+          "where": "WIN:WIN_UpdateSolicitudes close",
+          "evidence": "Drop TABLE [##BIENES\" + gnCodigoTabla + \"] / Drop TABLE [##SERVICIOS\" + gnCodigoTabla + \"]"
+        },
+        {
+          "id": "BR-SOL-111",
+          "rule": "En cierre definitivo, se guardan notas de ventana en .wdnote (NoteSaveAll).",
+          "where": "WIN:WIN_UpdateSolicitudes close",
+          "evidence": "NoteSaveAll(fExeDir() + \"\\\" + MySelf..Name + \".wdnote\")"
+        }
+      ],
+      "exceptions_or_errors": [
+        {
+          "type": "db_error",
+          "condition": "Falla al ejecutar DROP TABLE de tablas temporales",
+          "handling": "Error suprimido (comentado)",
+          "evidence": "IF HExecuteSQLQuery(... Drop TABLE ...) = False THEN // Error(\"HFSQL error: \" + HErrorInfo())"
+        }
+      ],
+      "dependencies": [
+        {
+          "type": "db",
+          "name": "MyConnectionLucca",
+          "reason": "Ejecutar DROP TABLE de tablas temporales",
+          "evidence": "HExecuteSQLQuery(dsBloqueo, MyConnectionLucca, ... \"Drop TABLE ...\")"
+        },
+        {
+          "type": "filesystem",
+          "name": "wdnote en fExeDir()",
+          "reason": "Guardar notas al cierre",
+          "evidence": "NoteSaveAll(fExeDir() + \"\\\" + MySelf..Name + \".wdnote\")"
+        }
+      ]
+    }
+  ],
+  "procedures_called": [
+    { "id": "PROC:Recupera_ArtsInicial", "name": "Recupera_ArtsInicial", "call_sites": ["End of initialization"], "unknown": false },
+    { "id": "PROC:Carga_Inicial_Bienes", "name": "Carga_Inicial_Bienes", "call_sites": ["End of initialization (gnNVentanaEnUso=1 or 3)"], "unknown": false },
+    { "id": "PROC:Carga_Inicial_Servicios", "name": "Carga_Inicial_Servicios", "call_sites": ["End of initialization (gnNVentanaEnUso=2)"], "unknown": false }
+  ],
+  "data_access_summary": {
+    "tables_read": ["Solicitudes", "AtencionServicios", "Usuarios", "ConfInter"],
+    "tables_write": [],
+    "stored_procedures": [],
+    "embedded_sql_detected": true
+  },
+  "notes_on_locking": {
+    "blocked_tables": ["LUCCA429", "LUCCA430"],
+    "observation": "En el código proporcionado de WIN_UpdateSolicitudes no se observa liberación/borrado explícito de registros de bloqueo en LUCCA429/LUCCA430. La liberación podría ocurrir en otros eventos (guardar/cancelar) no incluidos.",
+    "unknown": true
+  },
+  "unknowns": [
+    {
+      "topic": "Liberación de bloqueos (LUCCA429/LUCCA430): ¿se elimina registro al guardar/cerrar o hay expiración?",
+      "why": "El fragmento muestra inserción de bloqueos en la ventana browse, pero aquí solo se eliminan tablas temporales ##BIENES/##SERVICIOS; no hay DELETE/UPDATE en LUCCA429/LUCCA430.",
+      "how_to_confirm": "Pegar eventos de guardar/aceptar/cerrar definitivo dentro de WIN_UpdateSolicitudes (botones de guardar/aceptar) y buscar DELETE/UPDATE sobre LUCCA429/LUCCA430."
+    },
+    {
+      "topic": "Significado exacto de nCerroBien y cuándo se asigna a 1",
+      "why": "Controla cierre definitivo vs ReturnToCapture, pero no se ve dónde cambia.",
+      "how_to_confirm": "Buscar asignaciones a nCerroBien en eventos (guardar, cerrar, cancelar) dentro de WIN_UpdateSolicitudes."
+    },
+    {
+      "topic": "Acciones de botones (Guardar/Imprimir/DocsAdj/etc.) y sus reglas de negocio",
+      "why": "Solo se proporcionó init y close; faltan eventos click que probablemente contienen lógica clave (persistencia, flujos, validaciones).",
+      "how_to_confirm": "Pegar código de eventos click de botones principales en WIN_UpdateSolicitudes (Guardar/Aceptar/Cancelar/Imprimir/Adjuntar)."
+    }
+  ],
+  "followups": [
+    "Pegar código del evento click de guardar/aceptar (o botón equivalente) en WIN_UpdateSolicitudes para ubicar reglas de persistencia y liberación de bloqueos LUCCA429/LUCCA430.",
+    "Buscar y pegar dónde se asigna nCerroBien=1 (o distinto de 0) para entender el flujo de cierre definitivo.",
+    "Si existe un procedimiento de liberación de bloqueo, pegarlo (por ejemplo 'Desbloquear' o similar)."
+  ],
+  "table_column_bindings_confirmed": {
+    "TABLE_Catalogo_Solicitudes": [
+      { "control_column": "COL_Codigo", "display_name": "Codigo" },
+      { "control_column": "COL_Fecha", "display_name": "Fecha" },
+      { "control_column": "COL_Area", "display_name": "Area" },
+      { "control_column": "COL_Solicitante", "display_name": "Solicitante" },
+      { "control_column": "COL_Estado", "display_name": "Estado" }
+    ]
+  }
+}

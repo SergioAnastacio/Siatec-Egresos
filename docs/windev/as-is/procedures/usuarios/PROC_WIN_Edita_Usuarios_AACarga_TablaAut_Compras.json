@@ -1,0 +1,40 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Edita_Usuarios:AACarga_TablaAut_Compras",
+  "name": "AACarga_TablaAut_Compras",
+  "scope": "window_local",
+  "owner_window": "WIN_Edita_Usuarios",
+  "signature": "PROCEDURE AACarga_TablaAut_Compras()",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Edita_Usuarios_AACarga_TablaAut_Compras.json",
+  "tables_read": [
+    "Areax",
+    "BuscaQry",
+    "LUCCA105"
+  ],
+  "tables_write": [],
+  "relations_found": [
+    {
+      "type": "field_assignment",
+      "child_table": "A1",
+      "child_column": "Codigo",
+      "parent_table": "U1",
+      "parent_column": "Area",
+      "evidence": "A1.Codigo=U1.Area",
+      "source": "PROC:AACarga_TablaAut_Compras"
+    },
+    {
+      "type": "sql_join",
+      "join_table": "Areax",
+      "on": "A1.Codigo=U1.Area",
+      "evidence": " FROM LUCCA105 U1 Left Join AreaX A1 On A1.Codigo=U1.Area Where U1.Codigo=...",
+      "source": "PROC:AACarga_TablaAut_Compras"
+    }
+  ],
+  "metrics": {
+    "lines": 21,
+    "sql_fragments": 2
+  },
+  "wl_code": "BuscaQry is Data Source\n\n\nPart 1 › WINDEV window › WIN_Edita_Usuarios › Procedures\n3/9/2026\n223\nSIATEC1_IA\nTableDeleteAll(TABLE_Areas_Aut_Compras)\nIF HExecuteSQLQuery(BuscaQry, MyConnectionLucca, hQueryWithoutCorrection + hNoBind,\n\"SELECT U1.Codigo, U1.Renglon, A1.Descripcion \" + ...\n\" FROM LUCCA105 U1 Left Join AreaX A1 On A1.Codigo=U1.Area Where U1.Codigo=\" + Usuarios.CODIGO +\n\" Order by A1.Descripcion \") = False THEN\nError(\"HFSQL error: \" + HErrorInfo())\nEND\nHReadFirst(BuscaQry)\nLOOP (HNbRec(BuscaQry))\nTableAddLine(TABLE_Areas_Aut_Compras, BuscaQry.Codigo, BuscaQry.Renglon, NoSpace(BuscaQry.Descripcion)\n)\nHReadNext(BuscaQry)\nEND\nLocal procedure AACarga_TablaSoloDerechos"
+}

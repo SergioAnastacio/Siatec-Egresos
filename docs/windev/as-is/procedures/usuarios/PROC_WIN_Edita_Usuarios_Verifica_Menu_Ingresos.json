@@ -1,0 +1,19 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Edita_Usuarios:Verifica_Menu_Ingresos",
+  "name": "Verifica_Menu_Ingresos",
+  "scope": "window_local",
+  "owner_window": "WIN_Edita_Usuarios",
+  "signature": "PROCEDURE Verifica_Menu_Ingresos()",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Edita_Usuarios_Verifica_Menu_Ingresos.json",
+  "tables_read": [],
+  "tables_write": [],
+  "relations_found": [],
+  "metrics": {
+    "lines": 80,
+    "sql_fragments": 0
+  },
+  "wl_code": "gsResPath=TreeFind(TREE_Example, 170, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=-1 THEN\nTREE_Example[gsResPath]..Checked=0\nEND\n\n\nPart 1 › WINDEV window › WIN_Edita_Usuarios › Procedures\n3/9/2026\n345\nSIATEC1_IA\nIF TREE_Example[gsResPath]..Checked=0 THEN\ngsResPath=TreeFind(TREE_Example, 171, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 172, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 173, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 174, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 175, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 176, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 177, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 178, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 179, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 180, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 181, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 182, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 183, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 184, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 185, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\nELSE\ngsResPath=TreeFind(TREE_Example, 171, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 172, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 173, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 174, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 175, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 176, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 177, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 178, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 179, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 180, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 181, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 182, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 183, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 184, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 185, Null, tvLeaf + tvNode)\n\n\nPart 1 › WINDEV window › WIN_Edita_Usuarios › Procedures\n3/9/2026\n346\nSIATEC1_IA\nTREE_Example[gsResPath]..Checked=1\nEND\nLocal procedure Verifica_Menu_Licita"
+}

@@ -1,0 +1,14 @@
+{
+  "artifact_type": "table_aliases",
+  "schema": "dbo",
+  "output_dir": "docs/db/metadata/",
+  "output_filename": "table_aliases.json",
+  "aliases": [
+    {
+      "wl_name": "Areas",
+      "sql_name": "Areax",
+      "schema": "dbo",
+      "note": "En WLanguage se usa 'Areas' pero la tabla real en SQL Server es dbo.Areax."
+    }
+  ]
+}

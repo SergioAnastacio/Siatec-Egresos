@@ -1,0 +1,36 @@
+{
+  "artifact_type": "fk_candidates_patch",
+  "scope": "WIN_Edita_Usuarios",
+  "new_high_value_candidates": [
+    {
+      "child_table": "UsuHist",
+      "child_column": "CODIGO",
+      "parent_table": "Usuarios",
+      "parent_column": "CODIGO",
+      "confidence": "high",
+      "reason": "Histórico de contraseñas por usuario",
+      "evidence": "HReadSeek(UsuHist,PK_UsuHist,[Usuarios.CODIGO,EDT_PASSWORD],...) y asignación UsuHist.CODIGO=Usuarios.CODIGO"
+    },
+    {
+      "child_table": "BitMovs",
+      "child_column": "USUARIO",
+      "parent_table": "Usuarios",
+      "parent_column": "CODIGO",
+      "confidence": "high",
+      "reason": "Bitácora registra usuario ejecutor",
+      "evidence": "BitMovs.USUARIO=gnUSUARIO"
+    },
+    {
+      "child_table": "BitMovs",
+      "child_column": "REGISTRO",
+      "parent_table": "Usuarios",
+      "parent_column": "CODIGO",
+      "confidence": "medium",
+      "reason": "Bitácora en proceso 'Usuarios' usa REGISTRO=Usuarios.CODIGO",
+      "evidence": "BitMovs.PROCESO='Usuarios' y BitMovs.REGISTRO=Usuarios.CODIGO"
+    }
+  ],
+  "notes": [
+    "Antes de aplicar FK, validar orphans y NULLs en staging y definir estrategia de remediación."
+  ]
+}

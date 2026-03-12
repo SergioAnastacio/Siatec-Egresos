@@ -1,0 +1,30 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Inicio_LUCCA:Actualiza_Pendientes",
+  "name": "Actualiza_Pendientes",
+  "scope": "window_local",
+  "owner_window": "WIN_Inicio_LUCCA",
+  "signature": "PROCEDURE Actualiza_Pendientes()",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Inicio_LUCCA_Actualiza_Pendientes.json",
+  "summary": {
+    "purpose": "Refresca el componente IW_Pendientes invocando Carga_Tabla().",
+    "calls": [
+      "IW_Pendientes.Carga_Tabla"
+    ]
+  },
+  "ui_effects": [],
+  "tables_read": [],
+  "tables_write": [],
+  "business_rules": [],
+  "dependencies": [],
+  "raw_wl_excerpt": "IW_Pendientes.Carga_Tabla()",
+  "unknowns": [
+    {
+      "topic": "Eventos click reales de botones del SIDE_Menu",
+      "why": "Prepara_Menu solo aplica permisos; no incluye navegación",
+      "how_to_confirm": "Subir eventos Click/Select de botones clave (SolBienes/SolServ/etc.)."
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "step": 1,
+  "artifact_type": "window_or_page",
+  "id": "WIN:WIN_Catalogo_Usuarios",
+  "name": "WIN_Catalogo_Usuarios",
+  "module": "Admin/Usuarios",
+  "output_dir": "docs/as-is/windows/",
+  "output_filename": "WIN_WIN_Catalogo_Usuarios.json",
+  "purpose": "Catálogo de usuarios. Funciona en modo administración (alta/edición) y en modo selector (devuelve código seleccionado via gsGnCodSel).",
+  "entrypoints": [
+    {
+      "event": "Global declarations / MyWindow",
+      "summary": "Activa modo selector si gsGnCodSel es -2 o -1: muestra BTN_Seleccionar y oculta botones de mantenimiento (Aceptar/Editar/Eliminar) según el caso.",
+      "evidence_excerpt": "IF gsGnCodSel=-2 THEN\n\t\t\t\tgsGnCodSel=0\n\t\t\t\tBTN_Seleccionar..Visible=True\n\t\t\t\tBTN_Aceptar..Visible=False\n\t\t\t\tBTN_Editar..Visible=False\n\t\t\t\tBTN_Eliminar..Visible=False\t\n\t\t\tELSE IF gsGnCodSel=-1 THEN\n\t\t\t\tgsGnCodSel=0\n\t\t\t\tBTN_Seleccionar..Visible=True\n\t\t\tEND"
+    },
+    {
+      "event": "End of initialization",
+      "summary": "Ejecuta Carga_Tabla() con HourGlass.",
+      "evidence_excerpt": "HourGlass()\n\t\t\tCarga_Tabla()\n\t\t\tHourGlass(False)"
+    }
+  ],
+  "ui": {
+    "controls": [
+      "BTN_Aceptar",
+      "BTN_Ayuda",
+      "BTN_Cerrar",
+      "BTN_Editar",
+      "BTN_Eliminar",
+      "BTN_Seleccionar"
+    ],
+    "tables": [
+      {
+        "name": "TABLE_Catalog_Cont",
+        "columns": [
+          {
+            "name": "COL_Codigo",
+            "title": "Codigo",
+            "type": "Numerico"
+          },
+          {
+            "name": "COL_Usuario",
+            "title": "Nombre de Usuario",
+            "type": "Text"
+          },
+          {
+            "name": "COL_Puesto",
+            "title": "Puesto",
+            "type": "Text"
+          },
+          {
+            "name": "COL_Adcripcion",
+            "title": "Area de Adscripcion",
+            "type": "Text"
+          },
+          {
+            "name": "COL_Activo",
+            "title": "Activo",
+            "type": "CheckBox"
+          }
+        ],
+        "notes": "Todas las columnas deberían ser sort/search en TO-BE; COL_Activo corresponde a ReceptorOficios (checkbox)."
+      }
+    ]
+  },
+  "local_procedures_declared": [
+    "Carga_Tabla"
+  ],
+  "data_access": {
+    "tables_read": [
+      "dbo.Usuarios",
+      "dbo.AreaX"
+    ],
+    "tables_written": [
+      "dbo.Usuarios"
+    ],
+    "embedded_sql": [
+      {
+        "crud": "read",
+        "sql_summary": "SELECT Usuarios + AreaX (LEFT JOIN) ORDER BY Usuarios.Nombre"
+      },
+      {
+        "crud": "write",
+        "sql_summary": "INSERT Usuarios con MAX(Codigo)+1 (OUTPUT Inserted.Codigo)"
+      }
+    ]
+  },
+  "business_rules": [
+    {
+      "id": "BR-USR-SEL-001",
+      "rule": "Modo selector: si gsGnCodSel in (-2,-1) mostrar BTN_Seleccionar; en -2 además ocultar Aceptar/Editar/Eliminar.",
+      "evidence": "IF gsGnCodSel=-2 ... ELSE IF gsGnCodSel=-1 ..."
+    },
+    {
+      "id": "BR-USR-DEL-001",
+      "rule": "No se permite borrar usuarios (históricos/reportes).",
+      "evidence": "Info('Por necesidades de Reporteria e Historicos no se puede Borrar un Empleado')"
+    },
+    {
+      "id": "BR-USR-ID-001",
+      "rule": "Alta usuario usa MAX(Codigo)+1 (riesgo concurrencia). TO-BE debe usar SEQUENCE/IDENTITY.",
+      "evidence": "(SELECT IsNull(Max(Codigo),0) ... + 1)"
+    }
+  ],
+  "navigation": {
+    "opens_windows": [
+      {
+        "window": "WIN_Edita_Usuarios",
+        "trigger": "BTN_Aceptar / BTN_Editar"
+      }
+    ],
+    "returns_value": {
+      "name": "gsGnCodSel",
+      "when": "BTN_Seleccionar",
+      "meaning": "Código de usuario seleccionado"
+    }
+  },
+  "unknowns": [
+    {
+      "topic": "Tablas afectadas en WIN_Edita_Usuarios",
+      "why": "Se abre con parámetros pero no se adjuntó su código",
+      "how_to_confirm": "Subir WIN_Edita_Usuarios (guardar/cerrar)."
+    }
+  ]
+}

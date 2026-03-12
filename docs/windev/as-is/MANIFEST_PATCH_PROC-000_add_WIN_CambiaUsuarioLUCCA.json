@@ -1,0 +1,19 @@
+{
+  "manifest_patch_type": "append_artifacts",
+  "target_process_id": "PROC-000",
+  "windows_to_add": [
+    "docs/as-is/windows/WIN_WIN_CambiaUsuarioLUCCA.json"
+  ],
+  "controls_to_add": [
+    "docs/as-is/windows/CTRL_WIN_WIN_CambiaUsuarioLUCCA_BTN_Agregar_Click.json",
+    "docs/as-is/windows/CTRL_WIN_WIN_CambiaUsuarioLUCCA_BTN_Cancelar_Click.json",
+    "docs/as-is/windows/CTRL_WIN_WIN_CambiaUsuarioLUCCA_BTN_NoName1_Click.json",
+    "docs/as-is/windows/CTRL_WIN_WIN_CambiaUsuarioLUCCA_EDT_LOGIN_Exit.json"
+  ],
+  "procedures_to_add": [
+    "docs/as-is/procedures/PROC_WIN_CambiaUsuarioLUCCA_Habilita_Menu.json",
+    "docs/as-is/procedures/PROC_WIN_CambiaUsuarioLUCCA_Inicializa_Menu.json",
+    "docs/as-is/procedures/PROC_WIN_CambiaUsuarioLUCCA_Prepara_Menu.json"
+  ],
+  "note": "Si PROC-000 no existe aún, crear el proceso Auth primero (ya sugerido en patch anterior)."
+}

@@ -1,0 +1,118 @@
+{
+  "step": 1,
+  "artifact_type": "ui_control_event",
+  "id": "CTRL:WIN:WIN_Edita_Usuarios:BTN_Aceptar1:Click",
+  "window_or_page": "WIN:WIN_Edita_Usuarios",
+  "module": "Admin/Usuarios",
+  "control": {
+    "name": "BTN_Aceptar1",
+    "type": "Button",
+    "purpose": "Guardar cambios de usuario (datos básicos, permisos, flags de almacén), registrar bitácora y cerrar la ventana.",
+    "visibility_or_permissions": []
+  },
+  "output_dir": "docs/as-is/windows/",
+  "output_filename": "CTRL_WIN_WIN_Edita_Usuarios_BTN_Aceptar1_Click.json",
+  "events": [
+    {
+      "event": "Click BTN_Aceptar1",
+      "summary": "Guarda la edición/alta de un usuario: valida campos básicos; opcionalmente valida reutilización de contraseña contra UsuHist; actualiza ULTIMOREGISTRO al desbloquear; setea flags de almacén desde TREE_Example; modifica Usuarios, LUCCA182, LUCCA333; si cambió contraseña cifra Usuarios.Firma vía ENCRYPTBYPASSPHRASE y marca Password='Cifrado'; guarda permisos LUCCA410; registra BitMovs (Agregar/Modificar/Desbloqueo) y cierra.",
+      "calls_procedures": [
+        "PROC:AACarga_ZZZGuarda410"
+      ],
+      "calls_windows": [],
+      "calls_queries_or_sql": [
+        {
+          "kind": "sql",
+          "name": "Update Usuarios.Firma via ENCRYPTBYPASSPHRASE",
+          "crud": "write",
+          "evidence": "Update Usuarios SET Firma= ENCRYPTBYPASSPHRASE('C1traseña', ...), Password='Cifrado' Where Codigo=..."
+        }
+      ],
+      "tables_read": [
+        "dbo.Usuarios",
+        "dbo.UsuHist"
+      ],
+      "tables_write": [
+        "dbo.Usuarios",
+        "dbo.UsuHist",
+        "dbo.LUCCA182",
+        "dbo.LUCCA333",
+        "dbo.BitMovs",
+        "dbo.LUCCA410"
+      ],
+      "business_rules": [
+        {
+          "id": "BR-USR-SAVE-001",
+          "rule": "Campos básicos obligatorios: Login, Nombre, Contraseña y Puesto; si falta alguno no se guarda.",
+          "evidence": "IF EDT_LOGIN='' OR EDT_NOMBRE='' OR EDT_PASSWORD='' OR EDT_PUESTO='' THEN Info('Debes Capturar...')"
+        },
+        {
+          "id": "BR-USR-PASS-HIST-001",
+          "rule": "Si gnCambioContrasena=1, valida que la contraseña no haya sido usada anteriormente (UsuHist). Si ya existe, rechaza y vuelve a capturar.",
+          "evidence": "IF gnCambioContrasena=1 THEN HReadSeek(UsuHist,PK_UsuHist,[Usuarios.CODIGO,EDT_PASSWORD],...) IF HFound(UsuHist) THEN IF UsuHist.CONTRASENA=EDT_PASSWORD THEN Info('... ya ha sido usada ...')"
+        },
+        {
+          "id": "BR-USR-UNBLOCK-001",
+          "rule": "Si gnCambioBloqueo=1 y CBOX_NoName1=0, actualizar ULTIMOREGISTRO al día actual (gdFechaGral).",
+          "evidence": "IF gnCambioBloqueo=1 AND CBOX_NoName1=0 THEN Usuarios.ULTIMOREGISTRO=DateToInteger(gdFechaGral)-362"
+        },
+        {
+          "id": "BR-USR-ALM-001",
+          "rule": "Flags de almacén se derivan de nodos del árbol TREE_Example: id 108 -> SUPERVISORALMACEN, id 109 -> ADMINISTRADORALMACENES.",
+          "evidence": "TreeFind(TREE_Example,108,...) / TreeFind(...,109,...)"
+        },
+        {
+          "id": "BR-USR-PASS-ENC-001",
+          "rule": "Al cambiar contraseña, se cifra la firma en SQL Server con ENCRYPTBYPASSPHRASE('C1traseña', Usuarios.PASSWORD) y se marca Password='Cifrado'.",
+          "evidence": "Update Usuarios SET Firma=ENCRYPTBYPASSPHRASE('C1traseña', ...), Password='Cifrado' Where Codigo=..."
+        },
+        {
+          "id": "BR-USR-AUDIT-001",
+          "rule": "Registrar BitMovs: si gnUso=1 -> 'Agregar Usuario'; si gnUso=2 -> 'Modificar Usuario' o 'Modificar Contraseña' o 'Desbloqueo del Usuario' según flags.",
+          "evidence": "IF gnUso=1 THEN BitMovs.MODALIDAD='Agregar Usuario' ELSE IF gnUso=2 THEN ... BitMovs.MODALIDAD=..."
+        }
+      ],
+      "validations": [
+        {
+          "rule": "Si contraseña reutilizada, impedir guardado y regresar foco a EDT_PASSWORD.",
+          "severity": "high",
+          "evidence": "ReturnToCapture(EDT_PASSWORD)"
+        }
+      ],
+      "exceptions_or_errors": [
+        {
+          "type": "db_error",
+          "condition": "HExecuteSQLQuery returns False",
+          "handling": "Error('HFSQL error: ' + HErrorInfo())",
+          "evidence": "IF HExecuteSQLQuery(...)=False THEN Error('HFSQL error: ' + HErrorInfo())"
+        }
+      ],
+      "dependencies": [
+        {
+          "type": "filesystem",
+          "name": "ScreenToFile",
+          "reason": "Captura de pantalla al guardar (evidencia/auditoría).",
+          "evidence": "ScreenToFile(WIN_Edita_Usuarios)"
+        },
+        {
+          "type": "database_crypto",
+          "name": "SQL Server ENCRYPTBYPASSPHRASE",
+          "reason": "Cifrado de contraseña/firma (AS-IS). TO-BE migrará a hash.",
+          "evidence": "ENCRYPTBYPASSPHRASE('C1traseña',...)"
+        }
+      ],
+      "wl_code": "Click BTN_Aceptar1\n\nHReadSeek(Usuarios,CODIGO,EDT_CODIGO,hIdentical)\nScreenToFile(WIN_Edita_Usuarios)\nUsuarios.AREA=gnArea\nUsuarios.NOEMPLEADO=gnNoEmpleado\nUsuarios.CUENTADEUDORDIVERSO=gnCtaDeudiv\nUsuarios.CTADEUDORDIVINTERNACIONAL=gnCtaDeuDivInt\nUsuarios.CTADEUDORDIVOTROSGASTOS=gnCtaDeuOtrosGastos\nUsuarios.AUTBIEN=gnAutbien\nUsuarios.AUTSERV=gnAutServ\nUsuarios.AUTVIAT=gnAutViat\nUsuarios.ALMACENFAVORITO=gnFavorito\nUsuarios.OPERADORALMACEN=gnOperaAlmacen\n Usuarios.ReceptorOficios=gnReceptodrDoctos\n\n\n\nIF EDT_LOGIN=\"\" OR EDT_NOMBRE=\"\" OR EDT_PASSWORD=\"\" OR EDT_PUESTO=\"\" THEN\n\tInfo(\"Debes Capturar toda la Información basica: Login, Nombre, contrasena, y puesto\")\nELSE\nScreenToFile(WIN_Edita_Usuarios)\nIF gnCambioContrasena=1 THEN\n\tHReadSeek(UsuHist,PK_UsuHist,[Usuarios.CODIGO,EDT_PASSWORD],hIdentical)\n\tIF HFound(UsuHist) THEN\n//\t\tsDirBD=Uncrypt(sDirBD, \"FckGW\")\n//sContenido=Crypt(sContenido, \"FckGW\")\n//HashString\n\t\tIF UsuHist.CONTRASENA=EDT_PASSWORD THEN\n\t\t\tInfo(\"La contraseña ya ha sido usada con anterioridad por el usuario,por seguridad debe ser una contraseña nueva\")\n\t\t\tReturnToCapture(EDT_PASSWORD)\n\t\tELSE\n\t\t\tUsuHist.CODIGO=Usuarios.CODIGO\n\t\t\tUsuHist.CONTRASENA=EDT_PASSWORD\n\t\t\tHAdd(UsuHist)\n\t\tEND\n\tEND\nEND\nIF gnCambioBloqueo=1 AND CBOX_NoName1=0 THEN\n\tUsuarios.ULTIMOREGISTRO=DateToInteger(gdFechaGral) -362\nEND\n\n\tgsResPath=TreeFind(TREE_Example, 108, Null, tvLeaf + tvNode)\n\tnEstado98 is int=TREE_Example[gsResPath]..Checked\n\nIF nEstado98=1 THEN\n\tUsuarios.SUPERVISORALMACEN=1\nELSE\n\tUsuarios.SUPERVISORALMACEN=0\nEND\n\tgsResPath=TreeFind(TREE_Example, 109, Null, tvLeaf + tvNode)\n\tnEstado98=TREE_Example[gsResPath]..Checked\n\nIF nEstado98=1 THEN\n\tUsuarios.ADMINISTRADORALMACENES=1\nELSE\n\tUsuarios.ADMINISTRADORALMACENES=0\nEND\n\nHModify(Usuarios)\t\nHModify(LUCCA182)\nHModify(LUCCA333)\n\nIF gnCambioContrasena=1 THEN\nBuscaContras is Data Source\t\n\nIF HExecuteSQLQuery(BuscaContras, MyConnectionLucca, hQueryWithoutCorrection + hNoBind,\"Update Usuarios SET Firma= ENCRYPTBYPASSPHRASE('C1traseña','\" + Usuarios.PASSWORD + \"'), Password='Cifrado'  \" + ...\n\t\"Where Codigo=\" + gnCodigo  ) = False THEN\n\tError(\"HFSQL error: \" + HErrorInfo())\nEND\t\n\nEND\n\nAACarga_ZZZGuarda410()\n\nIF gnUso=1 THEN\n\t\n\tdtFechaEspecial is DateTime\t\n\tdtFechaEspecial..Date=gdFechaGral\n\tdtFechaEspecial..Time=Now()\t\n\tBitMovs.FECHAHORA=dtFechaEspecial\t\n\tBitMovs.USUARIO=gnUSUARIO\n\tBitMovs.NIVEL=1\n\tBitMovs.PROCESO=\"Usuarios\"\n\tBitMovs.MODALIDAD=\"Agregar Usuario\"\n\tBitMovs.REGISTRO=Usuarios.CODIGO\n\tHAdd(BitMovs)\t\n\t\nELSE IF gnUso=2 THEN\n\t\n\tdtFechaEspecial is DateTime\t\n\tdtFechaEspecial..Date=gdFechaGral\n\tdtFechaEspecial..Time=Now()\t\n\tBitMovs.FECHAHORA=dtFechaEspecial\t\n\tBitMovs.USUARIO=gnUSUARIO\n\tBitMovs.NIVEL=1\n\tBitMovs.PROCESO=\"Usuarios\"\n\tIF gnCambioBloqueo=1 THEN\n\t\tBitMovs.MODALIDAD=\"Modificar Contraseña\"\n\tELSE IF gnCambioContrasena=1 THEN\n\t\tBitMovs.MODALIDAD=\"Desbloqueo del Usuario\"\n\tELSE\n\t\tBitMovs.MODALIDAD=\"Modificar Usuario\"\n\tEND\n\tBitMovs.REGISTRO=Usuarios.CODIGO\n\tHAdd(BitMovs)\n\t\n\t\n\t\n\t\nEND\ngnCerroBien=1\n//Guarda_DerNomina()\n\nClose()\n\t\t\t\nEND"
+    }
+  ],
+  "unknowns": [
+    {
+      "topic": "AACarga_ZZZGuarda410() - estructura exacta y tablas tocadas",
+      "why": "Se llama pero no se incluye su código en este evento",
+      "how_to_confirm": "Aportar el PROCEDURE AACarga_ZZZGuarda410() completo para documentar escritura de LUCCA410"
+    }
+  ],
+  "followups": [
+    "Subir el código de AACarga_ZZZGuarda410() para completar el mapa de permisos nuevo (LUCCA410).",
+    "Confirmar la PK real de UsuHist (PK_UsuHist) y sus columnas para proponer FK/índice correcto."
+  ]
+}

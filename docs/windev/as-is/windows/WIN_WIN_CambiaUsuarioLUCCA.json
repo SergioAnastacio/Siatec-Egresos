@@ -1,0 +1,88 @@
+{
+  "step": 1,
+  "artifact_type": "window_or_page",
+  "id": "WIN:WIN_CambiaUsuarioLUCCA",
+  "name": "WIN_CambiaUsuarioLUCCA",
+  "module": "Auth/ChangeUser",
+  "output_dir": "docs/as-is/windows/",
+  "output_filename": "WIN_WIN_CambiaUsuarioLUCCA.json",
+  "purpose": "Ventana para cambio de usuario durante la ejecución del shell. Valida credenciales, carga permisos (garrDerechos/garrDerNvos), registra bitácora y actualiza configuración de menú del shell.",
+  "ui": {
+    "controls": [
+      "BTN_Agregar",
+      "BTN_Cancelar",
+      "BTN_NoName1",
+      "EDT_LOGIN",
+      "EDT_PASSWORD",
+      "IMG_NoName1"
+    ]
+  },
+  "entrypoints": [
+    {
+      "event": "Global declarations",
+      "summary": "Define nIntentos=0 para control de intentos de contraseña.",
+      "evidence_excerpt": "PROCEDURE WIN_CambiaUsuarioLUCCA()\n\t\tnIntentos is int=0"
+    },
+    {
+      "event": "End of initialization",
+      "summary": "Carga DatosGrales(CODIGO=1) y llama Inicializa_Menu() para resetear menú antes de aplicar permisos.",
+      "evidence_excerpt": "HReadSeek(DatosGrales,CODIGO,1,hIdentical)\n\t\tInicializa_Menu()"
+    }
+  ],
+  "local_procedures_declared": [
+    "Habilita_Menu",
+    "Inicializa_Menu",
+    "Prepara_Menu"
+  ],
+  "artifacts": {
+    "controls": [
+      "docs/as-is/windows/CTRL_WIN_WIN_CambiaUsuarioLUCCA_BTN_Agregar_Click.json",
+      "docs/as-is/windows/CTRL_WIN_WIN_CambiaUsuarioLUCCA_BTN_Cancelar_Click.json",
+      "docs/as-is/windows/CTRL_WIN_WIN_CambiaUsuarioLUCCA_BTN_NoName1_Click.json",
+      "docs/as-is/windows/CTRL_WIN_WIN_CambiaUsuarioLUCCA_EDT_LOGIN_Exit.json"
+    ],
+    "procedures": [
+      "docs/as-is/procedures/PROC_WIN_CambiaUsuarioLUCCA_Habilita_Menu.json",
+      "docs/as-is/procedures/PROC_WIN_CambiaUsuarioLUCCA_Inicializa_Menu.json",
+      "docs/as-is/procedures/PROC_WIN_CambiaUsuarioLUCCA_Prepara_Menu.json"
+    ]
+  },
+  "data_access": {
+    "tables_read": [
+      "DatosGrales",
+      "LUCCA182",
+      "LUCCA333",
+      "LUCCA410",
+      "Usuarios"
+    ],
+    "tables_written": [
+      "BitMovs",
+      "LUCCA333",
+      "Usuarios"
+    ],
+    "notes": [
+      "La validación de contraseña se realiza con DECRYPTBYPASSPHRASE('C1traseña', Usuarios.Firma).",
+      "El evento Exit EDT_LOGIN puede crear/reparar el usuario ADMIN (CODIGO=1) y cifrar Firma con ENCRYPTBYPASSPHRASE."
+    ]
+  },
+  "security_notes": [
+    "AS-IS desencripta contraseña en SQL Server (passphrase fija). TO-BE debe migrar a hash (Argon2) con transición gradual.",
+    "Bloqueo de usuario por intentos fallidos e inactividad."
+  ],
+  "navigation": {
+    "called_from": [
+      {
+        "window": "WIN_Inicio_LUCCA",
+        "trigger": "BTN_GeneralCamUsu Click (WindowCount()==1)"
+      }
+    ],
+    "returns_to": "WIN_Inicio_LUCCA"
+  },
+  "unknowns": [
+    {
+      "topic": "Integración con multiempresa/multibase (si cambio usuario cambia BD)",
+      "why": "No se observa HChangeConnection aquí",
+      "how_to_confirm": "Buscar evento/proceso donde se setee base por RFC+Ejercicio en cambio de usuario."
+    }
+  ]
+}

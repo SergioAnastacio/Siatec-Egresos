@@ -1,0 +1,227 @@
+{
+  "artifact_type": "fk_candidates",
+  "scope": "WIN_Edita_Usuarios",
+  "candidates": [
+    {
+      "child_table": "LUCCA410",
+      "child_column": "CODIGO",
+      "parent_table": "Usuarios",
+      "parent_column": "CODIGO",
+      "confidence": "medium",
+      "evidence": "HReadSeek(LUCCA410,CODIGO,Usuarios.CODIGO,...)",
+      "source": "PROC:WIN_Edita_Usuarios",
+      "precheck_sql": "SELECT TOP 100 child.* FROM dbo.LUCCA410 child LEFT JOIN dbo.Usuarios parent ON parent.CODIGO=child.CODIGO WHERE child.CODIGO IS NOT NULL AND parent.CODIGO IS NULL;"
+    },
+    {
+      "child_table": "LUCCA187",
+      "child_column": "ROL",
+      "parent_table": "LUCCA411",
+      "parent_column": "CODIGO",
+      "confidence": "medium",
+      "evidence": "HReadSeek(LUCCA411,CODIGO,LUCCA187.ROL,...)",
+      "source": "PROC:WIN_Edita_Usuarios",
+      "precheck_sql": "SELECT TOP 100 child.* FROM dbo.LUCCA187 child LEFT JOIN dbo.LUCCA411 parent ON parent.CODIGO=child.ROL WHERE child.ROL IS NOT NULL AND parent.CODIGO IS NULL;"
+    },
+    {
+      "child_table": "UsuHist",
+      "child_column": "CODIGO",
+      "parent_table": "Usuarios",
+      "parent_column": "CODIGO",
+      "confidence": "medium",
+      "evidence": "UsuHist.CODIGO=Usuarios.CODIGO",
+      "source": "PROC:WIN_Edita_Usuarios",
+      "precheck_sql": "SELECT TOP 100 child.* FROM dbo.UsuHist child LEFT JOIN dbo.Usuarios parent ON parent.CODIGO=child.CODIGO WHERE child.CODIGO IS NOT NULL AND parent.CODIGO IS NULL;"
+    },
+    {
+      "child_table": "BitMovs",
+      "child_column": "REGISTRO",
+      "parent_table": "Usuarios",
+      "parent_column": "CODIGO",
+      "confidence": "medium",
+      "evidence": "BitMovs.REGISTRO=Usuarios.CODIGO",
+      "source": "PROC:WIN_Edita_Usuarios",
+      "precheck_sql": "SELECT TOP 100 child.* FROM dbo.BitMovs child LEFT JOIN dbo.Usuarios parent ON parent.CODIGO=child.REGISTRO WHERE child.REGISTRO IS NOT NULL AND parent.CODIGO IS NULL;"
+    },
+    {
+      "child_table": "Usuarios",
+      "child_column": "AUTVIAT",
+      "parent_table": "LUCCA104",
+      "parent_column": "ORDEN",
+      "confidence": "low",
+      "evidence": "Usuarios.AUTVIAT=LUCCA104.ORDEN",
+      "source": "PROC:WIN_Edita_Usuarios",
+      "precheck_sql": "SELECT TOP 100 child.* FROM dbo.Usuarios child LEFT JOIN dbo.LUCCA104 parent ON parent.ORDEN=child.AUTVIAT WHERE child.AUTVIAT IS NOT NULL AND parent.ORDEN IS NULL;"
+    },
+    {
+      "child_table": "Usuarios",
+      "child_column": "CUENTADEUDORDIVERSO",
+      "parent_table": "SIVEC001C",
+      "parent_column": "CODIGO",
+      "confidence": "medium",
+      "evidence": "Usuarios.CUENTADEUDORDIVERSO=SIVEC001C.CODIGO",
+      "source": "PROC:WIN_Edita_Usuarios",
+      "precheck_sql": "SELECT TOP 100 child.* FROM dbo.Usuarios child LEFT JOIN dbo.SIVEC001C parent ON parent.CODIGO=child.CUENTADEUDORDIVERSO WHERE child.CUENTADEUDORDIVERSO IS NOT NULL AND parent.CODIGO IS NULL;"
+    },
+    {
+      "child_table": "Usuarios",
+      "child_column": "CTADEUDORDIVINTERNACIONAL",
+      "parent_table": "SIVEC001C",
+      "parent_column": "CODIGO",
+      "confidence": "medium",
+      "evidence": "Usuarios.CTADEUDORDIVINTERNACIONAL=SIVEC001C.CODIGO",
+      "source": "PROC:WIN_Edita_Usuarios",
+      "precheck_sql": "SELECT TOP 100 child.* FROM dbo.Usuarios child LEFT JOIN dbo.SIVEC001C parent ON parent.CODIGO=child.CTADEUDORDIVINTERNACIONAL WHERE child.CTADEUDORDIVINTERNACIONAL IS NOT NULL AND parent.CODIGO IS NULL;"
+    },
+    {
+      "child_table": "Usuarios",
+      "child_column": "AREA",
+      "parent_table": "Areax",
+      "parent_column": "CODIGO",
+      "confidence": "medium",
+      "evidence": "Usuarios.AREA=Areas.CODIGO",
+      "source": "PROC:WIN_Edita_Usuarios",
+      "precheck_sql": "SELECT TOP 100 child.* FROM dbo.Usuarios child LEFT JOIN dbo.Areax parent ON parent.CODIGO=child.AREA WHERE child.AREA IS NOT NULL AND parent.CODIGO IS NULL;"
+    },
+    {
+      "child_table": "Usuarios",
+      "child_column": "CTADEUDORDIVOTROSGASTOS",
+      "parent_table": "SIVEC001C",
+      "parent_column": "CODIGO",
+      "confidence": "medium",
+      "evidence": "Usuarios.CTADEUDORDIVOTROSGASTOS=SIVEC001C.CODIGO",
+      "source": "PROC:WIN_Edita_Usuarios",
+      "precheck_sql": "SELECT TOP 100 child.* FROM dbo.Usuarios child LEFT JOIN dbo.SIVEC001C parent ON parent.CODIGO=child.CTADEUDORDIVOTROSGASTOS WHERE child.CTADEUDORDIVOTROSGASTOS IS NOT NULL AND parent.CODIGO IS NULL;"
+    },
+    {
+      "child_table": "LUCCA182",
+      "child_column": "CTAEFEVOCAJA",
+      "parent_table": "SIVEC001C",
+      "parent_column": "CODIGO",
+      "confidence": "medium",
+      "evidence": "LUCCA182.CTAEFEVOCAJA=SIVEC001C.CODIGO",
+      "source": "PROC:WIN_Edita_Usuarios",
+      "precheck_sql": "SELECT TOP 100 child.* FROM dbo.LUCCA182 child LEFT JOIN dbo.SIVEC001C parent ON parent.CODIGO=child.CTAEFEVOCAJA WHERE child.CTAEFEVOCAJA IS NOT NULL AND parent.CODIGO IS NULL;"
+    },
+    {
+      "child_table": "Usuarios",
+      "child_column": "AUTBIEN",
+      "parent_table": "LUCCA102",
+      "parent_column": "ORDEN",
+      "confidence": "low",
+      "evidence": "Usuarios.AUTBIEN=LUCCA102.ORDEN",
+      "source": "PROC:WIN_Edita_Usuarios",
+      "precheck_sql": "SELECT TOP 100 child.* FROM dbo.Usuarios child LEFT JOIN dbo.LUCCA102 parent ON parent.ORDEN=child.AUTBIEN WHERE child.AUTBIEN IS NOT NULL AND parent.ORDEN IS NULL;"
+    },
+    {
+      "child_table": "Usuarios",
+      "child_column": "AUTSERV",
+      "parent_table": "LUCCA103",
+      "parent_column": "ORDEN",
+      "confidence": "low",
+      "evidence": "Usuarios.AUTSERV=LUCCA103.ORDEN",
+      "source": "PROC:WIN_Edita_Usuarios",
+      "precheck_sql": "SELECT TOP 100 child.* FROM dbo.Usuarios child LEFT JOIN dbo.LUCCA103 parent ON parent.ORDEN=child.AUTSERV WHERE child.AUTSERV IS NOT NULL AND parent.ORDEN IS NULL;"
+    },
+    {
+      "child_table": "LUCCA182",
+      "child_column": "MANIPULAUF",
+      "parent_table": "LUCCA213",
+      "parent_column": "CODIGO",
+      "confidence": "medium",
+      "evidence": "LUCCA182.MANIPULAUF=LUCCA213.CODIGO",
+      "source": "PROC:WIN_Edita_Usuarios",
+      "precheck_sql": "SELECT TOP 100 child.* FROM dbo.LUCCA182 child LEFT JOIN dbo.LUCCA213 parent ON parent.CODIGO=child.MANIPULAUF WHERE child.MANIPULAUF IS NOT NULL AND parent.CODIGO IS NULL;"
+    },
+    {
+      "child_table": "U1",
+      "child_column": "Codigo",
+      "parent_table": "L63",
+      "parent_column": "Usuario",
+      "confidence": "low",
+      "evidence": "U1.Codigo=L63.Usuario",
+      "source": "PROC:AACarga_Tabla_RecepDocts",
+      "precheck_sql": "SELECT TOP 100 child.* FROM dbo.U1 child LEFT JOIN dbo.L63 parent ON parent.Usuario=child.Codigo WHERE child.Codigo IS NOT NULL AND parent.Usuario IS NULL;"
+    },
+    {
+      "child_table": "A1",
+      "child_column": "Codigo",
+      "parent_table": "U1",
+      "parent_column": "Area",
+      "confidence": "low",
+      "evidence": "A1.Codigo=U1.Area",
+      "source": "PROC:AACarga_TablaAut_Compras",
+      "precheck_sql": "SELECT TOP 100 child.* FROM dbo.A1 child LEFT JOIN dbo.U1 parent ON parent.Area=child.Codigo WHERE child.Codigo IS NOT NULL AND parent.Area IS NULL;"
+    },
+    {
+      "child_table": "P1",
+      "child_column": "Codigo",
+      "parent_table": "U1",
+      "parent_column": "Area",
+      "confidence": "low",
+      "evidence": "P1.Codigo=U1.Area",
+      "source": "PROC:AACarga_ZDerechos_AreaCompras",
+      "precheck_sql": "SELECT TOP 100 child.* FROM dbo.P1 child LEFT JOIN dbo.U1 parent ON parent.Area=child.Codigo WHERE child.Codigo IS NOT NULL AND parent.Area IS NULL;"
+    },
+    {
+      "child_table": "P1",
+      "child_column": "Numero",
+      "parent_table": "U1",
+      "parent_column": "Cuenta",
+      "confidence": "low",
+      "evidence": "P1.Numero=U1.Cuenta",
+      "source": "PROC:AACarga_ZDerechos_BancosRev",
+      "precheck_sql": "SELECT TOP 100 child.* FROM dbo.P1 child LEFT JOIN dbo.U1 parent ON parent.Cuenta=child.Numero WHERE child.Numero IS NOT NULL AND parent.Cuenta IS NULL;"
+    },
+    {
+      "child_table": "P1",
+      "child_column": "Codigo",
+      "parent_table": "U1",
+      "parent_column": "Cuadrilla",
+      "confidence": "low",
+      "evidence": "P1.Codigo=U1.Cuadrilla",
+      "source": "PROC:AACarga_ZDerechos_Cuadrilla",
+      "precheck_sql": "SELECT TOP 100 child.* FROM dbo.P1 child LEFT JOIN dbo.U1 parent ON parent.Cuadrilla=child.Codigo WHERE child.Codigo IS NOT NULL AND parent.Cuadrilla IS NULL;"
+    },
+    {
+      "child_table": "P1",
+      "child_column": "Codigo",
+      "parent_table": "U1",
+      "parent_column": "Rol",
+      "confidence": "low",
+      "evidence": "P1.Codigo=U1.Rol",
+      "source": "PROC:AACarga_ZDerechos_GruposRoles",
+      "precheck_sql": "SELECT TOP 100 child.* FROM dbo.P1 child LEFT JOIN dbo.U1 parent ON parent.Rol=child.Codigo WHERE child.Codigo IS NOT NULL AND parent.Rol IS NULL;"
+    },
+    {
+      "child_table": "P1",
+      "child_column": "Codigo",
+      "parent_table": "U1",
+      "parent_column": "CodAmarre",
+      "confidence": "low",
+      "evidence": "P1.Codigo=U1.CodAmarre",
+      "source": "PROC:AACarga_ZDerechos_Nomina",
+      "precheck_sql": "SELECT TOP 100 child.* FROM dbo.P1 child LEFT JOIN dbo.U1 parent ON parent.CodAmarre=child.Codigo WHERE child.Codigo IS NOT NULL AND parent.CodAmarre IS NULL;"
+    },
+    {
+      "child_table": "D1",
+      "child_column": "Codigo",
+      "parent_table": "U1",
+      "parent_column": "CodAmarre",
+      "confidence": "low",
+      "evidence": "D1.Codigo=U1.CodAmarre",
+      "source": "PROC:AACarga_ZDerechos_Nomina",
+      "precheck_sql": "SELECT TOP 100 child.* FROM dbo.D1 child LEFT JOIN dbo.U1 parent ON parent.CodAmarre=child.Codigo WHERE child.Codigo IS NOT NULL AND parent.CodAmarre IS NULL;"
+    },
+    {
+      "child_table": "P1",
+      "child_column": "Codigo",
+      "parent_table": "U1",
+      "parent_column": "Revision",
+      "confidence": "low",
+      "evidence": "P1.Codigo=U1.Revision",
+      "source": "PROC:AACarga_ZDerechos_Revision",
+      "precheck_sql": "SELECT TOP 100 child.* FROM dbo.P1 child LEFT JOIN dbo.U1 parent ON parent.Revision=child.Codigo WHERE child.Codigo IS NOT NULL AND parent.Revision IS NULL;"
+    }
+  ],
+  "generated_at": "2026-03-09T16:08:25.756651+00:00"
+}

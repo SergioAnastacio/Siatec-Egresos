@@ -1,0 +1,19 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Edita_Usuarios:Menu_Prg_ChequesManuales",
+  "name": "Menu_Prg_ChequesManuales",
+  "scope": "window_local",
+  "owner_window": "WIN_Edita_Usuarios",
+  "signature": "PROCEDURE Menu_Prg_ChequesManuales(sIdentifier is string)",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Edita_Usuarios_Menu_Prg_ChequesManuales.json",
+  "tables_read": [],
+  "tables_write": [],
+  "relations_found": [],
+  "metrics": {
+    "lines": 40,
+    "sql_fragments": 0
+  },
+  "wl_code": "IF sIdentifier=\"31\" THEN\ngsResPath=TreeFind(TREE_Example, 31, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=-1 THEN\nTREE_Example[gsResPath]..Checked=0\nEND\nIF TREE_Example[gsResPath]..Checked=1 THEN\ngsResPath=TreeFind(TREE_Example, 32, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 33, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\nELSE\ngsResPath=TreeFind(TREE_Example, 32, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 33, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\nEND\nELSE IF sIdentifier=\"32\" THEN\ngsResPath=TreeFind(TREE_Example, 32, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=-1 THEN\nTREE_Example[gsResPath]..Checked=0\nEND\nELSE IF sIdentifier=\"33\" THEN\ngsResPath=TreeFind(TREE_Example, 33, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=-1 THEN\nTREE_Example[gsResPath]..Checked=0\nEND\nEND\ngsResPath=TreeFind(TREE_Example, 32, Null, tvLeaf + tvNode)\nnElemento32 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 33, Null, tvLeaf + tvNode)\nnElemento33 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 31, Null, tvLeaf + tvNode)\nIF nElemento32=0 AND nElemento33=0 THEN\nTREE_Example[gsResPath]..Checked=0\nELSE IF nElemento32=1 AND nElemento33=1 THEN\nTREE_Example[gsResPath]..Checked=1\nELSE IF nElemento32=1 OR nElemento33=1 THEN\nTREE_Example[gsResPath]..Checked=-1\nEND\nLocal procedure Menu_Prg_Servicios"
+}

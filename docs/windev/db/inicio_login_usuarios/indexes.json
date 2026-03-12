@@ -1,0 +1,332 @@
+{
+  "indexes": [
+    {
+      "schema_name": "dbo",
+      "table_name": "Areax",
+      "index_name": "PK__Areas_2019",
+      "type_desc": "CLUSTERED",
+      "is_primary_key": true,
+      "is_unique": true,
+      "is_unique_constraint": false,
+      "has_filter": false,
+      "filter_definition": null,
+      "columns": [
+        {
+          "key_ordinal": 1,
+          "index_column_id": 1,
+          "column_name": "CODIGO",
+          "is_included_column": false,
+          "is_descending_key": false
+        }
+      ]
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "BitMovs",
+      "index_name": "IX_BitMovs_USUARIO",
+      "type_desc": "NONCLUSTERED",
+      "is_primary_key": false,
+      "is_unique": false,
+      "is_unique_constraint": false,
+      "has_filter": false,
+      "filter_definition": null,
+      "columns": [
+        {
+          "key_ordinal": 1,
+          "index_column_id": 1,
+          "column_name": "USUARIO",
+          "is_included_column": false,
+          "is_descending_key": false
+        }
+      ]
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "BitMovs",
+      "index_name": "PK_BitMovs",
+      "type_desc": "CLUSTERED",
+      "is_primary_key": true,
+      "is_unique": true,
+      "is_unique_constraint": false,
+      "has_filter": false,
+      "filter_definition": null,
+      "columns": [
+        {
+          "key_ordinal": 1,
+          "index_column_id": 1,
+          "column_name": "FECHAHORA",
+          "is_included_column": false,
+          "is_descending_key": false
+        },
+        {
+          "key_ordinal": 2,
+          "index_column_id": 2,
+          "column_name": "USUARIO",
+          "is_included_column": false,
+          "is_descending_key": false
+        }
+      ]
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "ConfInter",
+      "index_name": "PK_ConfInter",
+      "type_desc": "CLUSTERED",
+      "is_primary_key": true,
+      "is_unique": true,
+      "is_unique_constraint": false,
+      "has_filter": false,
+      "filter_definition": null,
+      "columns": [
+        {
+          "key_ordinal": 1,
+          "index_column_id": 1,
+          "column_name": "CODIGO",
+          "is_included_column": false,
+          "is_descending_key": false
+        }
+      ]
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "DatosGrales",
+      "index_name": "PK__DatosGra__CC87E12715261146",
+      "type_desc": "CLUSTERED",
+      "is_primary_key": true,
+      "is_unique": true,
+      "is_unique_constraint": false,
+      "has_filter": false,
+      "filter_definition": null,
+      "columns": [
+        {
+          "key_ordinal": 1,
+          "index_column_id": 1,
+          "column_name": "CODIGO",
+          "is_included_column": false,
+          "is_descending_key": false
+        }
+      ]
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "LUCCA182",
+      "index_name": "IX_LUCCA182_CODIGO",
+      "type_desc": "NONCLUSTERED",
+      "is_primary_key": false,
+      "is_unique": false,
+      "is_unique_constraint": false,
+      "has_filter": false,
+      "filter_definition": null,
+      "columns": [
+        {
+          "key_ordinal": 1,
+          "index_column_id": 1,
+          "column_name": "CODIGO",
+          "is_included_column": false,
+          "is_descending_key": false
+        }
+      ]
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "LUCCA182",
+      "index_name": "PK_LUCCA182",
+      "type_desc": "CLUSTERED",
+      "is_primary_key": true,
+      "is_unique": true,
+      "is_unique_constraint": false,
+      "has_filter": false,
+      "filter_definition": null,
+      "columns": [
+        {
+          "key_ordinal": 1,
+          "index_column_id": 1,
+          "column_name": "CODIGO",
+          "is_included_column": false,
+          "is_descending_key": false
+        }
+      ]
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "LUCCA333",
+      "index_name": "IX_LUCCA333_CODIGO",
+      "type_desc": "NONCLUSTERED",
+      "is_primary_key": false,
+      "is_unique": false,
+      "is_unique_constraint": false,
+      "has_filter": false,
+      "filter_definition": null,
+      "columns": [
+        {
+          "key_ordinal": 1,
+          "index_column_id": 1,
+          "column_name": "CODIGO",
+          "is_included_column": false,
+          "is_descending_key": false
+        }
+      ]
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "LUCCA333",
+      "index_name": "PK_LUCCA333",
+      "type_desc": "CLUSTERED",
+      "is_primary_key": true,
+      "is_unique": true,
+      "is_unique_constraint": false,
+      "has_filter": false,
+      "filter_definition": null,
+      "columns": [
+        {
+          "key_ordinal": 1,
+          "index_column_id": 1,
+          "column_name": "CODIGO",
+          "is_included_column": false,
+          "is_descending_key": false
+        }
+      ]
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "LUCCA410",
+      "index_name": "IX_LUCCA410_CODIGO",
+      "type_desc": "NONCLUSTERED",
+      "is_primary_key": false,
+      "is_unique": false,
+      "is_unique_constraint": false,
+      "has_filter": false,
+      "filter_definition": null,
+      "columns": [
+        {
+          "key_ordinal": 1,
+          "index_column_id": 1,
+          "column_name": "CODIGO",
+          "is_included_column": false,
+          "is_descending_key": false
+        }
+      ]
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "LUCCA410",
+      "index_name": "PK_LUCCA410",
+      "type_desc": "CLUSTERED",
+      "is_primary_key": true,
+      "is_unique": true,
+      "is_unique_constraint": false,
+      "has_filter": false,
+      "filter_definition": null,
+      "columns": [
+        {
+          "key_ordinal": 1,
+          "index_column_id": 1,
+          "column_name": "CODIGO",
+          "is_included_column": false,
+          "is_descending_key": false
+        }
+      ]
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "UsuHist",
+      "index_name": "IX_UsuHist_CODIGO",
+      "type_desc": "NONCLUSTERED",
+      "is_primary_key": false,
+      "is_unique": false,
+      "is_unique_constraint": false,
+      "has_filter": false,
+      "filter_definition": null,
+      "columns": [
+        {
+          "key_ordinal": 1,
+          "index_column_id": 1,
+          "column_name": "CODIGO",
+          "is_included_column": false,
+          "is_descending_key": false
+        }
+      ]
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "UsuHist",
+      "index_name": "PK_UsuHist",
+      "type_desc": "CLUSTERED",
+      "is_primary_key": true,
+      "is_unique": true,
+      "is_unique_constraint": false,
+      "has_filter": false,
+      "filter_definition": null,
+      "columns": [
+        {
+          "key_ordinal": 1,
+          "index_column_id": 1,
+          "column_name": "CODIGO",
+          "is_included_column": false,
+          "is_descending_key": false
+        },
+        {
+          "key_ordinal": 2,
+          "index_column_id": 2,
+          "column_name": "CONTRASENA",
+          "is_included_column": false,
+          "is_descending_key": false
+        }
+      ]
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "Usuarios",
+      "index_name": "IX_Usuarios_AREA",
+      "type_desc": "NONCLUSTERED",
+      "is_primary_key": false,
+      "is_unique": false,
+      "is_unique_constraint": false,
+      "has_filter": false,
+      "filter_definition": null,
+      "columns": [
+        {
+          "key_ordinal": 1,
+          "index_column_id": 1,
+          "column_name": "AREA",
+          "is_included_column": false,
+          "is_descending_key": false
+        },
+        {
+          "key_ordinal": 0,
+          "index_column_id": 2,
+          "column_name": "CODIGO",
+          "is_included_column": true,
+          "is_descending_key": false
+        },
+        {
+          "key_ordinal": 0,
+          "index_column_id": 3,
+          "column_name": "NOMBRE",
+          "is_included_column": true,
+          "is_descending_key": false
+        }
+      ]
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "Usuarios",
+      "index_name": "PK__Usuarios__CC87E12718C3FA05",
+      "type_desc": "CLUSTERED",
+      "is_primary_key": true,
+      "is_unique": true,
+      "is_unique_constraint": false,
+      "has_filter": false,
+      "filter_definition": null,
+      "columns": [
+        {
+          "key_ordinal": 1,
+          "index_column_id": 1,
+          "column_name": "CODIGO",
+          "is_included_column": false,
+          "is_descending_key": false
+        }
+      ]
+    }
+  ]
+}

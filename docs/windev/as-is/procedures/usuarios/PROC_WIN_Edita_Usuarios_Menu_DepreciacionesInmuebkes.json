@@ -1,0 +1,19 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Edita_Usuarios:Menu_DepreciacionesInmuebkes",
+  "name": "Menu_DepreciacionesInmuebkes",
+  "scope": "window_local",
+  "owner_window": "WIN_Edita_Usuarios",
+  "signature": "PROCEDURE Menu_DepreciacionesInmuebkes(sIdentifier is string)",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Edita_Usuarios_Menu_DepreciacionesInmuebkes.json",
+  "tables_read": [],
+  "tables_write": [],
+  "relations_found": [],
+  "metrics": {
+    "lines": 40,
+    "sql_fragments": 0
+  },
+  "wl_code": "IF sIdentifier=\"55\" THEN\ngsResPath=TreeFind(TREE_Example, 55, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=-1 THEN\nTREE_Example[gsResPath]..Checked=0\nEND\nIF TREE_Example[gsResPath]..Checked=1 THEN\ngsResPath=TreeFind(TREE_Example, 56, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 57, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\nELSE\ngsResPath=TreeFind(TREE_Example, 56, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 57, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\nEND\nELSE IF sIdentifier=\"56\" THEN\ngsResPath=TreeFind(TREE_Example, 56, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=-1 THEN\nTREE_Example[gsResPath]..Checked=0\nEND\nELSE IF sIdentifier=\"57\" THEN\ngsResPath=TreeFind(TREE_Example, 57, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=-1 THEN\nTREE_Example[gsResPath]..Checked=0\nEND\nEND\ngsResPath=TreeFind(TREE_Example, 56, Null, tvLeaf + tvNode)\nnElemento56 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 57, Null, tvLeaf + tvNode)\nnElemento57 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 55, Null, tvLeaf + tvNode)\nIF nElemento56=0 AND nElemento57=0 THEN\nTREE_Example[gsResPath]..Checked=0\nELSE IF nElemento56=1 AND nElemento57=1 THEN\nTREE_Example[gsResPath]..Checked=1\nELSE IF nElemento56=1 OR nElemento57=1 THEN\nTREE_Example[gsResPath]..Checked=-1\nEND\nLocal procedure Menu_DeuPub"
+}

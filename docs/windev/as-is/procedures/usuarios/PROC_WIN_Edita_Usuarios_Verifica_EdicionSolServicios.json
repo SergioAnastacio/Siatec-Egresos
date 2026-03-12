@@ -1,0 +1,19 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Edita_Usuarios:Verifica_EdicionSolServicios",
+  "name": "Verifica_EdicionSolServicios",
+  "scope": "window_local",
+  "owner_window": "WIN_Edita_Usuarios",
+  "signature": "PROCEDURE Verifica_EdicionSolServicios()",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Edita_Usuarios_Verifica_EdicionSolServicios.json",
+  "tables_read": [],
+  "tables_write": [],
+  "relations_found": [],
+  "metrics": {
+    "lines": 36,
+    "sql_fragments": 0
+  },
+  "wl_code": "gsResPath=TreeFind(TREE_Example, 13, Null, tvLeaf + tvNode)\nnEstado13 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 14, Null, tvLeaf + tvNode)\nnEstado14 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 15, Null, tvLeaf + tvNode)\nnEstado15 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 16, Null, tvLeaf + tvNode)\nnEstado16 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 17, Null, tvLeaf + tvNode)\nnEstado17 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 18, Null, tvLeaf + tvNode)\nnEstado18 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 19, Null, tvLeaf + tvNode)\nnEstado19 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 20, Null, tvLeaf + tvNode)\nnEstado20 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 16, Null, tvLeaf + tvNode)\nIF nEstado17=0 AND nEstado18=0 AND nEstado19=0 AND nEstado20=0 THEN\nTREE_Example[gsResPath]..Checked=-1\nELSE IF nEstado17=1 AND nEstado18=1 AND nEstado19=1 AND nEstado20=1 THEN\nTREE_Example[gsResPath]..Checked=1\nELSE IF nEstado17=1 OR nEstado18=1 OR nEstado19=1 OR nEstado20=1 THEN\nTREE_Example[gsResPath]..Checked=-1\nEND\nnEstado16=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 12, Null, tvLeaf + tvNode)\nIF nEstado13=1 AND nEstado14=1 AND nEstado15=1 AND nEstado16=1 THEN\nTREE_Example[gsResPath]..Checked=1\nELSE IF nEstado13=0 AND nEstado14=0 AND nEstado15=0 AND nEstado16=0 THEN\nTREE_Example[gsResPath]..Checked=0\nELSE IF nEstado13=1 OR nEstado14=1 OR nEstado15=1 OR nEstado16=1 THEN\nTREE_Example[gsResPath]..Checked=-1\nELSE IF nEstado13=-1 OR nEstado14=-1 OR nEstado15=-1 OR nEstado16=-1 THEN\nTREE_Example[gsResPath]..Checked=-1\nEND\nLocal procedure Verifica_Menu_Almacen"
+}

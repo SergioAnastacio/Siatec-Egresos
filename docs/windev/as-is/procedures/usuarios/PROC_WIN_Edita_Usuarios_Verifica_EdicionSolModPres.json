@@ -1,0 +1,19 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Edita_Usuarios:Verifica_EdicionSolModPres",
+  "name": "Verifica_EdicionSolModPres",
+  "scope": "window_local",
+  "owner_window": "WIN_Edita_Usuarios",
+  "signature": "PROCEDURE Verifica_EdicionSolModPres()",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Edita_Usuarios_Verifica_EdicionSolModPres.json",
+  "tables_read": [],
+  "tables_write": [],
+  "relations_found": [],
+  "metrics": {
+    "lines": 33,
+    "sql_fragments": 0
+  },
+  "wl_code": "gsResPath=TreeFind(TREE_Example, 40, Null, tvLeaf + tvNode)\nnEstado40 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 41, Null, tvLeaf + tvNode)\nnEstado41 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 42, Null, tvLeaf + tvNode)\nnEstado42 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 43, Null, tvLeaf + tvNode)\nnEstado43 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 42, Null, tvLeaf + tvNode)\nIF nEstado43=0 THEN\nTREE_Example[gsResPath]..Checked=-1\nELSE IF nEstado43=1 THEN\nTREE_Example[gsResPath]..Checked=1\nEND\nnEstado42=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 39, Null, tvLeaf + tvNode)\nIF nEstado40=1 AND nEstado41=1 AND nEstado42=1 THEN\nTREE_Example[gsResPath]..Checked=1\n//ELSE IF nEstado40=0 AND nEstado41=0 AND nEstado42=0 THEN\n//\nTREE_Example[gsResPath]..Checked=0\nELSE IF nEstado40=1 OR nEstado41=1 OR nEstado42=1 THEN\nTREE_Example[gsResPath]..Checked=-1\nELSE IF nEstado40=-1 OR nEstado41=-1 OR nEstado42=-1 THEN\nTREE_Example[gsResPath]..Checked=-1\nEND\nLocal procedure Verifica_EdicionSolServicios\n\n\nPart 1 › WINDEV window › WIN_Edita_Usuarios › Procedures\n3/9/2026\n335\nSIATEC1_IA"
+}

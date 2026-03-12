@@ -1,0 +1,57 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Edita_Usuarios:AACarga_ZDerechos_Nomina",
+  "name": "AACarga_ZDerechos_Nomina",
+  "scope": "window_local",
+  "owner_window": "WIN_Edita_Usuarios",
+  "signature": "PROCEDURE AACarga_ZDerechos_Nomina()",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Edita_Usuarios_AACarga_ZDerechos_Nomina.json",
+  "tables_read": [
+    "BuscaQry",
+    "Deducciones",
+    "LUCCA185",
+    "Percepciones"
+  ],
+  "tables_write": [],
+  "relations_found": [
+    {
+      "type": "field_assignment",
+      "child_table": "P1",
+      "child_column": "Codigo",
+      "parent_table": "U1",
+      "parent_column": "CodAmarre",
+      "evidence": "P1.Codigo=U1.CodAmarre",
+      "source": "PROC:AACarga_ZDerechos_Nomina"
+    },
+    {
+      "type": "field_assignment",
+      "child_table": "D1",
+      "child_column": "Codigo",
+      "parent_table": "U1",
+      "parent_column": "CodAmarre",
+      "evidence": "D1.Codigo=U1.CodAmarre",
+      "source": "PROC:AACarga_ZDerechos_Nomina"
+    },
+    {
+      "type": "sql_join",
+      "join_table": "Percepciones",
+      "on": "P1.Codigo=U1.CodAmarre",
+      "evidence": " FROM LUCCA185 U1 Left Join Percepciones P1 On P1.Codigo=U1.CodAmarre and U1.Funcion='Percepcion\n' Left Join Deducciones D1 On D1.Codigo=U1.CodAmarre and U1.Funcion='Deduccion'  ...",
+      "source": "PROC:AACarga_ZDerechos_Nomina"
+    },
+    {
+      "type": "sql_join",
+      "join_table": "Deducciones",
+      "on": "D1.Codigo=U1.CodAmarre",
+      "evidence": " FROM LUCCA185 U1 Left Join Percepciones P1 On P1.Codigo=U1.CodAmarre and U1.Funcion='Percepcion\n' Left Join Deducciones D1 On D1.Codigo=U1.CodAmarre and U1.Funcion='Deduccion'  ...",
+      "source": "PROC:AACarga_ZDerechos_Nomina"
+    }
+  ],
+  "metrics": {
+    "lines": 23,
+    "sql_fragments": 3
+  },
+  "wl_code": "BuscaQry is Data Source\n\n\nPart 1 › WINDEV window › WIN_Edita_Usuarios › Procedures\n3/9/2026\n263\nSIATEC1_IA\nTableDeleteAll(TABLE_DerechosNomina)\nIF HExecuteSQLQuery(BuscaQry, MyConnectionLucca, hQueryWithoutCorrection + hNoBind,\n\"SELECT U1.Codigo, U1.Renglon, U1.Funcion, (Case When U1.Funcion='Percepcion\n' Then P1.Precepcion Else D1.Deduccion End) As Descripcion \" + ...\n\" FROM LUCCA185 U1 Left Join Percepciones P1 On P1.Codigo=U1.CodAmarre and U1.Funcion='Percepcion\n' Left Join Deducciones D1 On D1.Codigo=U1.CodAmarre and U1.Funcion='Deduccion'  \" + ...\n\"Where U1.Codigo=\" + Usuarios.CODIGO + \" Order by U1.Renglon \") = False THEN\nError(\"HFSQL error: \" + HErrorInfo())\nEND\nHReadFirst(BuscaQry)\nLOOP (HNbRec(BuscaQry))\nTableAddLine(TABLE_DerechosNomina, BuscaQry.Codigo, BuscaQry.Renglon, BuscaQry.Funcion, BuscaQry.\nDescripcion)\nHReadNext(BuscaQry)\nEND\nLocal procedure AACarga_ZDerechos_Revision"
+}

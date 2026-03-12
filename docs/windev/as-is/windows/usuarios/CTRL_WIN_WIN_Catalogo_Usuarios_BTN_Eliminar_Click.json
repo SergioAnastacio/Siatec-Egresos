@@ -1,0 +1,39 @@
+{
+  "step": 1,
+  "artifact_type": "ui_control_event",
+  "id": "CTRL:WIN:WIN_Catalogo_Usuarios:BTN_Eliminar:Click",
+  "window_or_page": "WIN:WIN_Catalogo_Usuarios",
+  "module": "Admin/Usuarios",
+  "control": {
+    "name": "BTN_Eliminar",
+    "type": "Button",
+    "purpose": "No permite borrar: muestra mensaje por históricos/reportes.",
+    "visibility_or_permissions": []
+  },
+  "output_dir": "docs/as-is/windows/",
+  "output_filename": "CTRL_WIN_WIN_Catalogo_Usuarios_BTN_Eliminar_Click.json",
+  "events": [
+    {
+      "event": "Click BTN_Eliminar",
+      "summary": "No permite borrar: muestra mensaje por históricos/reportes.",
+      "calls_procedures": [],
+      "calls_windows": [],
+      "calls_queries_or_sql": [],
+      "tables_read": [],
+      "tables_write": [],
+      "business_rules": [
+        {
+          "id": "BR-USR-DEL-001",
+          "rule": "No se borra empleado.",
+          "evidence": "no se puede Borrar"
+        }
+      ],
+      "validations": [],
+      "exceptions_or_errors": [],
+      "dependencies": [],
+      "wl_code": "Info(\"Por necesidades de Reporteria e Historicos no se puede Borrar un Empleado\")"
+    }
+  ],
+  "unknowns": [],
+  "followups": []
+}

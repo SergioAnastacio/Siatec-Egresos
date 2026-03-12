@@ -1,0 +1,59 @@
+{
+  "manifest_patch_type": "add_process_or_update",
+  "suggested_process": {
+    "id": "PROC-000",
+    "name": "Autenticación y Control de Acceso (RegistroUsuarioLUCCA)",
+    "criticality": "high",
+    "bounded_context": "Auth",
+    "entrypoints": [
+      "WIN:WIN_RegistroUsuarioLUCCA",
+      "WIN:WIN_Inicio_LUCCA"
+    ],
+    "artifacts": {
+      "windows": [
+        "docs/as-is/windows/WIN_WIN_RegistroUsuarioLUCCA.json",
+        "docs/as-is/windows/WIN_WIN_Inicio_LUCCA.json"
+      ],
+      "procedures": [
+        "docs/as-is/procedures/PROC_WIN_RegistroUsuarioLUCCA_Habilita_Menu.json",
+        "docs/as-is/procedures/PROC_WIN_RegistroUsuarioLUCCA_Prepara_Menu.json",
+        "docs/as-is/procedures/PROC_WIN_RegistroUsuarioLUCCA_Prepara_Menu1.json"
+      ],
+      "controls": [
+        "docs/as-is/windows/CTRL_WIN_WIN_RegistroUsuarioLUCCA_BTN_Agregar_Click.json",
+        "docs/as-is/windows/CTRL_WIN_WIN_RegistroUsuarioLUCCA_BTN_Cancelar_Click.json",
+        "docs/as-is/windows/CTRL_WIN_WIN_RegistroUsuarioLUCCA_EDT_LOGIN_Exit.json"
+      ]
+    },
+    "db_usage": {
+      "read": [
+        "dbo.Usuarios",
+        "dbo.DatosGrales",
+        "dbo.LUCCA410",
+        "dbo.LUCCA182",
+        "dbo.LUCCA333",
+        "dbo.LUCCA466"
+      ],
+      "write": [
+        "dbo.BitMovs",
+        "dbo.Usuarios",
+        "dbo.LUCCA333",
+        "dbo.LUCCA410",
+        "dbo.LUCCA182",
+        "dbo.LUCCA466"
+      ]
+    },
+    "business_rules_summary": [
+      "Contraseña se valida desencriptando Usuarios.Firma con DECRYPTBYPASSPHRASE('C1traseña') y comparando con EDT_PASSWORD.",
+      "Bloqueo por intentos: tras >3 intentos fallidos se marca Usuarios.BLOQUEADO=1; si es admin (CODIGO=1) también se bloquea la MAC en LUCCA466.",
+      "Bloqueo por inactividad: si días desde ULTIMOREGISTRO supera DatosGrales.NODIASINHABLITARINACTIVO (>0) y no es admin, se bloquea usuario y se cierra.",
+      "Carga de permisos: garrDerechos[] desde Usuarios/LUCCA182/LUCCA333; garrDerNvos[] desde LUCCA410.'1'..'360'."
+    ],
+    "migration_wave": 1,
+    "to_be_targets": {
+      "api": "services/api (Rust) -> /auth/login y /auth/permissions",
+      "ui": "libs/ui LoginPage",
+      "notes": "TO-BE no debe desencriptar contraseñas; usar hash moderno (Argon2) y migración gradual."
+    }
+  }
+}

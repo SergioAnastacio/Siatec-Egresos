@@ -1,0 +1,44 @@
+{
+  "name": "WIN_Inicio_LUCCA",
+  "ui": {
+    "controls": {
+      "top_level_buttons": [
+        "BTN_SolBienes",
+        "BTN_SolServ",
+        "BTN_GeneralCerrar",
+        "BTN_GeneralCamUsu",
+        "BTN_Paramsistema"
+      ]
+    }
+  },
+  "events": {
+    "navigation_buttons": [
+      {
+        "control": "BTN_SolBienes",
+        "opens": "WIN_Browse_Solicitudes",
+        "sets": {
+          "gnNVentanaEnUso": 1
+        }
+      },
+      {
+        "control": "BTN_SolServ",
+        "opens": "WIN_Browse_Solicitudes",
+        "sets": {
+          "gnNVentanaEnUso": 2
+        }
+      },
+      {
+        "control": "BTN_Paramsistema",
+        "opens": "WIN_Datos_Generales"
+      },
+      {
+        "control": "BTN_GeneralCamUsu",
+        "opens": "WIN_CambiaUsuarioLUCCA"
+      },
+	  {
+		"control": "BTN_ParamCotrolUsuario",
+		"opens": "WIN_Catalogo_Usuarios"
+	  }
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Edita_Usuarios:Menu_Licita",
+  "name": "Menu_Licita",
+  "scope": "window_local",
+  "owner_window": "WIN_Edita_Usuarios",
+  "signature": "PROCEDURE Menu_Licita()",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Edita_Usuarios_Menu_Licita.json",
+  "tables_read": [],
+  "tables_write": [],
+  "relations_found": [],
+  "metrics": {
+    "lines": 24,
+    "sql_fragments": 0
+  },
+  "wl_code": "nSumaCeros is int=0\nnSumaUnos is int=0\nnSumaNegativos is int=0\nNGuardaValor is int=0\nFOR i=277 TO 281\ngsResPath=TreeFind(TREE_Example, i, Null, tvLeaf + tvNode)\nNGuardaValor=TREE_Example[gsResPath]..Checked\nIF NGuardaValor=0 THEN\nnSumaCeros++\nELSE IF NGuardaValor=1 THEN\nnSumaUnos++\nELSE IF NGuardaValor=-1 THEN\nnSumaNegativos++\nEND\nEND\ngsResPath=TreeFind(TREE_Example, 276, Null, tvLeaf + tvNode)\nIF nSumaCeros=5  THEN\nTREE_Example[gsResPath]..Checked=0\nELSE IF nSumaUnos=5 THEN\nTREE_Example[gsResPath]..Checked=1\nELSE IF nSumaUnos>0 OR nSumaNegativos>0 THEN\nTREE_Example[gsResPath]..Checked=-1\nEND\nLocal procedure Menu_Mantto"
+}

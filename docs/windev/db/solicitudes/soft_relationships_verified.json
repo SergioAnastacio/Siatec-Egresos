@@ -1,0 +1,116 @@
+{
+  "artifact_type": "soft_relationships_verified",
+  "schema": "dbo",
+  "output_dir": "docs/db/metadata/",
+  "output_filename": "soft_relationships_verified.json",
+  "source_of_truth": [
+    "DDL (SQL Server)",
+    "AS-IS code relationships (JOIN/HReadSeek)",
+    "Business rule confirmations from user"
+  ],
+  "relationships": [
+    {
+      "id": "SFK-001",
+      "from": { "table": "dbo.Solicitudes", "column": "AREA", "type": "smallint", "is_nullable_in_db": true },
+      "to":   { "table": "dbo.Areax",       "column": "CODIGO", "type": "int", "is_nullable_in_db": false, "is_pk": true },
+      "relationship_type": "soft_fk",
+      "cardinality": "many_to_one",
+      "required_by_business_rule": true,
+      "db_constraint_enforced": false,
+      "type_compatibility": "widening_ok (smallint -> int)",
+      "evidence": "JOIN Areax ON Areax.CODIGO = Solicitudes.AREA"
+    },
+    {
+      "id": "SFK-002",
+      "from": { "table": "dbo.Solicitudes", "column": "USUARIOS", "type": "int", "is_nullable_in_db": true },
+      "to":   { "table": "dbo.Usuarios",   "column": "CODIGO",   "type": "int", "is_nullable_in_db": false, "is_pk": true },
+      "relationship_type": "soft_fk",
+      "cardinality": "many_to_one",
+      "required_by_business_rule": true,
+      "db_constraint_enforced": false,
+      "type_compatibility": "ok",
+      "evidence": "JOIN Usuarios ON Usuarios.CODIGO = Solicitudes.USUARIOS; WHERE Solicitudes.USUARIOS = gnUSUARIO"
+    },
+    {
+      "id": "SFK-003",
+      "from": { "table": "dbo.AtencionServicios", "column": "AREA", "type": "smallint", "is_nullable_in_db": true },
+      "to":   { "table": "dbo.Areax",            "column": "CODIGO", "type": "int", "is_nullable_in_db": false, "is_pk": true },
+      "relationship_type": "soft_fk",
+      "cardinality": "many_to_one",
+      "required_by_business_rule": true,
+      "db_constraint_enforced": false,
+      "type_compatibility": "widening_ok (smallint -> int)",
+      "evidence": "JOIN Areax ON Areax.CODIGO = AtencionServicios.AREA"
+    },
+    {
+      "id": "SFK-004",
+      "from": { "table": "dbo.AtencionServicios", "column": "USUARIOS", "type": "smallint", "is_nullable_in_db": true },
+      "to":   { "table": "dbo.Usuarios",         "column": "CODIGO", "type": "int", "is_nullable_in_db": false, "is_pk": true },
+      "relationship_type": "soft_fk",
+      "cardinality": "many_to_one",
+      "required_by_business_rule": true,
+      "db_constraint_enforced": false,
+      "type_compatibility": "mismatch_risk (smallint -> int) + possible overflow",
+      "evidence": "JOIN Usuarios ON Usuarios.CODIGO = AtencionServicios.USUARIOS; WHERE AtencionServicios.USUARIOS = gnUSUARIO"
+    },
+    {
+      "id": "SFK-005",
+      "from": { "table": "dbo.Usuarios", "column": "AREA", "type": "int", "is_nullable_in_db": true },
+      "to":   { "table": "dbo.Areax",    "column": "CODIGO", "type": "int", "is_nullable_in_db": false, "is_pk": true },
+      "relationship_type": "soft_fk",
+      "cardinality": "many_to_one",
+      "required_by_business_rule": true,
+      "db_constraint_enforced": false,
+      "type_compatibility": "ok",
+      "evidence": "HReadSeek(Areas/Areax, CODIGO, Usuarios.AREA, ...)"
+    },
+    {
+      "id": "LOCK-001",
+      "from": { "table": "dbo.LUCCA429", "column": "Codigo", "type": "int", "is_nullable_in_db": false, "is_pk": true },
+      "to":   { "table": "dbo.Solicitudes", "column": "CODIGO", "type": "int", "is_nullable_in_db": false, "is_pk": true },
+      "relationship_type": "soft_lock",
+      "cardinality": "zero_or_one_to_one",
+      "required_by_business_rule": true,
+      "db_constraint_enforced": "partially (PK on LUCCA429.Codigo prevents duplicate lock rows for same Codigo)",
+      "type_compatibility": "ok",
+      "evidence": "Select/Insert LUCCA429 Where Codigo=<gnCodigoTabla>"
+    },
+    {
+      "id": "LOCK-002",
+      "from": { "table": "dbo.LUCCA430", "column": "Codigo", "type": "int", "is_nullable_in_db": false, "is_pk": true },
+      "to":   { "table": "dbo.AtencionServicios", "column": "CODIGO", "type": "int", "is_nullable_in_db": false, "is_pk": true },
+      "relationship_type": "soft_lock",
+      "cardinality": "zero_or_one_to_one",
+      "required_by_business_rule": true,
+      "db_constraint_enforced": "partially (PK on LUCCA430.Codigo prevents duplicate lock rows for same Codigo)",
+      "type_compatibility": "ok",
+      "evidence": "Select/Insert LUCCA430 Where Codigo=<gnCodigoTabla>"
+    },
+    {
+      "id": "DEV-001",
+      "from": { "table": "dbo.LUCCA429", "column": "Mac", "type": "varchar(20)", "is_nullable_in_db": true },
+      "to":   { "table": "dbo.LUCCA466", "column": "Mac", "type": "varchar(20)", "is_nullable_in_db": true, "is_unique": false },
+      "relationship_type": "soft_reference",
+      "cardinality": "many_to_many_possible",
+      "required_by_business_rule": false,
+      "db_constraint_enforced": false,
+      "type_compatibility": "ok",
+      "evidence": "LUCCA429 almacena Mac; LUCCA466 guarda info por Mac, pero Mac NO es único (confirmado)."
+    }
+  ],
+  "consistency_notes": [
+    {
+      "topic": "Business required vs DB nullable",
+      "detail": "Confirmaste que AREA y USUARIOS son obligatorios, pero en DDL están como NULL en Solicitudes/AtencionServicios/Usuarios. Se documenta como regla de aplicación, no constraint de BD."
+    }
+  ],
+  "risks": [
+    {
+      "id": "RISK-001",
+      "severity": "high",
+      "topic": "Type mismatch AtencionServicios.USUARIOS (smallint) vs Usuarios.CODIGO (int)",
+      "impact": "Posibles joins incorrectos / overflow si CODIGO supera 32767, y casting implícito puede afectar performance.",
+      "evidence": "AtencionServicios.USUARIOS smallint; Usuarios.CODIGO int."
+    }
+  ]
+}

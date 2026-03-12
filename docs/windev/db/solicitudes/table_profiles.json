@@ -1,0 +1,70 @@
+{
+  "artifact_type": "table_profiles",
+  "schema": "dbo",
+  "output_dir": "docs/db/metadata/",
+  "output_filename": "table_profiles.json",
+  "tables": [
+    {
+      "table": "dbo.Solicitudes",
+      "primary_key": ["CODIGO"],
+      "key_columns_used_by_app": ["AREA", "USUARIOS", "ESTADO", "REVISION", "UBICACION", "FECHA"],
+      "nullable_in_db_but_required_by_app": ["AREA", "USUARIOS"],
+      "notes": [
+        "PK clustered en CODIGO.",
+        "AREA es smallint NULL (BD), pero en app se trata como obligatorio.",
+        "USUARIOS es int NULL (BD), pero en app se trata como obligatorio."
+      ]
+    },
+    {
+      "table": "dbo.AtencionServicios",
+      "primary_key": ["CODIGO"],
+      "key_columns_used_by_app": ["AREA", "USUARIOS", "ESTADO", "NECESITADO", "FECHA"],
+      "nullable_in_db_but_required_by_app": ["AREA", "USUARIOS"],
+      "notes": [
+        "USUARIOS es smallint (mismatch con Usuarios.CODIGO int)."
+      ]
+    },
+    {
+      "table": "dbo.Usuarios",
+      "primary_key": ["CODIGO"],
+      "key_columns_used_by_app": ["NOMBRE", "AREA", "ALMACENFAVORITO"],
+      "nullable_in_db_but_required_by_app": ["AREA"],
+      "notes": [
+        "AREA es int NULL (BD), pero en app se usa para lookup de Areax."
+      ]
+    },
+    {
+      "table": "dbo.Areax",
+      "primary_key": ["CODIGO"],
+      "key_columns_used_by_app": ["DESCRIPCION", "CENTRODECOSTO"],
+      "notes": [
+        "Equivalente a WL 'Areas'."
+      ]
+    },
+    {
+      "table": "dbo.LUCCA429",
+      "primary_key": ["Codigo"],
+      "key_columns_used_by_app": ["Usuario", "Mac", "IP", "NOM", "FECHAREG"],
+      "notes": [
+        "Lock table para Solicitudes."
+      ]
+    },
+    {
+      "table": "dbo.LUCCA430",
+      "primary_key": ["Codigo"],
+      "key_columns_used_by_app": ["Usuario", "Mac", "IP", "NOM"],
+      "notes": [
+        "Lock table para AtencionServicios."
+      ]
+    },
+    {
+      "table": "dbo.LUCCA466",
+      "primary_key": [],
+      "key_columns_used_by_app": ["Mac", "UltPostit"],
+      "notes": [
+        "No hay PK/Unique en DDL; Mac NO es único (confirmado).",
+        "Esto complica usarlo como entidad 'Device' en TO-BE: en nueva arquitectura conviene introducir PK surrogate."
+      ]
+    }
+  ]
+}

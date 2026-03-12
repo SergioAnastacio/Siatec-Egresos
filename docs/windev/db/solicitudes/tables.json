@@ -1,0 +1,58 @@
+﻿{
+  "tables": [
+    {
+      "schema_name": "dbo",
+      "table_name": "Areax",
+      "create_date": "2026-02-06T11:16:37.590",
+      "modify_date": "2026-02-06T11:16:39.740"
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "AtencionServicios",
+      "create_date": "2023-08-24T11:14:42.587",
+      "modify_date": "2023-08-24T11:14:42.640"
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "ConfInter",
+      "create_date": "2019-03-25T18:02:08.800",
+      "modify_date": "2019-03-26T18:42:57.570"
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "DatosGrales",
+      "create_date": "2022-03-07T06:27:57.877",
+      "modify_date": "2026-02-16T13:08:10.053"
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "LUCCA429",
+      "create_date": "2019-03-26T18:35:12.240",
+      "modify_date": "2019-03-26T18:35:12.240"
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "LUCCA430",
+      "create_date": "2019-03-26T18:35:12.243",
+      "modify_date": "2019-03-26T18:35:12.243"
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "LUCCA466",
+      "create_date": "2020-01-13T14:25:53.027",
+      "modify_date": "2020-01-13T14:25:53.033"
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "Solicitudes",
+      "create_date": "2024-08-27T09:27:07.890",
+      "modify_date": "2024-08-27T09:27:08.030"
+    },
+    {
+      "schema_name": "dbo",
+      "table_name": "Usuarios",
+      "create_date": "2021-02-19T10:56:16.020",
+      "modify_date": "2021-02-19T10:56:16.600"
+    }
+  ]
+}

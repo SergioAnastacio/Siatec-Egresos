@@ -1,0 +1,54 @@
+{
+  "manifest_version": "minimal-1.0",
+  "project": {
+    "name": "SIATEC / LUCCA Modernization",
+    "scope": "desktop-first",
+    "platform": {
+      "desktop": true,
+      "web": false,
+      "mobile": false,
+      "windows_targets": [
+        "x86_64-pc-windows-msvc",
+        "i686-pc-windows-msvc"
+      ],
+      "packaging_target": "MSIX"
+    }
+  },
+  "active_modules": [
+    "auth",
+    "inicio"
+  ],
+  "deferred_modules": [
+    "solicitudes_bienes",
+    "solicitudes_servicios",
+    "usuarios_catalogo",
+    "usuarios_edicion"
+  ],
+  "data_conventions": {
+    "rowversion_column": "RowVer",
+    "legacy_date_base": "1800-12-28",
+    "legacy_date_offset_days": 362,
+    "servicios_user_field_canonical": "AtencionServicios.USUARIO_ID",
+    "servicios_user_field_legacy": "AtencionServicios.USUARIOS",
+    "password_hash_algorithm": "argon2id"
+  },
+  "trusted_foreign_keys": [
+    "FK_AtencionServicios_Usuarios_USUARIO_ID",
+    "FK_BitMovs_Usuario",
+    "FK_LUCCA182_Usuarios",
+    "FK_LUCCA333_Usuarios",
+    "FK_LUCCA410_Usuarios",
+    "FK_Usuarios_Areax",
+    "FK_UsuHist_Usuarios"
+  ],
+  "context_directories": {
+    "as_is_windows": "docs/windev/as-is/windows/",
+    "as_is_procedures": "docs/windev/as-is/procedures/",
+    "db_metadata_inicio_login_usuarios": "docs/windev/db/metadata/inicio_login_usuarios/"
+  },
+  "instruction": {
+    "only_use_existing_files": true,
+    "do_not_assume_missing_artifacts": true,
+    "leave_todo_when_evidence_is_missing": true
+  }
+}

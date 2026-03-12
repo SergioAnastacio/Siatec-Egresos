@@ -1,0 +1,19 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Edita_Usuarios:Prende_Recaudadoras",
+  "name": "Prende_Recaudadoras",
+  "scope": "window_local",
+  "owner_window": "WIN_Edita_Usuarios",
+  "signature": "PROCEDURE Prende_Recaudadoras()",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Edita_Usuarios_Prende_Recaudadoras.json",
+  "tables_read": [],
+  "tables_write": [],
+  "relations_found": [],
+  "metrics": {
+    "lines": 21,
+    "sql_fragments": 0
+  },
+  "wl_code": "IF TREE_Example[gsResPath]..Checked=1 THEN\ngsResPath=TreeFind(TREE_Example, 347, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 348, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 349, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 350, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\nELSE\ngsResPath=TreeFind(TREE_Example, 347, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 348, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 349, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 350, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\nEND\nMenu_Comerical()\nLocal procedure Verifica_EdicionprgBien"
+}

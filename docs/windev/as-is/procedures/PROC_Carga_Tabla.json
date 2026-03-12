@@ -1,0 +1,123 @@
+{
+  "step": 1,
+  "artifact_type": "procedure_wl",
+  "id": "PROC:Carga_Tabla",
+  "name": "Carga_Tabla",
+  "module": "Solicitudes",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_Carga_Tabla.json",
+  "signature": "PROCEDURE Carga_Tabla()",
+  "parameters": [],
+  "returns": {
+    "type": "void",
+    "meaning": "Carga/recarga el listado de solicitudes en la tabla UI según el contexto gnNVentanaEnUso (Bienes/Servicios/Préstamo)."
+  },
+  "side_effects": [
+    {
+      "kind": "ui",
+      "summary": "Limpia y llena TABLE_Catalogo_Solicitudes; cambia el Caption de la ventana según contexto."
+    },
+    {
+      "kind": "db_read",
+      "summary": "Ejecuta consulta SQL dinámica (HExecuteSQLQuery) para obtener solicitudes del usuario."
+    }
+  ],
+  "tables_read": ["Solicitudes", "AtencionServicios", "AreaX", "Usuarios"],
+  "tables_write": [],
+  "sql_or_queries": [
+    {
+      "kind": "sql",
+      "name": "SELECT catálogo Bienes desde Solicitudes + AreaX + Usuarios (todos los estados)",
+      "crud": "read",
+      "evidence": "SELECT S1.CODIGO, S1.FECHA, A1.DESCRIPCION, U1.NOMBRE, S1.ESTADO FROM Solicitudes S1 INNER JOIN AreaX A1 ON A1.CODIGO=S1.AREA INNER JOIN Usuarios U1 ON U1.CODIGO=S1.Usuarios WHERE S1.Usuarios=<gnUSUARIO> and RTrim(S1.Ubicacion) <> 'Programas Sociales' and S1.REVISION=0 Order By S1.Codigo Desc"
+    },
+    {
+      "kind": "sql",
+      "name": "SELECT catálogo Préstamos desde Solicitudes + AreaX + Usuarios (solo ESTADO='Prestamo')",
+      "crud": "read",
+      "evidence": "Regla confirmada: si gnNVentanaEnUso=3 se filtra por S1.ESTADO='Prestamo' (comentario previo en código y confirmación AS-IS)."
+    },
+    {
+      "kind": "sql",
+      "name": "SELECT catálogo Servicios desde AtencionServicios + AreaX + Usuarios",
+      "crud": "read",
+      "evidence": "SELECT S1.CODIGO, S1.FECHA, A1.DESCRIPCION, U1.NOMBRE, S1.ESTADO FROM AtencionServicios S1 INNER JOIN AreaX A1 ON A1.CODIGO=S1.AREA INNER JOIN Usuarios U1 ON U1.CODIGO=S1.Usuarios WHERE S1.Usuarios=<gnUSUARIO> and RTrim(S1.Necesitado) <> 'Programas Sociales' Order By S1.Codigo Desc"
+    }
+  ],
+  "business_logic": [
+    {
+      "step": 1,
+      "description": "Define un Data Source (BuscaQry) y limpia por completo la tabla UI TABLE_Catalogo_Solicitudes.",
+      "evidence": "BuscaQry is Data Source; TableDeleteAll(TABLE_Catalogo_Solicitudes)"
+    },
+    {
+      "step": 2,
+      "description": "Si gnNVentanaEnUso=1 (Bienes), ajusta el Caption y ejecuta SQL contra Solicitudes filtrando por usuario, excluyendo Ubicacion='Programas Sociales' y con REVISION=0. Muestra todos los estados.",
+      "evidence": "IF gnNVentanaEnUso=1 THEN Caption=\"Catalogo de Solicitudes de Bienes\" ... WHERE ... RTrim(S1.Ubicacion) <> 'Programas Sociales' and S1.REVISION=0"
+    },
+    {
+      "step": 3,
+      "description": "Si gnNVentanaEnUso=3 (Préstamo de Bienes), el catálogo debe listar únicamente registros de Solicitudes con ESTADO='Prestamo'.",
+      "evidence": "Regla AS-IS confirmada: gnNVentanaEnUso=3 => S1.ESTADO='Prestamo'"
+    },
+    {
+      "step": 4,
+      "description": "Si gnNVentanaEnUso=2 (Servicios), ajusta el Caption y ejecuta SQL contra AtencionServicios filtrando por usuario y excluyendo Necesitado='Programas Sociales'.",
+      "evidence": "ELSE IF gnNVentanaEnUso=2 THEN Caption=\"Catalogo de Solicitudes de Servicios\" ... RTrim(S1.Necesitado) <> 'Programas Sociales'"
+    },
+    {
+      "step": 5,
+      "description": "Itera todos los registros del Data Source (BuscaQry) y agrega líneas a TABLE_Catalogo_Solicitudes: Codigo, Fecha convertida, Area, Solicitante, Estado.",
+      "evidence": "HReadFirst; LOOP(HNbRec) TableAddLine(TABLE_Catalogo_Solicitudes, BuscaQry.Codigo, IntegerToDate(BuscaQry.Fecha + 362), NoSpace(BuscaQry.DESCRIPCION), BuscaQry.Nombre, BuscaQry.Estado)"
+    }
+  ],
+  "validations": [
+    {
+      "rule": "Exclusión de registros de programas sociales (bienes: Ubicacion; servicios: Necesitado).",
+      "severity": "medium",
+      "evidence": "RTrim(S1.Ubicacion) <> 'Programas Sociales' / RTrim(S1.Necesitado) <> 'Programas Sociales'"
+    },
+    {
+      "rule": "Bienes: solo registros con REVISION=0.",
+      "severity": "medium",
+      "evidence": "and S1.REVISION=0"
+    },
+    {
+      "rule": "Préstamos (gnNVentanaEnUso=3): solo incluir solicitudes con ESTADO='Prestamo'.",
+      "severity": "high",
+      "evidence": "Confirmación AS-IS: mostrar solo ESTADO='Prestamo' para gnNVentanaEnUso=3"
+    }
+  ],
+  "exceptions_or_errors": [
+    {
+      "type": "db_error",
+      "condition": "Falla al ejecutar HExecuteSQLQuery en Bienes o Servicios",
+      "handling": "Error(\"HFSQL error: \" + HErrorInfo())",
+      "evidence": "IF HExecuteSQLQuery(...) = False THEN Error(\"HFSQL error: \" + HErrorInfo())"
+    }
+  ],
+  "dependencies": [
+    {
+      "type": "db",
+      "name": "MyConnectionLucca",
+      "reason": "Conexión usada para ejecutar SQL dinámico",
+      "evidence": "HExecuteSQLQuery(BuscaQry, MyConnectionLucca, ...)"
+    },
+    {
+      "type": "ui",
+      "name": "TABLE_Catalogo_Solicitudes",
+      "reason": "Tabla destino para renderizar el catálogo",
+      "evidence": "TableDeleteAll(TABLE_Catalogo_Solicitudes); TableAddLine(TABLE_Catalogo_Solicitudes, ...)"
+    },
+    {
+      "type": "global_state",
+      "name": "gnNVentanaEnUso, gnUSUARIO",
+      "reason": "Determina modo (bienes/servicios/préstamo) y filtra por usuario",
+      "evidence": "IF gnNVentanaEnUso=...; WHERE S1.Usuarios= + gnUSUARIO"
+    }
+  ],
+  "unknowns": [],
+  "followups": [
+    "Si se implementa físicamente la rama gnNVentanaEnUso=3 fuera de este procedimiento, localizar dónde se aplica el filtro ESTADO='Prestamo' (por ejemplo, en la llamada a Carga_Tabla o en una variante del procedimiento)."
+  ]
+}

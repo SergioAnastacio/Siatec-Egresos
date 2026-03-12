@@ -1,0 +1,34 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Inicio_LUCCA:Cambia_Letrero_Fecha",
+  "name": "Cambia_Letrero_Fecha",
+  "scope": "window_local",
+  "owner_window": "WIN_Inicio_LUCCA",
+  "signature": "PROCEDURE Cambia_Letrero_Fecha()",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Inicio_LUCCA_Cambia_Letrero_Fecha.json",
+  "summary": {
+    "purpose": "Actualiza texto en barra de estado con gdFechaGral.",
+    "calls": []
+  },
+  "ui_effects": [
+    {
+      "type": "statusbar",
+      "control": "SBC_FechaSistema",
+      "effect": "set_text"
+    }
+  ],
+  "tables_read": [],
+  "tables_write": [],
+  "business_rules": [],
+  "dependencies": [],
+  "raw_wl_excerpt": "SBC_FechaSistema=\"Fecha del Sistema: \" + DateToString(gdFechaGral)",
+  "unknowns": [
+    {
+      "topic": "Eventos click reales de botones del SIDE_Menu",
+      "why": "Prepara_Menu solo aplica permisos; no incluye navegación",
+      "how_to_confirm": "Subir eventos Click/Select de botones clave (SolBienes/SolServ/etc.)."
+    }
+  ]
+}

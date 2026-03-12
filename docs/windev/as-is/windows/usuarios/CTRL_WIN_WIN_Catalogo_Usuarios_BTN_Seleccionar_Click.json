@@ -1,0 +1,35 @@
+{
+  "step": 1,
+  "artifact_type": "ui_control_event",
+  "id": "CTRL:WIN:WIN_Catalogo_Usuarios:BTN_Seleccionar:Click",
+  "window_or_page": "WIN:WIN_Catalogo_Usuarios",
+  "module": "Admin/Usuarios",
+  "control": {
+    "name": "BTN_Seleccionar",
+    "type": "Button",
+    "purpose": "Selecciona usuario (gsGnCodSel=COL_Codigo) y cierra ventana.",
+    "visibility_or_permissions": []
+  },
+  "output_dir": "docs/as-is/windows/",
+  "output_filename": "CTRL_WIN_WIN_Catalogo_Usuarios_BTN_Seleccionar_Click.json",
+  "events": [
+    {
+      "event": "Click BTN_Seleccionar",
+      "summary": "Selecciona usuario (gsGnCodSel=COL_Codigo) y cierra ventana.",
+      "calls_procedures": [],
+      "calls_windows": [],
+      "calls_queries_or_sql": [],
+      "tables_read": [
+        "dbo.Usuarios"
+      ],
+      "tables_write": [],
+      "business_rules": [],
+      "validations": [],
+      "exceptions_or_errors": [],
+      "dependencies": [],
+      "wl_code": "gsGnCodSel=COL_Codigo\n\t\t\tClose()"
+    }
+  ],
+  "unknowns": [],
+  "followups": []
+}

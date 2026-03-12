@@ -1,0 +1,194 @@
+CREATE TABLE [dbo].[Solicitudes](
+	[CODIGO] [int] NOT NULL,
+	[FECHA] [int] NULL,
+	[AREA] [smallint] NULL,
+	[USUARIOS] [int] NULL,
+	[REQUERIDO] [char](7) NULL,
+	[JUSTIFICACION] [decimal](3, 0) NULL,
+	[UBICACION] [char](40) NULL,
+	[ESTADO] [char](10) NULL,
+	[MOTIVOSOLICITUD] [char](100) NULL,
+	[FUENTERECURSOS] [char](30) NULL,
+	[FECHAIDEALRECEPCION] [int] NULL,
+	[ORDENTRABAJO] [decimal](5, 0) NULL,
+	[ALMACEN] [smallint] NULL,
+	[PROVEEDOR] [decimal](5, 0) NULL,
+	[SELECCIONADO] [tinyint] NULL,
+	[MOTIVOCANCELACION] [decimal](3, 0) NULL,
+	[AUTORIZO] [smallint] NULL,
+	[FECHAAUTORIZA] [int] NULL,
+	[CENTRODECOSTO] [varchar](10) NULL,
+	[PROYECTO] [varchar](10) NULL,
+	[PROGRAMA] [varchar](10) NULL,
+	[FINFUNSUB] [smallint] NULL,
+	[POLPRECOMP] [int] NULL,
+	[REVISION] [tinyint] NULL,
+	[DESTGASTESP] [varchar](10) NULL,
+	[MUNICIPIO] [varchar](10) NULL,
+	[REGION] [varchar](10) NULL,
+	[GENERO] [tinyint] NULL,
+	[CAJACHICA] [int] NULL,
+	[INGRESO] [smallint] NULL,
+	[VER] [smallint] NULL,
+	[Activo] [int] NULL,
+ CONSTRAINT [PK__Solicitu__CC87E1274B1A6FA8] PRIMARY KEY CLUSTERED 
+(
+	[CODIGO] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[Usuarios](
+	[CODIGO] [int] NOT NULL,
+	[LOGIN] [char](10) NULL,
+	[PASSWORD] [char](10) NULL,
+	[NOMBRE] [varchar](100) NULL,
+	[NOEMPLEADO] [int] NULL,
+	[PUESTO] [char](30) NULL,
+	[AREA] [int] NULL,
+	[CUADRILLA] [char](4) NULL,
+	[DERECHOALMACEN1] [tinyint] NULL,
+	[DERECHOALMACEN2] [tinyint] NULL,
+	[DERECHOALMACEN3] [tinyint] NULL,
+	[DERECHOALMACEN4] [tinyint] NULL,
+	[DERECHOS1] [tinyint] NULL,
+	[DERECHOS2] [tinyint] NULL,
+	[DERECHOS3] [tinyint] NULL,
+	[DERECHOS4] [tinyint] NULL,
+	[DERECHO5] [tinyint] NULL,
+	[DERECHO6] [tinyint] NULL,
+	[DERECHO7] [tinyint] NULL,
+	[DERECHO8] [tinyint] NULL,
+	[DERECHO9] [tinyint] NULL,
+	[DERECHO10] [tinyint] NULL,
+	[DERECHO11] [tinyint] NULL,
+	[DERECHO12] [tinyint] NULL,
+	[DERECHO13] [tinyint] NULL,
+	[NOMINA] [tinyint] NULL,
+	[CUENTADEUDORDIVERSO] [int] NULL,
+	[CTADEUDORDIVINTERNACIONAL] [int] NULL,
+	[CTADEUDORDIVOTROSGASTOS] [int] NULL,
+	[RELEVANTECALIDAD] [decimal](1, 0) NULL,
+	[HORARIO] [decimal](3, 0) NULL,
+	[ULTIMOREGISTRO] [int] NULL,
+	[BLOQUEADO] [tinyint] NULL,
+	[FIRMA] [varchar](100) NULL,
+	[AUTBIEN] [smallint] NULL,
+	[AUTSERV] [smallint] NULL,
+	[AUTVIAT] [smallint] NULL,
+	[AUTTODASAREAS] [tinyint] NULL,
+	[OPERADORALMACEN] [smallint] NULL,
+	[SUPERVISORALMACEN] [tinyint] NULL,
+	[ADMINISTRADORALMACENES] [tinyint] NULL,
+	[ALMACENFAVORITO] [smallint] NULL,
+	[ReceptorOficios] [int] NULL,
+	[FOTO] [text] NULL,
+ CONSTRAINT [PK__Usuarios__CC87E12718C3FA05] PRIMARY KEY CLUSTERED 
+(
+	[CODIGO] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[LUCCA466](
+	[Mac] [varchar](20) NULL,
+	[UltUsuario] [int] NULL,
+	[PenUsuario] [int] NULL,
+	[AntUsuario] [int] NULL,
+	[Bloqueado] [tinyint] NULL,
+	[MotivoBloqueo] [varchar](50) NULL,
+	[UltPostit] [int] NULL
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[LUCCA430](
+	[Codigo] [int] NOT NULL,
+	[Usuario] [int] NULL,
+	[Mac] [varchar](20) NULL,
+	[IP] [varchar](15) NULL,
+	[NOM] [varchar](35) NULL,
+ CONSTRAINT [PK_LUCCA430] PRIMARY KEY CLUSTERED 
+(
+	[Codigo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[LUCCA429](
+	[Codigo] [int] NOT NULL,
+	[Usuario] [int] NULL,
+	[Mac] [varchar](20) NULL,
+	[IP] [varchar](15) NULL,
+	[NOM] [varchar](35) NULL,
+	[FECHAREG] [date] NULL,
+ CONSTRAINT [PK_LUCCA429] PRIMARY KEY CLUSTERED 
+(
+	[Codigo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
+CREATE TABLE [dbo].[Areax](
+	[CODIGO] [int] NOT NULL,
+	[DESCRIPCION] [varchar](200) NULL,
+	[SEGMENTO1] [decimal](3, 0) NOT NULL,
+	[SEGMENTO2] [decimal](3, 0) NULL,
+	[SEGMENTO3] [decimal](3, 0) NULL,
+	[SEGMENTO4] [decimal](5, 0) NULL,
+	[RESPONSABLEAREA] [char](35) NULL,
+	[PUESTO] [char](20) NULL,
+	[GERENTEDELAREA] [char](40) NULL,
+	[CENTRODECOSTO] [varchar](10) NULL,
+	[NIVEL] [smallint] NULL,
+	[Activo] [tinyint] NULL,
+ CONSTRAINT [PK__Areas_2019] PRIMARY KEY CLUSTERED 
+(
+	[CODIGO] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[AtencionServicios](
+	[CODIGO] [int] NOT NULL,
+	[FECHA] [int] NULL,
+	[AREA] [smallint] NULL,
+	[USUARIOS] [smallint] NULL,
+	[REQUERIDO] [char](7) NULL,
+	[JUSTIFICACION] [decimal](3, 0) NULL,
+	[NECESITADO] [char](40) NULL,
+	[ESTADO] [char](10) NULL,
+	[MOTIVOSOLICITUD] [char](40) NULL,
+	[FUENTERECURSOS] [char](30) NULL,
+	[COLONIA] [decimal](5, 0) NULL,
+	[ORDENTRABAJO] [decimal](5, 0) NULL,
+	[IVA] [decimal](9, 2) NULL,
+	[IMPORTETOTAL] [decimal](9, 2) NULL,
+	[OBSERVACIONESPEDIDO] [varchar](200) NULL,
+	[PROVEEDOR] [decimal](5, 0) NULL,
+	[LEYADQ] [char](2) NULL,
+	[NOFATCURA] [char](10) NULL,
+	[FECHAAUTORIZACION] [int] NULL,
+	[FECHALIBERACIONORDEN] [int] NULL,
+	[CENTRODECOSTO] [varchar](10) NULL,
+	[PROYECTO] [varchar](10) NULL,
+	[PROGRAMA] [varchar](10) NULL,
+	[FINFUNSUB] [smallint] NULL,
+	[POLPRECOMP] [int] NULL,
+	[REVISON] [tinyint] NULL,
+	[PARIDADCOTIZA] [decimal](7, 2) NULL,
+	[FECHACOTIZA] [int] NULL,
+	[DESTGASTESP] [varchar](10) NULL,
+	[MUNICIPIO] [varchar](10) NULL,
+	[REGION] [varchar](10) NULL,
+	[GENERO] [tinyint] NULL,
+	[CAJACHICA] [int] NULL,
+	[INGRESO] [smallint] NULL,
+	[VER] [smallint] NULL,
+	[Activo] [int] NULL,
+ CONSTRAINT [PK__Atencion__CC87E1275A5CB338] PRIMARY KEY CLUSTERED 
+(
+	[CODIGO] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO

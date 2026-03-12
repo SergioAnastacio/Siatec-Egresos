@@ -1,0 +1,19 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Edita_Usuarios:Verifica_MenuPrgServ",
+  "name": "Verifica_MenuPrgServ",
+  "scope": "window_local",
+  "owner_window": "WIN_Edita_Usuarios",
+  "signature": "PROCEDURE Verifica_MenuPrgServ()",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Edita_Usuarios_Verifica_MenuPrgServ.json",
+  "tables_read": [],
+  "tables_write": [],
+  "relations_found": [],
+  "metrics": {
+    "lines": 33,
+    "sql_fragments": 0
+  },
+  "wl_code": "gsResPath=TreeFind(TREE_Example, 27, Null, tvLeaf + tvNode)\nnEstado27 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 28, Null, tvLeaf + tvNode)\nnEstado28 is int=TREE_Example[gsResPath]..Checked\nIF nEstado27=0 AND nEstado28=0 THEN\ngsResPath=TreeFind(TREE_Example, 29, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 30, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\nELSE IF nEstado27=1 AND nEstado28=1 THEN\ngsResPath=TreeFind(TREE_Example, 29, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=0 THEN\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 30, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\nEND\nELSE IF nEstado27=1 OR nEstado28=1 THEN\ngsResPath=TreeFind(TREE_Example, 29, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=0 THEN\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 30, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\nEND\nEND\ngsResPath=TreeFind(TREE_Example, 26, Null, tvLeaf + tvNode)\nIF nEstado27=1 AND nEstado28=1 THEN\nTREE_Example[gsResPath]..Checked=1\nELSE IF nEstado27=0 AND nEstado28=0 THEN\nTREE_Example[gsResPath]..Checked=0\nELSE IF nEstado27=1 OR nEstado28=1 THEN\nTREE_Example[gsResPath]..Checked=-1\nEND\nLocal procedure Verifica_MenuSolBien"
+}

@@ -1,0 +1,273 @@
+{
+  "step": 2,
+  "artifact_type": "soft_relationships",
+  "schema": "dbo",
+  "source": "AS-IS inferred from extracted WinDev/WLanguage code for WIN_Browse_Solicitudes, WIN_UpdateSolicitudes, and PROC Carga_Tabla",
+  "output_dir": "docs/as-is/processes/",
+  "output_filename": "RELATIONS_soft_from_windev.json",
+  "scope": {
+    "windows": ["WIN:WIN_Browse_Solicitudes", "WIN:WIN_UpdateSolicitudes"],
+    "procedures": ["PROC:Carga_Tabla"]
+  },
+  "relationships": [
+    {
+      "id": "REL-001",
+      "from_table": "dbo.Solicitudes",
+      "from_column": "AREA",
+      "to_table": "dbo.AreaX",
+      "to_column": "CODIGO",
+      "cardinality": "many_to_one",
+      "relationship_type": "soft_fk",
+      "purpose": "Resolver descripción de área en el catálogo de solicitudes (Bienes).",
+      "evidence": {
+        "kind": "sql_join",
+        "snippet": "INNER JOIN AreaX A1 ON A1.CODIGO=S1.AREA"
+      }
+    },
+    {
+      "id": "REL-002",
+      "from_table": "dbo.Solicitudes",
+      "from_column": "Usuarios",
+      "to_table": "dbo.Usuarios",
+      "to_column": "CODIGO",
+      "cardinality": "many_to_one",
+      "relationship_type": "soft_fk",
+      "purpose": "Resolver nombre del solicitante y filtrar solicitudes por usuario.",
+      "evidence": {
+        "kind": "sql_join_and_filter",
+        "snippet": "INNER JOIN Usuarios U1 ON U1.CODIGO=S1.Usuarios ... WHERE S1.Usuarios=\" + gnUSUARIO"
+      }
+    },
+    {
+      "id": "REL-003",
+      "from_table": "dbo.AtencionServicios",
+      "from_column": "AREA",
+      "to_table": "dbo.AreaX",
+      "to_column": "CODIGO",
+      "cardinality": "many_to_one",
+      "relationship_type": "soft_fk",
+      "purpose": "Resolver descripción de área en el catálogo de solicitudes (Servicios).",
+      "evidence": {
+        "kind": "sql_join",
+        "snippet": "FROM AtencionServicios S1 INNER JOIN AreaX A1 ON A1.CODIGO=S1.AREA"
+      }
+    },
+    {
+      "id": "REL-004",
+      "from_table": "dbo.AtencionServicios",
+      "from_column": "Usuarios",
+      "to_table": "dbo.Usuarios",
+      "to_column": "CODIGO",
+      "cardinality": "many_to_one",
+      "relationship_type": "soft_fk",
+      "purpose": "Resolver nombre del solicitante y filtrar servicios por usuario.",
+      "evidence": {
+        "kind": "sql_join_and_filter",
+        "snippet": "INNER JOIN Usuarios U1 ON U1.CODIGO=S1.Usuarios ... WHERE S1.Usuarios=\" + gnUSUARIO"
+      }
+    },
+    {
+      "id": "REL-005",
+      "from_table": "dbo.Usuarios",
+      "from_column": "AREA",
+      "to_table": "dbo.Areas",
+      "to_column": "CODIGO",
+      "cardinality": "many_to_one",
+      "relationship_type": "soft_fk",
+      "purpose": "Resolver el área del usuario (para asignar área/centro de costo al crear solicitudes).",
+      "evidence": {
+        "kind": "hreadseek",
+        "snippet": "HReadSeek(Areas,CODIGO,Usuarios.AREA,hIdentical)"
+      }
+    },
+    {
+      "id": "REL-006",
+      "from_table": "dbo.Solicitudes",
+      "from_column": "AREA",
+      "to_table": "dbo.Areas",
+      "to_column": "CODIGO",
+      "cardinality": "many_to_one",
+      "relationship_type": "soft_fk_indirect",
+      "purpose": "Al crear una solicitud, se asigna el área a partir del área del usuario (Areas.CODIGO), además de usar Areas.CENTRODECOSTO en el insert.",
+      "evidence": {
+        "kind": "insert_from_user_area",
+        "snippet": "HReadSeek(Areas,CODIGO,Usuarios.AREA,...) ... Insert Into Solicitudes ... \" + Areas.CODIGO + \",\" + gnUSUARIO + ... \" + Areas.CENTRODECOSTO + \" ..."
+      },
+      "notes": [
+        "Aunque el catálogo hace JOIN con AreaX, la creación usa Areas (del usuario). Esto sugiere que 'Areas' y 'AreaX' pueden representar catálogos distintos o redundantes.",
+        "Confirmar en metadata si Solicitudes.AREA referencia realmente a AreaX o Areas (soft)."
+      ]
+    },
+    {
+      "id": "REL-007",
+      "from_table": "dbo.AtencionServicios",
+      "from_column": "AREA",
+      "to_table": "dbo.Areas",
+      "to_column": "CODIGO",
+      "cardinality": "many_to_one",
+      "relationship_type": "soft_fk_indirect",
+      "purpose": "Al crear un servicio, se asigna el área a partir del área del usuario (Areas.CODIGO) y se usa Areas.CENTRODECOSTO.",
+      "evidence": {
+        "kind": "insert_from_user_area",
+        "snippet": "HReadSeek(Areas,CODIGO,Usuarios.AREA,...) ... Insert Into AtencionServicios ... \" + Areas.CODIGO + \",\" + gnUSUARIO + ... \" + Areas.CENTRODECOSTO + \" ..."
+      },
+      "notes": [
+        "El catálogo de AtencionServicios hace JOIN con AreaX, pero la creación usa Areas.",
+        "Confirmar equivalencia Areas vs AreaX en el modelo conceptual."
+      ]
+    },
+    {
+      "id": "REL-008",
+      "from_table": "dbo.LUCCA429",
+      "from_column": "Codigo",
+      "to_table": "dbo.Solicitudes",
+      "to_column": "CODIGO",
+      "cardinality": "zero_or_one_to_one (assumed per active lock)",
+      "relationship_type": "soft_lock",
+      "purpose": "Bloqueo de concurrencia para edición/cancelación de solicitudes (Bienes y Préstamo).",
+      "evidence": {
+        "kind": "select_and_insert_lock",
+        "snippet": "Select Codigo, Usuario, Mac, IP, Nom from LUCCA429 Where Codigo=... ; Insert into LUCCA429 Select Codigo=..., Usuario=..., Mac=..., IP=..., Nom=..., 'timestamp'"
+      },
+      "constraints_assumed": [
+        "Idealmente LUCCA429.Codigo debe ser único para representar un lock activo por solicitud; no se observa enforcement en código."
+      ]
+    },
+    {
+      "id": "REL-009",
+      "from_table": "dbo.LUCCA430",
+      "from_column": "Codigo",
+      "to_table": "dbo.AtencionServicios",
+      "to_column": "CODIGO",
+      "cardinality": "zero_or_one_to_one (assumed per active lock)",
+      "relationship_type": "soft_lock",
+      "purpose": "Bloqueo de concurrencia para edición/cancelación de servicios.",
+      "evidence": {
+        "kind": "select_and_insert_lock",
+        "snippet": "Select Codigo, Usuario, Mac, Ip, Nom from LUCCA430 Where Codigo=... ; Insert into LUCCA430 Select Codigo=..., Usuario=..., Mac=..., IP=..., Nom=..."
+      },
+      "constraints_assumed": [
+        "Idealmente LUCCA430.Codigo debe ser único para representar un lock activo por servicio; no se observa enforcement en código."
+      ]
+    },
+    {
+      "id": "REL-010",
+      "from_table": "dbo.LUCCA429",
+      "from_column": "Usuario",
+      "to_table": "dbo.Usuarios",
+      "to_column": "CODIGO",
+      "cardinality": "many_to_one",
+      "relationship_type": "soft_fk",
+      "purpose": "Resolver el nombre del usuario que bloqueó un registro.",
+      "evidence": {
+        "kind": "hreadseek_after_lock_select",
+        "snippet": "HReadSeek(Usuarios,CODIGO,dsBloqueo.Usuario,hIdentical) ; Info(\"Registro Bloqueado por el usuario: \" + Usuarios.NOMBRE ...)"
+      }
+    },
+    {
+      "id": "REL-011",
+      "from_table": "dbo.LUCCA430",
+      "from_column": "Usuario",
+      "to_table": "dbo.Usuarios",
+      "to_column": "CODIGO",
+      "cardinality": "many_to_one",
+      "relationship_type": "soft_fk",
+      "purpose": "Resolver el nombre del usuario que bloqueó un registro (servicios).",
+      "evidence": {
+        "kind": "hreadseek_after_lock_select",
+        "snippet": "HReadSeek(Usuarios,CODIGO,dsBloqueo.Usuario,hIdentical) ; Info(\"Registro Bloqueado por el usuario: \" + Usuarios.NOMBRE ...)"
+      }
+    },
+    {
+      "id": "REL-012",
+      "from_table": "dbo.DatosGrales",
+      "from_column": "CODIGO",
+      "to_table": "dbo.DatosGrales",
+      "to_column": "CODIGO",
+      "cardinality": "singleton",
+      "relationship_type": "config_singleton",
+      "purpose": "Parámetros globales del sistema (ej. permitir captura proyecto adquisiciones).",
+      "evidence": {
+        "kind": "hreadseek_singleton",
+        "snippet": "HReadSeek(DatosGrales,CODIGO,1,hIdentical)"
+      }
+    },
+    {
+      "id": "REL-013",
+      "from_table": "dbo.ConfInter",
+      "from_column": "CODIGO",
+      "to_table": "dbo.ConfInter",
+      "to_column": "CODIGO",
+      "cardinality": "singleton",
+      "relationship_type": "config_singleton",
+      "purpose": "Configuración global (consultada en init de WIN_UpdateSolicitudes).",
+      "evidence": {
+        "kind": "hreadseek_singleton",
+        "snippet": "HReadSeekFirst(ConfInter, CODIGO, 1)"
+      }
+    },
+    {
+      "id": "REL-014",
+      "from_table": "dbo.LUCCA466",
+      "from_column": "Mac",
+      "to_table": "dbo.LUCCA466",
+      "to_column": "Mac",
+      "cardinality": "by_device",
+      "relationship_type": "device_state",
+      "purpose": "Persistir contador UltPostit por dispositivo (MAC).",
+      "evidence": {
+        "kind": "update_by_mac",
+        "snippet": "Update LUCCA466 set UltPostit=... Where Mac='\" + gsMacAdd + \"'"
+      }
+    }
+  ],
+  "runtime_artifacts": [
+    {
+      "id": "RT-001",
+      "type": "global_temp_table",
+      "name_pattern": "##BIENES<gnCodigoTabla>",
+      "associated_context": "WIN_UpdateSolicitudes close",
+      "association_key": "gnCodigoTabla",
+      "lifecycle": {
+        "created": "unknown (not in provided snippet)",
+        "dropped": "On close when nCerroBien<>0 and gnNVentanaEnUso in (1,3)"
+      },
+      "evidence": "Drop TABLE [##BIENES\" + gnCodigoTabla + \"]"
+    },
+    {
+      "id": "RT-002",
+      "type": "global_temp_table",
+      "name_pattern": "##SERVICIOS<gnCodigoTabla>",
+      "associated_context": "WIN_UpdateSolicitudes close",
+      "association_key": "gnCodigoTabla",
+      "lifecycle": {
+        "created": "unknown (not in provided snippet)",
+        "dropped": "On close when nCerroBien<>0 and gnNVentanaEnUso=2"
+      },
+      "evidence": "Drop TABLE [##SERVICIOS\" + gnCodigoTabla + \"]"
+    }
+  ],
+  "ui_bindings_confirmed": {
+    "TABLE_Catalogo_Solicitudes": [
+      { "control_column": "COL_Codigo", "display_name": "Codigo" },
+      { "control_column": "COL_Fecha", "display_name": "Fecha" },
+      { "control_column": "COL_Area", "display_name": "Area" },
+      { "control_column": "COL_Solicitante", "display_name": "Solicitante" },
+      { "control_column": "COL_Estad", "display_name": "Estado" }
+    ]
+  },
+  "assumptions_and_risks": [
+    {
+      "risk": "Areas vs AreaX ambiguity",
+      "description": "Creación de solicitudes/servicios usa Areas.CODIGO (del usuario) para el campo AREA, pero el browse hace JOIN a AreaX por AREA. Puede indicar catálogos redundantes o mapeo implícito.",
+      "impact": "Alta para reescritura/modularización: el dominio 'Área' puede estar duplicado o necesitar traducción.",
+      "mitigation": "En Paso 2 (metadata), comparar tipos/valores y validar si Areas y AreaX comparten CODIGO o si existe tabla puente."
+    },
+    {
+      "risk": "Soft locks without enforcement",
+      "description": "LUCCA429/LUCCA430 parecen representar locks activos, pero no se observa constraint único ni liberación explícita en snippets.",
+      "impact": "Puede causar locks huérfanos o duplicados.",
+      "mitigation": "Buscar liberación en eventos de guardar/cerrar definitivo o jobs de limpieza; en TO-BE definir estrategia de lock explícita (TTL o transacciones)."
+    }
+  ]
+}

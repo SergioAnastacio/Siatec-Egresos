@@ -1,0 +1,19 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Edita_Usuarios:Menu_Aut_Ini_Obra",
+  "name": "Menu_Aut_Ini_Obra",
+  "scope": "window_local",
+  "owner_window": "WIN_Edita_Usuarios",
+  "signature": "PROCEDURE Menu_Aut_Ini_Obra(sIdentifier is string)",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Edita_Usuarios_Menu_Aut_Ini_Obra.json",
+  "tables_read": [],
+  "tables_write": [],
+  "relations_found": [],
+  "metrics": {
+    "lines": 51,
+    "sql_fragments": 0
+  },
+  "wl_code": "nProcesar is int=0\nIF sIdentifier=\"86\" THEN\ngsResPath=TreeFind(TREE_Example, 86, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=-1 THEN\nTREE_Example[gsResPath]..Checked=0\nEND\nIF TREE_Example[gsResPath]..Checked=1 THEN\ngsResPath=TreeFind(TREE_Example, 87, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\ngsResPath=TreeFind(TREE_Example, 88, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=1\nELSE\ngsResPath=TreeFind(TREE_Example, 87, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\ngsResPath=TreeFind(TREE_Example, 88, Null, tvLeaf + tvNode)\nTREE_Example[gsResPath]..Checked=0\nEND\nELSE IF sIdentifier=\"87\" THEN\ngsResPath=TreeFind(TREE_Example, 87, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=-1 THEN\nTREE_Example[gsResPath]..Checked=0\nEND\nnProcesar=1\nELSE IF sIdentifier=\"88\" THEN\ngsResPath=TreeFind(TREE_Example, 88, Null, tvLeaf + tvNode)\nIF TREE_Example[gsResPath]..Checked=-1 THEN\nTREE_Example[gsResPath]..Checked=0\nEND\nnProcesar=1\nEND\nIF nProcesar=1 THEN\ngsResPath=TreeFind(TREE_Example, 87, Null, tvLeaf + tvNode)\nnEstado87 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 88, Null, tvLeaf + tvNode)\nnEstado88 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 86, Null, tvLeaf + tvNode)\nIF nEstado87=1 AND nEstado88=1 THEN\nTREE_Example[gsResPath]..Checked=1\nELSE IF nEstado87=0 AND nEstado88=0 THEN\nTREE_Example[gsResPath]..Checked=0\nELSE IF nEstado87=1 OR nEstado88=1 THEN\nTREE_Example[gsResPath]..Checked=-1\n\n\nPart 1 › WINDEV window › WIN_Edita_Usuarios › Procedures\n3/9/2026\n288\nSIATEC1_IA\nEND\nEND\nLocal procedure Menu_Aut_Liq_Bienes"
+}

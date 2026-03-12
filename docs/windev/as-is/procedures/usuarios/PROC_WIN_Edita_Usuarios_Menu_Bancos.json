@@ -1,0 +1,19 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Edita_Usuarios:Menu_Bancos",
+  "name": "Menu_Bancos",
+  "scope": "window_local",
+  "owner_window": "WIN_Edita_Usuarios",
+  "signature": "PROCEDURE Menu_Bancos()",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Edita_Usuarios_Menu_Bancos.json",
+  "tables_read": [],
+  "tables_write": [],
+  "relations_found": [],
+  "metrics": {
+    "lines": 59,
+    "sql_fragments": 0
+  },
+  "wl_code": "gsResPath=TreeFind(TREE_Example, 149, Null, tvLeaf + tvNode)\nnEstado65 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 150, Null, tvLeaf + tvNode)\nnEstado72 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 151, Null, tvLeaf + tvNode)\nnEstado76 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 155, Null, tvLeaf + tvNode)\nnEstado77 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 158, Null, tvLeaf + tvNode)\nnEstado81 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 159, Null, tvLeaf + tvNode)\nnEstado84 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 160, Null, tvLeaf + tvNode)\nnEstado85 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 161, Null, tvLeaf + tvNode)\nnEstado86 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 162, Null, tvLeaf + tvNode)\nnEstado89 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 163, Null, tvLeaf + tvNode)\nnEstado90 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 164, Null, tvLeaf + tvNode)\nnEstado91 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 165, Null, tvLeaf + tvNode)\nnEstado92 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 166, Null, tvLeaf + tvNode)\nnEstado93 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 167, Null, tvLeaf + tvNode)\nnEstado94 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 168, Null, tvLeaf + tvNode)\nnEstado95 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 169, Null, tvLeaf + tvNode)\nnEstado96 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 301, Null, tvLeaf + tvNode)\nnEstado301 is int=TREE_Example[gsResPath]..Checked\ngsResPath=TreeFind(TREE_Example, 148, Null, tvLeaf + tvNode)\nIF nEstado65=0 AND nEstado72=0 AND nEstado76=0 AND nEstado77=0 AND nEstado81=0 AND nEstado84=0 AND\nnEstado85=0 AND nEstado86=0 AND nEstado89=0 AND nEstado90=0 AND nEstado91=0 AND nEstado92=0 AND nEstado93=0\nAND nEstado94=0 AND nEstado95=0 AND nEstado96=0 AND nEstado301=0 THEN\nTREE_Example[gsResPath]..Checked=0\nELSE IF nEstado65=1 AND nEstado72=1 AND nEstado76=1 AND nEstado77=1 AND nEstado81=1 AND nEstado84=1 AND\nnEstado85=1 AND nEstado86=1 AND nEstado89=1 AND nEstado90=1 AND nEstado91=1 AND nEstado92=1 AND nEstado93=1\nAND nEstado94=1 AND nEstado95=1 AND nEstado96=1 AND nEstado301=1THEN\nTREE_Example[gsResPath]..Checked=1\n\n\nPart 1 › WINDEV window › WIN_Edita_Usuarios › Procedures\n3/9/2026\n295\nSIATEC1_IA\nELSE IF nEstado65=1 OR nEstado72=1 OR nEstado76=1 OR nEstado77=1 OR nEstado81=1 OR nEstado84=1 OR nEstado85\n=1 OR nEstado86=1 OR nEstado89=1 OR nEstado90=1 OR nEstado91=1 OR nEstado92=1 OR nEstado93=1 OR nEstado94=1\nOR nEstado95=1 OR nEstado96=1 OR nEstado301=1 THEN\nTREE_Example[gsResPath]..Checked=-1\nELSE IF nEstado65=-1 OR nEstado72=-1 OR nEstado76=-1 OR nEstado77=-1 OR nEstado81=-1 OR nEstado84=-1 OR\nnEstado85=-1 OR nEstado86=-1 OR nEstado89=-1 OR nEstado90=-1 OR nEstado91=-1 OR nEstado92=-1 OR nEstado93=-\n1 OR nEstado94=-1 OR nEstado95=-1 OR nEstado96=-1 OR nEstado301=-1 THEN\nTREE_Example[gsResPath]..Checked=-1\nEND\nLocal procedure Menu_CatyReps"
+}

@@ -1,0 +1,30 @@
+{
+  "step": 1,
+  "artifact_type": "procedure",
+  "id": "PROC:WIN_Inicio_LUCCA:MsWheel",
+  "name": "MsWheel",
+  "scope": "window_local",
+  "owner_window": "WIN_Inicio_LUCCA",
+  "signature": "PROCEDURE MsWheel(pMessage, wParam, IParam)",
+  "output_dir": "docs/as-is/procedures/",
+  "output_filename": "PROC_WIN_Inicio_LUCCA_MsWheel.json",
+  "summary": {
+    "purpose": "Maneja scroll del mouse: dispara BTN_Arriba o BTN_Abajo via ExecuteProcess.",
+    "calls": [
+      "ExecuteProcess"
+    ]
+  },
+  "ui_effects": [],
+  "tables_read": [],
+  "tables_write": [],
+  "business_rules": [],
+  "dependencies": [],
+  "raw_wl_excerpt": "IF wParam = 7864320  THEN\n\t\tExecuteProcess(BTN_Arriba,trtClick)\n\tELSE\n\t\tExecuteProcess(BTN_Abajo,trtClick)\n\tEND\n\tpMessage=1\n\tIParam=0",
+  "unknowns": [
+    {
+      "topic": "Eventos click reales de botones del SIDE_Menu",
+      "why": "Prepara_Menu solo aplica permisos; no incluye navegación",
+      "how_to_confirm": "Subir eventos Click/Select de botones clave (SolBienes/SolServ/etc.)."
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "manifest_patch_type": "append_controls",
+  "target_process_id": "PROC-002",
+  "controls_to_add": [
+    "docs/as-is/windows/CTRL_WIN_WIN_Edita_Usuarios_BTN_Aceptar1_Click.json"
+  ],
+  "note": "Agregar BTN_Aceptar1 (guardar usuario) al proceso Administración de Usuarios."
+}
