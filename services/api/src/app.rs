@@ -1,9 +1,9 @@
 use axum::{routing::get, Router};
 use utoipa::OpenApi;
 
-use crate::{openapi::ApiDoc, routes};
+use crate::{openapi::ApiDoc, routes, state::AppState};
 
-pub fn build_router() -> Router {
+pub fn build_router(state: AppState) -> Router {
     // Business endpoints live under /api/v1.
     let egresos = Router::new()
         .route(
@@ -23,4 +23,5 @@ pub fn build_router() -> Router {
         .route("/version", get(routes::version::get_version))
         .route("/openapi.json", get(|| async { axum::Json(ApiDoc::openapi()) }))
         .nest("/api/v1", v1)
+        .with_state(state)
 }

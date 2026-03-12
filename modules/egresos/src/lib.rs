@@ -32,6 +32,9 @@ pub struct Egreso {
     pub monto: f64,
     /// Estado actual del egreso.
     pub status: EgresoStatus,
+    /// Fecha/hora de creación (RFC3339).
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub created_at: Option<String>,
 }
 
 /// Payload mínimo para crear un egreso.
