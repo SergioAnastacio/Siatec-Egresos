@@ -31,6 +31,7 @@ pub fn build_router(state: AppState, dev_auth: DevAuth) -> Router {
         .route("/health", get(routes::health::get_health))
         .route("/version", get(routes::version::get_version))
         .route("/openapi.json", get(|| async { axum::Json(ApiDoc::openapi()) }))
+        .route("/db/health", get(routes::db::get_db_health))
         .nest("/api/v1", v1)
         .with_state(state)
 }

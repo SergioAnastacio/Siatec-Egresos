@@ -16,6 +16,10 @@ tower-http = { version = "0.5", features = ["trace", "cors"] }
 uuid = { version = "1", features = ["v4"] }
 chrono = { version = "0.4", default-features = false, features = ["clock"] }
 
+# SQL Server connectivity (smoke)
+tiberius = { version = "0.12", default-features = false, features = ["rustls", "chrono"] }
+tokio-util = { version = "0.7", features = ["compat"] }
+
 # OpenAPI
 utoipa = { version = "4", features = ["axum_extras"] }
 
