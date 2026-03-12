@@ -10,7 +10,9 @@ use crate::{app::build_router, auth::DevAuth, config::AppConfig, state::AppState
 pub async fn serve(cfg: AppConfig) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     let addr = SocketAddr::new(cfg.host, cfg.port);
 
-    let state = AppState::default();
+    let mut state = AppState::default();
+    state.dev_token = cfg.dev_token.clone();
+
     let dev_auth = DevAuth {
         token: cfg.dev_token.clone(),
     };
