@@ -35,6 +35,14 @@ Skeleton inicial del servicio API.
 - `GET /api/v1/egresos/{egreso_id}`
 - `PATCH /api/v1/egresos/{egreso_id}/status`
 
+#### Solicitudes (MVP)
+
+- `GET /api/v1/solicitudes`
+- `POST /api/v1/solicitudes`
+- `GET /api/v1/solicitudes/{id}`
+- `PATCH /api/v1/solicitudes/{id}`
+- `PATCH /api/v1/solicitudes/{id}/status`
+
 ## Requisitos
 
 - Rust (stable) + Cargo
@@ -107,4 +115,34 @@ curl -i -X POST http://127.0.0.1:3001/api/v1/egresos \
   -H 'Authorization: Bearer super-secret-dev-token' \
   -H 'Content-Type: application/json' \
   -d '{"concepto":"cafe","monto":10.5}'
+
+# --- Solicitudes (MVP) ---
+
+# 1) Crear (201)
+curl -i -X POST http://127.0.0.1:3001/api/v1/solicitudes \
+  -H 'Authorization: Bearer super-secret-dev-token' \
+  -H 'Content-Type: application/json' \
+  -d '{"tipo":"bienes","area_id":"AREA-001","notas":"Solicitud MVP"}'
+
+# 2) Listar (200)
+curl -s http://127.0.0.1:3001/api/v1/solicitudes \
+  -H 'Authorization: Bearer super-secret-dev-token' | cat
+
+# 3) Detalle (200)
+SOL_ID=00000000-0000-0000-0000-000000000000 # reemplaza por un UUID real
+curl -s http://127.0.0.1:3001/api/v1/solicitudes/$SOL_ID \
+  -H 'Authorization: Bearer super-secret-dev-token' | cat
+
+# 4) Editar (200)
+curl -i -X PATCH http://127.0.0.1:3001/api/v1/solicitudes/$SOL_ID \
+  -H 'Authorization: Bearer super-secret-dev-token' \
+  -H 'Content-Type: application/json' \
+  -d '{"notas":"Actualizado"}'
+
+# 5) Cambiar status (200)
+# Nota: si status=canceled, motivo es requerido.
+curl -i -X PATCH http://127.0.0.1:3001/api/v1/solicitudes/$SOL_ID/status \
+  -H 'Authorization: Bearer super-secret-dev-token' \
+  -H 'Content-Type: application/json' \
+  -d '{"status":"sent"}'
 ```
