@@ -1,0 +1,24 @@
+{
+  "name": "@siatec-egresos/api-client",
+  "private": true,
+  "version": "0.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "pnpm --filter @siatec-egresos/contracts build && pnpm exec tsc -p tsconfig.json",
+    "dev": "pnpm exec tsc -p tsconfig.json --watch --preserveWatchOutput",
+    "lint": "node -e \"console.log('api-client: lint TODO')\"",
+    "typecheck": "pnpm exec tsc -p tsconfig.json --noEmit",
+    "test": "node -e \"console.log('api-client: no tests yet')\""
+  },
+  "dependencies": {
+    "@siatec-egresos/contracts": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "typescript": "^5.5.4"
+  }
+}

@@ -3,14 +3,16 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "pnpm --filter @siatec-egresos/ui build && pnpm exec next dev -p 3000",
-    "build": "pnpm --filter @siatec-egresos/ui build && pnpm exec next build",
+    "dev": "pnpm --filter @siatec-egresos/contracts build && pnpm --filter @siatec-egresos/api-client build && pnpm --filter @siatec-egresos/ui build && pnpm exec next dev -p 3000",
+    "build": "pnpm --filter @siatec-egresos/contracts build && pnpm --filter @siatec-egresos/api-client build && pnpm --filter @siatec-egresos/ui build && pnpm exec next build",
     "start": "pnpm exec next start -p 3000",
     "lint": "pnpm exec next lint",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "node -e \"console.log('no tests yet')\""
   },
   "dependencies": {
+    "@siatec-egresos/api-client": "workspace:*",
+    "@siatec-egresos/contracts": "workspace:*",
     "@siatec-egresos/ui": "workspace:*",
     "next": "^14.2.5",
     "react": "^18.3.1",
