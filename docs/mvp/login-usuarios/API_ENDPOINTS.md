@@ -6,11 +6,26 @@
 
 ## Convenciones
 
-- Auth: session/token (definir en implementación), pero los endpoints se documentan de forma agnóstica.
 - Responses de error: usar el formato estándar del API (`{ code, message }`).
 - Todos los endpoints deben tener **trazabilidad** a JSONs de `docs/windev/as-is/...`.
 
-## Endpoints propuestos (mínimo MVP)
+### Auth (estado actual en la implementación)
+
+Actualmente el API (Rust) usa un esquema **dev-mode** para proteger endpoints de escritura:
+
+- Header: `Authorization: Bearer <token>`
+- Variables de entorno (API): `API_DEV_TOKEN` o `DEV_TOKEN`
+- Comportamiento:
+  - Si **NO** hay token configurado → auth deshabilitado (útil para dev local)
+  - Si hay token configurado → se requiere `Authorization: Bearer ...` en los endpoints protegidos
+
+> Referencias: `services/api/src/auth.rs`, `services/api/src/config.rs`.
+
+### Auth (target MVP)
+
+El target para el MVP de Login/Usuarios es implementar un **login real** (session/JWT/etc.). Mientras eso no exista, los endpoints de `auth/login` y `auth/me` se consideran **propuestos** (no implementados aún).
+
+## Endpoints propuestos (mínimo MVP; **no implementados aún**)
 
 ### Auth
 
