@@ -1,6 +1,9 @@
-use utoipa::OpenApi;
+use utoipa::{
+    openapi::security::{HttpAuthScheme, HttpBuilder, SecurityScheme},
+    OpenApi,
+};
 
-use crate::routes;
+use crate::{error::ApiError, routes};
 
 /// Documento OpenAPI del servicio.
 #[derive(OpenApi)]
@@ -17,11 +20,21 @@ use crate::routes;
         schemas(
             routes::health::HealthResponse,
             routes::version::VersionResponse,
-            routes::egresos::ApiError,
+            ApiError,
             routes::egresos::UpdateEgresoStatusRequest,
             siatec_egresos_egresos::Egreso,
             siatec_egresos_egresos::CreateEgresoRequest,
             siatec_egresos_egresos::EgresoStatus
+        ),
+        security_schemes(
+            (
+                "devToken" = SecurityScheme::Http(
+                    HttpBuilder::new()
+                        .scheme(HttpAuthScheme::Bearer)
+                        .bearer_format("static")
+                        .build()
+                )
+            )
         )
     ),
     tags(
