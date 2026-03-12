@@ -1,6 +1,6 @@
 use utoipa::OpenApi;
 
-use crate::routes;
+use crate::{error::ApiError, routes};
 
 /// Documento OpenAPI del servicio.
 #[derive(OpenApi)]
@@ -17,7 +17,7 @@ use crate::routes;
         schemas(
             routes::health::HealthResponse,
             routes::version::VersionResponse,
-            routes::egresos::ApiError,
+            ApiError,
             routes::egresos::UpdateEgresoStatusRequest,
             siatec_egresos_egresos::Egreso,
             siatec_egresos_egresos::CreateEgresoRequest,

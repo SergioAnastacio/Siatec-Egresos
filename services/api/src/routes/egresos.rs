@@ -5,29 +5,13 @@ use axum::{
     Json,
 };
 use chrono::Utc;
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 use utoipa::ToSchema;
 use uuid::Uuid;
 
 use siatec_egresos_egresos::{CreateEgresoRequest, Egreso, EgresoStatus};
 
-use crate::state::AppState;
-
-#[derive(Debug, Serialize, ToSchema)]
-pub struct ApiError {
-    pub code: &'static str,
-    pub message: String,
-}
-
-fn api_error(status: StatusCode, code: &'static str, message: impl Into<String>) -> impl IntoResponse {
-    (
-        status,
-        Json(ApiError {
-            code,
-            message: message.into(),
-        }),
-    )
-}
+use crate::{error::ApiError, error::api_error, state::AppState};
 
 fn validate_uuid(id: &str) -> Result<Uuid, (StatusCode, Json<ApiError>)> {
     Uuid::parse_str(id)
@@ -54,10 +38,12 @@ pub async fn list_egresos(State(state): State<AppState>) -> impl IntoResponse {
     post,
     path = "/api/v1/egresos",
     tag = "Egresos",
+    security(("devToken" = [])),
     request_body = CreateEgresoRequest,
     responses(
         (status = 201, description = "Egreso creado", body = Egreso),
-        (status = 400, description = "Validación", body = ApiError)
+        (status = 400, description = "Validación", body = ApiError),
+        (status = 401, description = "No autorizado", body = ApiError)
     )
 )]
 pub async fn create_egreso(
@@ -123,6 +109,7 @@ pub struct UpdateEgresoStatusRequest {
     patch,
     path = "/api/v1/egresos/{egreso_id}/status",
     tag = "Egresos",
+    security(("devToken" = [])),
     params(
         ("egreso_id" = String, Path, description = "ID del egreso (UUID)")
     ),
@@ -130,6 +117,7 @@ pub struct UpdateEgresoStatusRequest {
     responses(
         (status = 200, description = "Egreso actualizado", body = Egreso),
         (status = 400, description = "Validación", body = ApiError),
+        (status = 401, description = "No autorizado", body = ApiError),
         (status = 404, description = "No encontrado", body = ApiError)
     )
 )]
